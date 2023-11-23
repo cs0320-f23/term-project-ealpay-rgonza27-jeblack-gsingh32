@@ -71,6 +71,12 @@
       <scope>compile</scope>
     </dependency>
 
+    <dependency>
+      <groupId>com.google.firebase</groupId>
+      <artifactId>firebase-admin</artifactId>
+      <version>9.2.0</version>
+    </dependency>
+
     <!--
            JUnit is a unit testing library for Java.
     -->

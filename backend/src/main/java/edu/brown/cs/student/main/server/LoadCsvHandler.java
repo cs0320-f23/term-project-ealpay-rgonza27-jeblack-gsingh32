@@ -39,7 +39,7 @@ public class LoadCsvHandler implements Route {
   public Object handle(Request request, Response response) throws Exception {
     // has to handle if hasHeader isn't given
     try {
-      String path =  System.getProperty("user.dir") + "/data/" + request.queryParams("Path");
+      String path = System.getProperty("user.dir") + "/data/" + request.queryParams("Path");
       String hasHeader = request.queryParams("hasHeader");
       if (hasHeader == null) {
         throw new IllegalAccessException();
@@ -53,11 +53,7 @@ public class LoadCsvHandler implements Route {
       Creator row = new Creator();
 
       response.type("application/json");
-      Parse<List<String>> parse =
-          new Parse<>(
-              row,
-              new FileReader(path),
-              headerBool);
+      Parse<List<String>> parse = new Parse<>(row, new FileReader(path), headerBool);
       Container<List<String>> container = parse.parseMethod();
       this.shared.rows = container.rows;
       this.shared.hasHeader = container.hasHeader;

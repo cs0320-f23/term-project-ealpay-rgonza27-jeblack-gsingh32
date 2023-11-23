@@ -33,10 +33,7 @@ public class TestParse {
   public void testParse() throws FileNotFoundException {
     this.parse =
         new Parse<>(
-            this.creator,
-            new FileReader(
-                "data/census/dol_ri_earnings_disparity.csv"),
-            false);
+            this.creator, new FileReader("data/census/dol_ri_earnings_disparity.csv"), false);
     ArrayList<HashMap<Integer, String>> rows = this.parse.parseMethod().rows;
     // Test Parse with another Creator Class.
     Assert.assertEquals(rows.get(1), answer1);
@@ -56,10 +53,7 @@ public class TestParse {
     // Test failedCreator
     this.parse =
         new Parse<>(
-            this.failCreator,
-            new FileReader(
-                "data/census/dol_ri_earnings_disparity.csv"),
-            true);
+            this.failCreator, new FileReader("data/census/dol_ri_earnings_disparity.csv"), true);
     this.parse.parseMethod();
   }
 }

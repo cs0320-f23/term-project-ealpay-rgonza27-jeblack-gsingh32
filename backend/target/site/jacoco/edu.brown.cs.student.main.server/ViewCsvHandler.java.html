@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ViewCsvHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">s0</a> &gt; <a href="index.source.html" class="el_package">edu.brown.cs.student.main.server</a> &gt; <span class="el_source">ViewCsvHandler.java</span></div><h1>ViewCsvHandler.java</h1><pre class="source lang-java linenums">package edu.brown.cs.student.main.server;
+
+import edu.brown.cs.student.main.csvSearch.Container;
+import java.util.List;
+import spark.Request;
+import spark.Response;
+import spark.Route;
+
+/** endpoint handler for viewCSV. */
+public class ViewCsvHandler implements Route {
+
+  private final Container&lt;List&lt;String&gt;&gt; container;
+
+  /**
+   * Constructor for the ViewHandler, takes in a shared version of a container object. (Shared
+   * between LoadCSV, viewCSV, searchCSV)
+   *
+   * @param container container object shared through CSV handlers
+   */
+<span class="fc" id="L20">  public ViewCsvHandler(Container&lt;List&lt;String&gt;&gt; container) {</span>
+<span class="fc" id="L21">    this.container = container;</span>
+<span class="fc" id="L22">  }</span>
+
+  /**
+   * Handle method that overrides it from the Route interface. Handles the /viewCSV endpoint that
+   * takes in no query parameters . Uses an instance of the container class (instance variable) and
+   * the APIUtilities class to display the CSV that has been previously loaded.
+   *
+   * @param request request made for viewCSV
+   * @param response expected response for viewCSV
+   * @return JSON Object depending on response
+   * @throws Exception catches all exceptions
+   */
+  @Override
+  public Object handle(Request request, Response response) throws Exception {
+    try {
+<span class="fc" id="L37">      response.type(&quot;application/json&quot;);</span>
+<span class="pc bpc" id="L38" title="3 of 4 branches missed.">      if (this.container.rows.isEmpty() &amp;&amp; this.container.header.isEmpty()) {</span>
+<span class="nc" id="L39">        throw new NullPointerException(</span>
+            &quot;CSV Not Loaded, please load a CSV First or provide a CSV with information in it&quot;);
+      }
+<span class="fc" id="L42">      return ApiUtilities.toJson(this.container);</span>
+<span class="nc" id="L43">    } catch (NullPointerException e) {</span>
+<span class="nc" id="L44">      return ApiUtilities.toJsonStatus(e.getMessage(), true);</span>
+    }
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
