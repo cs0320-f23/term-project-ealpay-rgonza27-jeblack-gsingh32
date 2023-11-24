@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BroadBandHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">s0</a> &gt; <a href="index.source.html" class="el_package">edu.brown.cs.student.main.server</a> &gt; <span class="el_source">BroadBandHandler.java</span></div><h1>BroadBandHandler.java</h1><pre class="source lang-java linenums">package edu.brown.cs.student.main.server;
+
+import spark.Request;
+import spark.Response;
+import spark.Route;
+
+/** Endpoint class for BroadBand that calls the US API. */
+public class BroadBandHandler implements Route {
+
+  private CacheData cacheData;
+
+  /**
+   * Constructor for the BroadBand Handler, takes in an instance of cacheData to utilize its caching
+   * functionality.
+   */
+<span class="fc" id="L16">  public BroadBandHandler(CacheData cacheData) {</span>
+<span class="fc" id="L17">    this.cacheData = cacheData;</span>
+<span class="fc" id="L18">  }</span>
+
+  /**
+   * Handle method that overrides it from the Route interface. Handles the /broadBand endpoint that
+   * takes in two query parameters in the form of a State and County. Uses an instance of the cache
+   * class (instance variable) and the APIUtilities class to get broadBand info for the given state,
+   * county pair, storing the data in the cache in the process.
+   *
+   * @param request the request to handle
+   * @param response use to modify properties of the response
+   * @return response content for broadband information
+   * @throws Exception catches any exception
+   */
+  @Override
+  public Object handle(Request request, Response response) throws Exception {
+    try {
+<span class="fc" id="L34">      String state = request.queryParams(&quot;State&quot;);</span>
+<span class="fc" id="L35">      String county = request.queryParams(&quot;county&quot;);</span>
+<span class="fc" id="L36">      response.type(&quot;application/json&quot;);</span>
+<span class="pc bpc" id="L37" title="1 of 4 branches missed.">      if ((state == null || county == null)) {</span>
+<span class="fc" id="L38">        throw new IllegalArgumentException(</span>
+            &quot;Please Enter a valid Query: broadBand?State=[State name]&amp;county=[County name]&quot;);
+      }
+<span class="pc bpc" id="L41" title="1 of 4 branches missed.">      if ((state.isEmpty() || county.isEmpty())) {</span>
+<span class="fc" id="L42">        throw new IllegalArgumentException(&quot;Please Enter a State and County&quot;);</span>
+      }
+<span class="fc" id="L44">      return ApiUtilities.toJson(ApiUtilities.fromJson(cacheData.output(state + &quot;,&quot; + county)));</span>
+<span class="fc" id="L45">    } catch (Exception a) {</span>
+<span class="fc" id="L46">      System.out.println(a);</span>
+<span class="fc" id="L47">      return ApiUtilities.toJsonStatus(a.getMessage(), true);</span>
+    }
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

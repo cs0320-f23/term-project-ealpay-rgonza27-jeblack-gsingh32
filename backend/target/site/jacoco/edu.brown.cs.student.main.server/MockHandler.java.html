@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MockHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">s0</a> &gt; <a href="index.source.html" class="el_package">edu.brown.cs.student.main.server</a> &gt; <span class="el_source">MockHandler.java</span></div><h1>MockHandler.java</h1><pre class="source lang-java linenums">package edu.brown.cs.student.main.server;
+
+import spark.Request;
+import spark.Response;
+import spark.Route;
+
+/** MockHandler to mimic BroadBandHandler functionality in testing. */
+public class MockHandler implements Route {
+
+  private String fakeArray;
+
+  /**
+   * Constructor for MockHAndler used to test functionality of broadBand Handler without actual
+   * requests to the API.
+   *
+   * @param fakeArray fake datatype
+   */
+<span class="fc" id="L18">  public MockHandler(String fakeArray) {</span>
+<span class="fc" id="L19">    this.fakeArray = fakeArray;</span>
+<span class="fc" id="L20">  }</span>
+
+  /**
+   * Handle method that overrides it from the Route interface. Handles the same things as the
+   * broadband handler but on fake data not retrieved from any real API.
+   *
+   * @param request request mock
+   * @param response response mock
+   * @return Status update (success/failure)
+   * @throws Exception any exception handled
+   */
+  @Override
+  public Object handle(Request request, Response response) throws Exception {
+    try {
+<span class="fc" id="L34">      String state = request.queryParams(&quot;State&quot;);</span>
+<span class="fc" id="L35">      String county = request.queryParams(&quot;county&quot;);</span>
+<span class="fc" id="L36">      response.type(&quot;application/json&quot;);</span>
+<span class="pc bpc" id="L37" title="1 of 4 branches missed.">      if ((state == null || county == null)) {</span>
+<span class="fc" id="L38">        throw new IllegalArgumentException(</span>
+            &quot;Please Enter a valid Query: broadBand?State=[State name]&amp;county=[County name]&quot;);
+      }
+<span class="pc bpc" id="L41" title="1 of 4 branches missed.">      if ((state.isEmpty() || county.isEmpty())) {</span>
+<span class="fc" id="L42">        throw new IllegalArgumentException(&quot;Please Enter a State and County&quot;);</span>
+      }
+
+<span class="fc" id="L45">      return ApiUtilities.toJson(ApiUtilities.fromJson(fakeArray));</span>
+<span class="fc" id="L46">    } catch (Exception a) {</span>
+<span class="fc" id="L47">      return ApiUtilities.toJsonStatus(a.getMessage(), true);</span>
+    }
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

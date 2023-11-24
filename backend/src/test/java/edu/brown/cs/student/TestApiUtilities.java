@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import okio.Buffer;
-import okio.BufferedSource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -169,16 +168,17 @@ public class TestApiUtilities {
 
   @Test
   public void testLoadGeoJsonData() throws IOException {
-    String json = "{\n"
-        + "  \"type\": \"Feature\",\n"
-        + "  \"geometry\": {\n"
-        + "    \"type\": \"Point\",\n"
-        + "    \"coordinates\": [125.6, 10.1]\n"
-        + "  },\n"
-        + "  \"properties\": {\n"
-        + "    \"name\": \"Dinagat Islands\"\n"
-        + "  }\n"
-        + "}";
+    String json =
+        "{\n"
+            + "  \"type\": \"Feature\",\n"
+            + "  \"geometry\": {\n"
+            + "    \"type\": \"Point\",\n"
+            + "    \"coordinates\": [125.6, 10.1]\n"
+            + "  },\n"
+            + "  \"properties\": {\n"
+            + "    \"name\": \"Dinagat Islands\"\n"
+            + "  }\n"
+            + "}";
     JsonReader reader = JsonReader.of(new Buffer().writeUtf8(json));
     MapsJSONResponse geoFeature = ApiUtilities.fromJsonGeneral(reader, MapsJSONResponse.class);
 
@@ -190,20 +190,21 @@ public class TestApiUtilities {
 
   @Test
   public void testLoadJsonDataNotNeededInfo() throws IOException {
-    String json = "{\n"
-        + "  \"type\": \"Feature\",\n"
-        + "  \"geometry\": {\n"
-        + "    \"type\": \"Point\",\n"
-        + "    \"coordinates\": [125.6, 10.1]\n"
-        + "  },\n"
-        + "  \"ShouldNotShowUP\": {\n"
-        + "    \"class\": \"dot\",\n"
-        + "    \"location\": [random, values]\n"
-        + "  },\n"
-        + "  \"properties\": {\n"
-        + "    \"name\": \"Dinagat Islands\"\n"
-        + "  }\n"
-        + "}";
+    String json =
+        "{\n"
+            + "  \"type\": \"Feature\",\n"
+            + "  \"geometry\": {\n"
+            + "    \"type\": \"Point\",\n"
+            + "    \"coordinates\": [125.6, 10.1]\n"
+            + "  },\n"
+            + "  \"ShouldNotShowUP\": {\n"
+            + "    \"class\": \"dot\",\n"
+            + "    \"location\": [random, values]\n"
+            + "  },\n"
+            + "  \"properties\": {\n"
+            + "    \"name\": \"Dinagat Islands\"\n"
+            + "  }\n"
+            + "}";
     JsonReader reader = JsonReader.of(new Buffer().writeUtf8(json));
     MapsJSONResponse geoFeature = ApiUtilities.fromJsonGeneral(reader, MapsJSONResponse.class);
 
@@ -215,27 +216,28 @@ public class TestApiUtilities {
 
   @Test
   public void testLoadJsonDataMissingInfo() throws IOException {
-    String json = "{\n"
-        + "  \"type\": \"Feature\",\n"
-        + "  \"geometry\": {\n"
-        + "    \"type\": \"Point\",\n"
-        + "    \"coordinates\": [125.6, 10.1]\n"
-        + "  },\n"
-        + "  \"ShouldNotShowUP\": {\n"
-        + "    \"class\": \"dot\",\n"
-        + "    \"location\": [random, values]\n"
-        + "  }\n"
-        + "}";
+    String json =
+        "{\n"
+            + "  \"type\": \"Feature\",\n"
+            + "  \"geometry\": {\n"
+            + "    \"type\": \"Point\",\n"
+            + "    \"coordinates\": [125.6, 10.1]\n"
+            + "  },\n"
+            + "  \"ShouldNotShowUP\": {\n"
+            + "    \"class\": \"dot\",\n"
+            + "    \"location\": [random, values]\n"
+            + "  }\n"
+            + "}";
     JsonReader reader = JsonReader.of(new Buffer().writeUtf8(json));
     MapsJSONResponse geoFeature = ApiUtilities.fromJsonGeneral(reader, MapsJSONResponse.class);
 
     assertEquals("Feature", geoFeature.type);
     assertEquals("Point", geoFeature.geometry.type);
     assertEquals("[125.6, 10.1]", geoFeature.geometry.coordinates.toString());
-    Assertions.assertThrows(NullPointerException.class, () -> {
-      String a = geoFeature.properties.name;
-    });
+    Assertions.assertThrows(
+        NullPointerException.class,
+        () -> {
+          String a = geoFeature.properties.name;
+        });
   }
 }
-
-
