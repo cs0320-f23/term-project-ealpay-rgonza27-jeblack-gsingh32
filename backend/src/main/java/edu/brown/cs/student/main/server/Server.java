@@ -7,12 +7,10 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import edu.brown.cs.student.main.csvSearch.Container;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import spark.Spark;
-
 
 /**
  * Top Level class for our project, utilizes spark to create and maintain our server. We setup all
@@ -30,11 +28,13 @@ public class Server {
    */
   public static void main(String[] args) throws IOException {
     FileInputStream serviceAccount =
-        new FileInputStream("/Users/robertogonzales/Desktop/CS0320/term-project-ealpay-rgonza27-jeblack-gsingh32/backend/src/main/java/edu/brown/cs/student/main/server/private/meikdatabase-firebase-adminsdk-5r9bn-be1c95c791.json");
+        new FileInputStream(
+            "/Users/robertogonzales/Desktop/CS0320/term-project-ealpay-rgonza27-jeblack-gsingh32/backend/src/main/java/edu/brown/cs/student/main/server/private/meikdatabase-firebase-adminsdk-5r9bn-be1c95c791.json");
 
-    FirebaseOptions options = new FirebaseOptions.Builder()
-        .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-        .build();
+    FirebaseOptions options =
+        new FirebaseOptions.Builder()
+            .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+            .build();
 
     FirebaseApp.initializeApp(options);
     int port = 3232;

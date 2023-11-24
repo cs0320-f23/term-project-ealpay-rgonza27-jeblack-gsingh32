@@ -2,7 +2,12 @@
 
 import static spark.Spark.after;
 
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import edu.brown.cs.student.main.csvSearch.Container;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import spark.Spark;
@@ -12,32 +17,42 @@ import spark.Spark;
  * the endpoint handler in the main method for this class. We have four total endpoints: loadCSV,
  * searchCSV, viewCSV, broadBand (and mock but that is not necessary for actual functionality).
  */
-<span class="nc" id="L15">public class Server {</span>
+public class Server {
 
-<span class="nc" id="L17">  private static final Container&lt;List&lt;String&gt;&gt; sharedContainer = new Container&lt;&gt;();</span>
+<span class="nc" id="L22">  private static final Container&lt;List&lt;String&gt;&gt; sharedContainer = new Container&lt;&gt;();</span>
 
-  /**
+<span class="nc" id="L24">  /**</span>
    * Runs Server.
    *
    * @param args none
    */
-  public static void main(String[] args) {
-<span class="nc" id="L25">    int port = 3232;</span>
-<span class="nc" id="L26">    Spark.port(port);</span>
-<span class="nc" id="L27">    CacheData cacheData = new CacheData(new ApiOutput(), 100, 10);</span>
-<span class="nc" id="L28">    after(</span>
+  public static void main(String[] args) throws IOException {
+    FileInputStream serviceAccount =
+        new FileInputStream(
+<span class="nc" id="L32">            &quot;/Users/robertogonzales/Desktop/CS0320/term-project-ealpay-rgonza27-jeblack-gsingh32/backend/src/main/java/edu/brown/cs/student/main/server/private/meikdatabase-firebase-adminsdk-5r9bn-be1c95c791.json&quot;);</span>
+
+    FirebaseOptions options =
+<span class="nc" id="L35">        new FirebaseOptions.Builder()</span>
+<span class="nc" id="L36">            .setCredentials(GoogleCredentials.fromStream(serviceAccount))</span>
+<span class="nc" id="L37">            .build();</span>
+
+<span class="nc" id="L39">    FirebaseApp.initializeApp(options);</span>
+<span class="nc" id="L40">    int port = 3232;</span>
+<span class="nc" id="L41">    Spark.port(port);</span>
+<span class="nc" id="L42">    CacheData cacheData = new CacheData(new ApiOutput(), 100, 10);</span>
+<span class="nc" id="L43">    after(</span>
         (request, response) -&gt; {
-<span class="nc" id="L30">          response.header(&quot;Access-Control-Allow-Origin&quot;, &quot;*&quot;);</span>
-<span class="nc" id="L31">          response.header(&quot;Access-Control-Allow-Methods&quot;, &quot;*&quot;);</span>
-<span class="nc" id="L32">        });</span>
-<span class="nc" id="L33">    LoadCsvHandler loadCsvHandler = new LoadCsvHandler(sharedContainer);</span>
-<span class="nc" id="L34">    Spark.get(</span>
+<span class="nc" id="L45">          response.header(&quot;Access-Control-Allow-Origin&quot;, &quot;*&quot;);</span>
+<span class="nc" id="L46">          response.header(&quot;Access-Control-Allow-Methods&quot;, &quot;*&quot;);</span>
+<span class="nc" id="L47">        });</span>
+<span class="nc" id="L48">    LoadCsvHandler loadCsvHandler = new LoadCsvHandler(sharedContainer);</span>
+<span class="nc" id="L49">    Spark.get(</span>
         &quot;/&quot;,
         (request, response) -&gt; {
-<span class="nc" id="L37">          response.type(&quot;application/json&quot;);</span>
-<span class="nc" id="L38">          response.status(200);</span>
+<span class="nc" id="L52">          response.type(&quot;application/json&quot;);</span>
+<span class="nc" id="L53">          response.status(200);</span>
 
-<span class="nc" id="L40">          return &quot;Welcome! Here are your options:\n&quot;</span>
+<span class="nc" id="L55">          return &quot;Welcome! Here are your options:\n&quot;</span>
               + &quot;\n&quot;
               + &quot;- /broadBand: Used to look at Information from the US Census, &quot;
               + &quot;you must provide a State and County name!\n&quot;
@@ -54,35 +69,35 @@ import spark.Spark;
               + &quot;\n&quot;
               + &quot;Example -&gt; http://localhost:3232/broadBand?State=California&amp;county=San%20Francisco&quot;;
         });
-<span class="nc" id="L57">    Spark.get(</span>
+<span class="nc" id="L72">    Spark.get(</span>
         &quot;DELETE_PARSED_DATA&quot;,
         (request, response) -&gt; {
-<span class="nc" id="L60">          response.type(&quot;application/json&quot;);</span>
-<span class="nc" id="L61">          response.status(200);</span>
-<span class="nc" id="L62">          delete();</span>
-<span class="nc" id="L63">          return &quot;Parsed Data Deleted&quot;;</span>
+<span class="nc" id="L75">          response.type(&quot;application/json&quot;);</span>
+<span class="nc" id="L76">          response.status(200);</span>
+<span class="nc" id="L77">          delete();</span>
+<span class="nc" id="L78">          return &quot;Parsed Data Deleted&quot;;</span>
         });
-<span class="nc" id="L65">    Spark.get(&quot;broadBand&quot;, new BroadBandHandler(cacheData));</span>
-<span class="nc" id="L66">    Spark.get(&quot;mock&quot;, new MockHandler(&quot;&quot;));</span>
-<span class="nc" id="L67">    Spark.get(&quot;loadCSV&quot;, loadCsvHandler);</span>
-<span class="nc" id="L68">    Spark.get(&quot;search&quot;, new SearchHandler(sharedContainer));</span>
-<span class="nc" id="L69">    Spark.get(&quot;viewCSV&quot;, new ViewCsvHandler(sharedContainer));</span>
-<span class="nc" id="L70">    Spark.notFound(</span>
+<span class="nc" id="L80">    Spark.get(&quot;broadBand&quot;, new BroadBandHandler(cacheData));</span>
+<span class="nc" id="L81">    Spark.get(&quot;mock&quot;, new MockHandler(&quot;&quot;));</span>
+<span class="nc" id="L82">    Spark.get(&quot;loadCSV&quot;, loadCsvHandler);</span>
+<span class="nc" id="L83">    Spark.get(&quot;search&quot;, new SearchHandler(sharedContainer));</span>
+<span class="nc" id="L84">    Spark.get(&quot;viewCSV&quot;, new ViewCsvHandler(sharedContainer));</span>
+<span class="nc" id="L85">    Spark.notFound(</span>
         (request, response) -&gt; {
-<span class="nc" id="L72">          response.status(404); // Not Found</span>
-<span class="nc" id="L73">          return &quot;404 Not Found - The requested endpoint does not exist.&quot;;</span>
+<span class="nc" id="L87">          response.status(404); // Not Found</span>
+<span class="nc" id="L88">          return &quot;404 Not Found - The requested endpoint does not exist.&quot;;</span>
         });
-<span class="nc" id="L75">    Spark.init();</span>
-<span class="nc" id="L76">    Spark.awaitInitialization();</span>
+<span class="nc" id="L90">    Spark.init();</span>
+<span class="nc" id="L91">    Spark.awaitInitialization();</span>
 
     // Notice this link alone leads to a 404... Why is that?
-<span class="nc" id="L79">    System.out.println(&quot;Server started at http://localhost:&quot; + port);</span>
-<span class="nc" id="L80">  }</span>
+<span class="nc" id="L94">    System.out.println(&quot;Server started at http://localhost:&quot; + port);</span>
+<span class="nc" id="L95">  }</span>
 
-<span class="nc" id="L82">  public static void delete() {</span>
-<span class="nc" id="L83">    sharedContainer.rows = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L84">    sharedContainer.hasHeader = false;</span>
-<span class="nc" id="L85">    sharedContainer.header = new ArrayList&lt;&gt;();</span>
-  }
+  public static void delete() {
+<span class="nc" id="L98">    sharedContainer.rows = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L99">    sharedContainer.hasHeader = false;</span>
+<span class="nc" id="L100">    sharedContainer.header = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L101">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

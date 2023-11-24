@@ -7,6 +7,7 @@ edu/brown/cs/student/main/server/LoadCsvHandler.class
 edu/brown/cs/student/main/csvSearch/FactoryFailureException.class
 edu/brown/cs/student/main/server/ViewCsvHandler.class
 edu/brown/cs/student/main/server/CacheData.class
+edu/brown/cs/student/main/server/FireBaseHandler.class
 edu/brown/cs/student/main/Maps/MapsJSONResponse$Geometry.class
 edu/brown/cs/student/main/server/SearchHandler.class
 edu/brown/cs/student/main/server/BroadBandHandler.class

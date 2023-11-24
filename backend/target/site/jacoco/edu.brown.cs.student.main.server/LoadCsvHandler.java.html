@@ -54,22 +54,22 @@ public class LoadCsvHandler implements Route {
 
 <span class="fc" id="L55">      response.type(&quot;application/json&quot;);</span>
 <span class="fc" id="L56">      Parse&lt;List&lt;String&gt;&gt; parse = new Parse&lt;&gt;(row, new FileReader(path), headerBool);</span>
-      Container&lt;List&lt;String&gt;&gt; container = parse.parseMethod();
-      this.shared.rows = container.rows;
-      this.shared.hasHeader = container.hasHeader;
+<span class="fc" id="L57">      Container&lt;List&lt;String&gt;&gt; container = parse.parseMethod();</span>
+<span class="fc" id="L58">      this.shared.rows = container.rows;</span>
+<span class="fc" id="L59">      this.shared.hasHeader = container.hasHeader;</span>
 <span class="fc" id="L60">      this.shared.header = container.header;</span>
 <span class="fc" id="L61">      return ApiUtilities.toJsonStatus(</span>
-<span class="fc" id="L62">          &quot;The load and Parse of your File has been successful. &quot;</span>
-<span class="fc" id="L63">              + &quot;Please go to /search or /view to visualize it&quot;,</span>
+          &quot;The load and Parse of your File has been successful. &quot;
+              + &quot;Please go to /search or /view to visualize it&quot;,
 <span class="fc" id="L64">          false);</span>
 <span class="fc" id="L65">    } catch (FileNotFoundException a) {</span>
-      return ApiUtilities.toJsonStatus(&quot;error_data_source(filename does not exist)&quot;, true);
+<span class="fc" id="L66">      return ApiUtilities.toJsonStatus(&quot;error_data_source(filename does not exist)&quot;, true);</span>
       // catch missing parameter issue here:
 <span class="fc" id="L68">    } catch (IllegalAccessException e) {</span>
 <span class="fc" id="L69">      return ApiUtilities.toJsonStatus(&quot;error_bad_request: Please put all fields&quot;, true);</span>
 <span class="fc" id="L70">    } catch (Exception e) {</span>
-      return ApiUtilities.toJsonStatus(e.getMessage(), true);
-<span class="fc" id="L72">    }</span>
-<span class="fc" id="L73">  }</span>
-<span class="fc" id="L74">}</span>
+<span class="fc" id="L71">      return ApiUtilities.toJsonStatus(e.getMessage(), true);</span>
+    }
+  }
+}
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
