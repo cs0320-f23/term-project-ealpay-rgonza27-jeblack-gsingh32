@@ -1,40 +1,48 @@
+/* RegisterPage.css */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #e9e2dc; /* Set your desired background color */
+}
 .register-container {
-  background-color: #f7f7f7;
+  background-color: #faf1e8;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
+  max-width: 400px; /* Set a maximum width for the container */
+  margin: 0 auto; /* Center the container horizontally */
+  transform: translate(0px, 200px);
 }
 
 .input-field {
-  width: 100%;
-  padding: 10px;
+  width: calc(100%); /* Adjust the width to account for padding on both sides */
+  height: 30px;
   margin: 10px 0;
-  border: 1px solid #ccc;
+  border: 1px solid #dbcfc3;
   border-radius: 4px;
 }
 
-.register-button {
-  background-color: #4caf50;
+.register-button,
+.back-button {
+  background-color: #e69b31;
   color: #fff;
   padding: 10px 20px;
   font-size: 16px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  margin-top: 10px; /* Add margin between the buttons */
+  display: block; /* Make the buttons block-level elements */
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.login-button {
-  background-color: #3498db;
-  color: #fff;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.back-button {
+  background-color: #e15033;
   margin-top: 10px;
 }
 
-.login-button:hover {
-  background-color: #2980b9;
+.back-button:hover {
+  background-color: #f6daa3;
 }

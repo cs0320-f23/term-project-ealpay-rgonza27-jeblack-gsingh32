@@ -63,7 +63,7 @@ const RegisterPage: React.FunctionComponent<IRegisterPageProps> = (props) => {
           Register
         </button>
         <button
-          className="login-button"
+          className="back-button"
           onClick={() => navigate("/login")}
           disabled={authing}
         >

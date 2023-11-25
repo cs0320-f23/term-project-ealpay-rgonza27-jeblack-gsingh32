@@ -12,20 +12,21 @@ import RegisterPage from "./Register";
 import { AnimatePresence } from "framer-motion";
 
 function AnimatedRouts() {
-  //   const location = useLocation();
+  const location = useLocation();
+
   return (
-    <AnimatePresence>
-      <Routes>
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
         <Route
           path="/"
           element={
-            <AuthRoute>
+            <AuthRoute key="home">
               <HomePage />
             </AuthRoute>
           }
         />
-        <Route path="/login" element={<LogInPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/login" element={<LogInPage key="login" />} />
+        <Route path="/register" element={<RegisterPage key="register" />} />
       </Routes>
     </AnimatePresence>
   );
