@@ -1,8 +1,10 @@
 import { ReactNode } from "react";
 import { motion } from "framer-motion";
+
 interface FlipCardProps {
   children: ReactNode;
 }
+
 const FlipCard: React.FC<FlipCardProps> = ({ children }) => {
   return (
     <motion.div
@@ -11,10 +13,10 @@ const FlipCard: React.FC<FlipCardProps> = ({ children }) => {
       }}
     >
       <motion.div
-        initial={{ rotateY: -180 }}
+        initial={{ rotateY: -90 }}
         animate={{ rotateY: 0 }}
-        exit={{ rotateY: 180 }}
-        transition={{ duration: 1 }}
+        exit={{ rotateY: 90 }}
+        transition={{ duration: 0.5 }}
         style={{
           transformStyle: "preserve-3d",
           transformOrigin: "center",

@@ -54,25 +54,29 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
       <motion.div key="login-page" className="login-container">
         <h1>Login Page</h1>
         <form>
-          <label htmlFor="email">Email</label>
-          <input
-            className="input-field"
-            placeholder="Email"
-            value={email}
-            onChange={(event) =>
-              setCredentials({ email: event.target.value, password })
-            }
-          />
-          <label htmlFor="password">Password</label>
-          <input
-            className="input-field"
-            placeholder="Password"
-            type="password"
-            value={password}
-            onChange={(event) =>
-              setCredentials({ email, password: event.target.value })
-            }
-          />
+          <div className="input-field-wrapper">
+            <label htmlFor="email">Email</label>
+            <input
+              className="input-field"
+              placeholder="Email"
+              value={email}
+              onChange={(event) =>
+                setCredentials({ email: event.target.value, password })
+              }
+            />
+          </div>
+          <div className="input-field-wrapper">
+            <label htmlFor="password">Password</label>
+            <input
+              className="input-field"
+              placeholder="Password"
+              type="password"
+              value={password}
+              onChange={(event) =>
+                setCredentials({ email, password: event.target.value })
+              }
+            />
+          </div>
         </form>
         <button
           className="login-button"
