@@ -1,18 +1,13 @@
 import React, { useState } from "react";
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-} from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import FlipCard from "../animations/flipcardRouts";
-import "../../styles/LoginStyle.css";
+import "../../styles/RegisterPage.css"; // Import your external CSS file if needed
 
-export interface ILoginPageProps {}
+export interface IRegisterPageProps {}
 
-const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
+const RegisterPage: React.FunctionComponent<IRegisterPageProps> = (props) => {
   const auth = getAuth();
   const navigate = useNavigate();
   const [authing, setAuthing] = useState(false);
@@ -21,24 +16,10 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
     password: "",
   });
 
-  const signInWithGoogle = async () => {
+  const register = async () => {
     setAuthing(true);
 
-    signInWithPopup(auth, new GoogleAuthProvider())
-      .then((response) => {
-        console.log(response.user.uid);
-        navigate("/");
-      })
-      .catch((error) => {
-        console.log(error);
-        setAuthing(false);
-      });
-  };
-
-  const logIn = async () => {
-    setAuthing(true);
-
-    signInWithEmailAndPassword(auth, email, password)
+    createUserWithEmailAndPassword(auth, email, password)
       .then((response) => {
         console.log(response.user.uid);
         navigate("/");
@@ -51,8 +32,8 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
 
   return (
     <FlipCard>
-      <motion.div key="login-page" className="login-container">
-        <h1>Login Page</h1>
+      <motion.div key="register-page" className="register-container">
+        <h1>Register Page</h1>
         <form>
           <label htmlFor="email">Email</label>
           <input
@@ -75,29 +56,22 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
           />
         </form>
         <button
-          className="login-button"
-          onClick={() => logIn()}
-          disabled={authing}
-        >
-          Log In
-        </button>
-        <button
-          className="google-login-button"
-          onClick={() => signInWithGoogle()}
-          disabled={authing}
-        >
-          Sign in with Google
-        </button>
-        <button
           className="register-button"
-          onClick={() => navigate("/register")}
+          onClick={() => register()}
           disabled={authing}
         >
-          Don't have an account? Register
+          Register
+        </button>
+        <button
+          className="login-button"
+          onClick={() => navigate("/login")}
+          disabled={authing}
+        >
+          Already have an account? Login
         </button>
       </motion.div>
     </FlipCard>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

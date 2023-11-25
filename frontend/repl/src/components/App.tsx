@@ -1,8 +1,7 @@
 import "../styles/App.css";
 import { initializeApp } from "firebase/app";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "./Home";
-import LogInPage from "./Auth/LogIn";
+import AnimatedRouts from "./Auth/animatedComp";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDxt7oAN1TTXBK4P03xaywk3fW59Yt0VpE",
@@ -21,10 +20,7 @@ export interface IApplicationProps {}
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LogInPage />} />
-      </Routes>
+      <AnimatedRouts />
     </Router>
   );
 }

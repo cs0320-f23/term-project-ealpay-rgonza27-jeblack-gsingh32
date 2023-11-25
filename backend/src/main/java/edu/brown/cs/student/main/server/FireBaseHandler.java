@@ -56,7 +56,7 @@ public class FireBaseHandler implements Route {
       response.type("application/json");
       return null;
     } catch (NullPointerException e) {
-      return ApiUtilities.toJsonStatus(e.getMessage(), true);
+      return e.getMessage();
     }
   }
 }
