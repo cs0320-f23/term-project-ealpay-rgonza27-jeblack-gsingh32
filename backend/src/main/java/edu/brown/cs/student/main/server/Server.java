@@ -2,6 +2,7 @@ package edu.brown.cs.student.main.server;
 
 import static spark.Spark.after;
 
+import edu.brown.cs.student.main.Authorization.FirebaseInitialize;
 import edu.brown.cs.student.main.csvSearch.Container;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +68,14 @@ public class Server {
     Spark.get("loadCSV", loadCsvHandler);
     Spark.get("search", new SearchHandler(sharedContainer));
     Spark.get("viewCSV", new ViewCsvHandler(sharedContainer));
+    try {
+        FirebaseInitialize initialize = new FirebaseInitialize();
+        FirebaseInitialize.initialize();
+    }
+    catch(Exception e) {
+        System.err.println( "Could not connect to database: "+ e.getMessage());
+      }
+    Spark.get("registerUser", new RegistrationHandler());
     Spark.notFound(
         (request, response) -> {
           response.status(404); // Not Found

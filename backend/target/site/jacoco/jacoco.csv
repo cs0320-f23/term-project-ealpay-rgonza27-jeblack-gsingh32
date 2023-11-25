@@ -19,4 +19,5 @@ s0,edu.brown.cs.student.main.server,CacheData.new CacheLoader() {...},0,15,0,0,0
 s0,edu.brown.cs.student.main.Maps,MapsJSONResponse,0,3,0,0,0,1,0,1,0,1
 s0,edu.brown.cs.student.main.Maps,MapsJSONResponse.Properties,0,3,0,0,0,1,0,1,0,1
 s0,edu.brown.cs.student.main.Maps,MapsJSONResponse.Geometry,0,3,0,0,0,1,0,1,0,1
-s0,edu.brown.cs.student.main.Authorization,Registration,3,0,0,0,1,0,1,0,1,0
+s0,edu.brown.cs.student.main.Authorization,FirebaseInitialize,20,0,0,0,7,0,2,0,2,0
+s0,edu.brown.cs.student.main.Authorization,Config,6,0,0,0,2,0,1,0,1,0

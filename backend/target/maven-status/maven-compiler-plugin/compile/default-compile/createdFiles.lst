@@ -1,1 +1,2 @@
-edu/brown/cs/student/main/Authorization/Registration.class
+edu/brown/cs/student/main/Authorization/Config.class
+edu/brown/cs/student/main/Authorization/FirebaseInitialize.class
