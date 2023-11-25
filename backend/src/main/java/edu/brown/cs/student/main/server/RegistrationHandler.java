@@ -12,39 +12,26 @@ public class RegistrationHandler implements Route {
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
+        String email = request.queryParams("email");
+        String password = request.queryParams("password");
+        if(email == null){
+            return new RegistrationResponse("Failure","none",false,
+                    "Please provide a brown affiliated email.");
+        }
+        if(password == null){
+            return new RegistrationResponse("Failure","none",false,
+                    "Please provide a password.");
+        }
         try {
             RegisterUser registerUser = new RegisterUser();
-            String email = request.queryParams("email");
-            if(!this.getEmailProvider(email).equals("brown.edu")){
-                throw new IllegalArgumentException("Please provide your Brown email");
-            }
-            //String password = request.queryParams("password");
-
-            String result = registerUser.saverUser("gurpartap_singh@brown.edu","testPassword1029-3");
-            return result;
-        } catch (Exception a) {
-            return "oh oh :" + a.getMessage();
+            boolean result = registerUser.saverUser(email,password);
+            return new RegistrationResponse("Success",email,result,
+                    "Registration Complete");
+        } catch (Exception e) {
+            return new RegistrationResponse("Failure",email,false, e.getMessage());
         }
     }
 
 
-    public String getEmailProvider(String email) {
-        // Regular expression pattern to match the domain part of the email
-        String regex = "@([a-zA-Z0-9.-]+)$";
 
-        // Create a Pattern object
-        Pattern pattern = Pattern.compile(regex);
-
-        // Create a Matcher object
-        Matcher matcher = pattern.matcher(email);
-
-        // Check if the pattern matches
-        if (matcher.find()) {
-            // Extract and return the matched email provider
-            return matcher.group(1);
-        } else {
-            // Return null if no match is found
-            return null;
-        }
-    }
 }

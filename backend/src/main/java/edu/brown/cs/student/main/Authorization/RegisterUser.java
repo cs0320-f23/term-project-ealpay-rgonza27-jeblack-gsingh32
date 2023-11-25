@@ -6,12 +6,17 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterUser {
 
 
-    public String saverUser(String userEmail,String password) throws FirebaseAuthException, IOException {
+    public boolean saverUser(String userEmail,String password) throws FirebaseAuthException, IOException {
 
+        if(!this.getEmailProvider(userEmail).equals("brown.edu")){
+            throw new IllegalArgumentException("Please provide your Brown email");
+        }
         UserRecord.CreateRequest request = new UserRecord.CreateRequest()
                 .setEmail(userEmail)
                 //.setEmailVerified(false)
@@ -23,7 +28,32 @@ public class RegisterUser {
 
         UserRecord userRecord = FirebaseAuth.getInstance().createUser(request);
         System.out.println("Successfully created new user: " + userRecord.getUid());
-        return userRecord.toString();
+        return true;
+    }
+
+    /***
+     * This method returns the email provider
+     * @param email - this is the email entered, example: example@school.edu
+     * @return the prover is returned, in our example it would return: "school.edu"
+     */
+    public String getEmailProvider(String email) {
+        // Regular expression pattern to match the domain part of the email
+        String regex = "@([a-zA-Z0-9.-]+)$";
+
+        // Create a Pattern object
+        Pattern pattern = Pattern.compile(regex);
+
+        // Create a Matcher object
+        Matcher matcher = pattern.matcher(email);
+
+        // Check if the pattern matches
+        if (matcher.find()) {
+            // Extract and return the matched email provider
+            return matcher.group(1);
+        } else {
+            // Return null if no match is found
+            return null;
+        }
     }
 
 
