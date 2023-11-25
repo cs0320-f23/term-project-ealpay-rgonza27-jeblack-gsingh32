@@ -2,7 +2,11 @@ package edu.brown.cs.student.main.server;
 
 import static spark.Spark.after;
 
-import edu.brown.cs.student.main.csvSearch.Container;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import spark.Spark;
@@ -14,23 +18,25 @@ import spark.Spark;
  */
 public class Server {
 
-  private static final Container<List<String>> sharedContainer = new Container<>();
 
   /**
    * Runs Server.
    *
    * @param args none
    */
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
+    FileInputStream serviceAccount =
+        new FileInputStream(
+            "/Users/robertogonzales/Desktop/CS0320/term-project-ealpay-rgonza27-jeblack-gsingh32/backend/src/main/java/edu/brown/cs/student/main/server/private/meikdatabase-firebase-adminsdk-5r9bn-be1c95c791.json");
+
     int port = 3232;
     Spark.port(port);
-    CacheData cacheData = new CacheData(new ApiOutput(), 100, 10);
     after(
         (request, response) -> {
           response.header("Access-Control-Allow-Origin", "*");
           response.header("Access-Control-Allow-Methods", "*");
         });
-    LoadCsvHandler loadCsvHandler = new LoadCsvHandler(sharedContainer);
+
     Spark.get(
         "/",
         (request, response) -> {
@@ -54,19 +60,7 @@ public class Server {
               + "\n"
               + "Example -> http://localhost:3232/broadBand?State=California&county=San%20Francisco";
         });
-    Spark.get(
-        "DELETE_PARSED_DATA",
-        (request, response) -> {
-          response.type("application/json");
-          response.status(200);
-          delete();
-          return "Parsed Data Deleted";
-        });
-    Spark.get("broadBand", new BroadBandHandler(cacheData));
-    Spark.get("mock", new MockHandler(""));
-    Spark.get("loadCSV", loadCsvHandler);
-    Spark.get("search", new SearchHandler(sharedContainer));
-    Spark.get("viewCSV", new ViewCsvHandler(sharedContainer));
+
     Spark.notFound(
         (request, response) -> {
           response.status(404); // Not Found
@@ -77,10 +71,5 @@ public class Server {
 
     // Notice this link alone leads to a 404... Why is that?
     System.out.println("Server started at http://localhost:" + port);
-  }
-  public static void delete(){
-    sharedContainer.rows = new ArrayList<>();
-    sharedContainer.hasHeader = false;
-    sharedContainer.header = new ArrayList<>();
   }
 }

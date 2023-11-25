@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SearchHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">s0</a> &gt; <a href="index.source.html" class="el_package">edu.brown.cs.student.main.server</a> &gt; <span class="el_source">SearchHandler.java</span></div><h1>SearchHandler.java</h1><pre class="source lang-java linenums">package edu.brown.cs.student.main.server;
+
+import edu.brown.cs.student.main.csvSearch.Container;
+import edu.brown.cs.student.main.csvSearch.Search;
+import java.util.ArrayList;
+import java.util.List;
+import spark.Request;
+import spark.Response;
+import spark.Route;
+
+/** Endpoint class for searchCSV. */
+public class SearchHandler implements Route {
+
+  private Container&lt;List&lt;String&gt;&gt; container;
+
+  /**
+   * Constructor for the SearchHandler, takes in a shared version of a container object. (Shared
+   * between LoadCSV, viewCSV, searchCSV)
+   *
+   * @param container container object shared between CSV handlers
+   */
+<span class="fc" id="L22">  public SearchHandler(Container&lt;List&lt;String&gt;&gt; container) {</span>
+<span class="fc" id="L23">    this.container = container;</span>
+<span class="fc" id="L24">  }</span>
+
+  /**
+   * Handle method that overrides it from the Route interface. Handles the /Search endpoint that
+   * takes in two query parameters in the form of a column and target. Uses a searcher object to
+   * search a CSV file given that it has been loaded with /loadCSV before. Catches many errors that
+   * could arise due to user and returns appropriate messages for all.
+   *
+   * @param request request for search
+   * @param response response expected for search
+   * @return JSON object depending on the response
+   * @throws Exception catches any exception
+   */
+  @Override
+  public Object handle(Request request, Response response) throws Exception {
+<span class="fc" id="L39">    String column = request.queryParams(&quot;column&quot;);</span>
+<span class="fc" id="L40">    String target = request.queryParams(&quot;target&quot;);</span>
+    try {
+<span class="fc" id="L42">      response.type(&quot;application/json&quot;);</span>
+<span class="fc" id="L43">      Search search = new Search();</span>
+<span class="pc bpc" id="L44" title="1 of 4 branches missed.">      if (column == null || target == null) {</span>
+<span class="fc" id="L45">        throw new IllegalAccessException();</span>
+      }
+<span class="pc bpc" id="L47" title="3 of 4 branches missed.">      if (this.container.rows.isEmpty() &amp;&amp; this.container.header.isEmpty()) {</span>
+<span class="nc" id="L48">        throw new NullPointerException(</span>
+            &quot;CSV Not Loaded, please load a CSV First or provide a CSV with information in it&quot;);
+      }
+<span class="fc" id="L51">      ArrayList&lt;List&lt;String&gt;&gt; finalList = search.searchItems(this.container, target, column);</span>
+<span class="fc" id="L52">      Container&lt;List&lt;String&gt;&gt; containerNew = new Container&lt;&gt;();</span>
+<span class="fc" id="L53">      containerNew.hasHeader = this.container.hasHeader;</span>
+<span class="fc" id="L54">      containerNew.header = this.container.header;</span>
+<span class="fc" id="L55">      containerNew.rows = finalList;</span>
+<span class="fc" id="L56">      return ApiUtilities.toJson(containerNew);</span>
+<span class="nc" id="L57">    } catch (NoSuchFieldException e) {</span>
+<span class="nc" id="L58">      return ApiUtilities.toJsonStatus(</span>
+          &quot;error_bad_request: &quot;
+              + column
+              + &quot; was not found in the file.&quot;
+              + &quot;The available headers are: &quot;
+              + this.container.header,
+<span class="nc" id="L64">          true);</span>
+<span class="fc" id="L65">    } catch (IllegalAccessException e) {</span>
+<span class="fc" id="L66">      return ApiUtilities.toJsonStatus(</span>
+          &quot;error_bad_request: Please use search?column=&quot;
+              + &quot;[column name or number]&amp;target=[word to search]&quot;,
+<span class="fc" id="L69">          true);</span>
+<span class="nc" id="L70">    } catch (IndexOutOfBoundsException e) {</span>
+<span class="nc" id="L71">      return ApiUtilities.toJsonStatus(</span>
+          &quot;error_bad_request: index provided can't be&quot;
+              + &quot;reached. Here are the available columns: &quot;
+              + this.container.header
+              + &quot; (index 0 -&gt; &quot;
+              + &quot;first column)&quot;,
+<span class="nc" id="L77">          true);</span>
+<span class="fc" id="L78">    } catch (Exception e) {</span>
+<span class="fc" id="L79">      return ApiUtilities.toJsonStatus(e.getMessage(), true);</span>
+    }
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Parse.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">s0</a> &gt; <a href="index.source.html" class="el_package">edu.brown.cs.student.main.csvSearch</a> &gt; <span class="el_source">Parse.java</span></div><h1>Parse.java</h1><pre class="source lang-java linenums">package edu.brown.cs.student.main.csvSearch;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import org.jetbrains.annotations.NotNull;
+
+/**
+ * Parse is a class equipped to parse a csv file given a CreatorFromRow object, reader, and boolean.
+ * It contains 1 main method that does the parsing, and it handles its own exceptions.
+ */
+public class Parse&lt;T&gt; implements Iterable&lt;T&gt; {
+
+  private final CreatorFromRow&lt;T&gt; creator;
+  private final Reader reader;
+
+  private final Boolean header;
+
+  private ArrayList&lt;T&gt; finalList;
+
+  /**
+   * Constructor that runs parseCSV with the provided information.
+   *
+   * @param row Is a class that implements the interface CreatorFromRow. This parameter will provide
+   *     the method parseCSV with a way to convert the list of strings from the parse to row objects
+   * @param reader Is an object the implements the reader interface. It will be used to read the CSV
+   *     file.
+   * @param header is a boolean that tells us if there is a header on the CSV File or not
+   */
+<span class="fc" id="L33">  public Parse(CreatorFromRow&lt;T&gt; row, Reader reader, Boolean header) {</span>
+<span class="fc" id="L34">    this.creator = row;</span>
+<span class="fc" id="L35">    this.reader = reader;</span>
+<span class="fc" id="L36">    this.header = header;</span>
+<span class="fc" id="L37">  }</span>
+
+  /**
+   * Method that parses the file given, and it converts them into rows with the create method. It
+   * uses a regex to split each line from the CSV to strings whenever it encounters a comma.
+   * However, if the comma is in between quotation marks, it won't split the string. In the outcome
+   * of an I/O error or a FactoryFailure error it will print it. If it is indicated that there is a
+   * header it will convert this one into a list of strings, and it will be stored in the Container
+   * object alongside the rows and a boolean hasHeader.
+   *
+   * @return This method returns a Container type Object that withholds information about the parsed
+   *     rows, the header (if it has one), and a boolean that tells us if the file had a header.
+   */
+  public Container&lt;T&gt; parseMethod() {
+<span class="fc" id="L51">    ArrayList&lt;T&gt; finalList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L52">    String[] header = new String[] {};</span>
+<span class="fc" id="L53">    Container&lt;T&gt; rowContainer = new Container&lt;&gt;();</span>
+    try {
+      String line;
+<span class="fc" id="L56">      BufferedReader br = new BufferedReader(this.reader);</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">      if (this.header) {</span>
+<span class="fc" id="L58">        header = br.readLine().split(&quot;,(?=(?:[^\&quot;]*\&quot;[^\&quot;]*\&quot;)*[^\&quot;]*$)&quot;, -1);</span>
+      }
+<span class="fc bfc" id="L60" title="All 2 branches covered.">      while ((line = br.readLine()) != null) {</span>
+<span class="fc" id="L61">        String[] rowStrings = line.split(&quot;,(?=(?:[^\&quot;]*\&quot;[^\&quot;]*\&quot;)*[^\&quot;]*$)&quot;, -1);</span>
+<span class="fc" id="L62">        finalList.add(this.creator.create(List.of(rowStrings)));</span>
+<span class="fc" id="L63">      }</span>
+<span class="fc" id="L64">    } catch (IOException | FactoryFailureException e) {</span>
+<span class="fc" id="L65">      System.out.print(&quot;ERROR:&quot; + e);</span>
+<span class="fc" id="L66">    }</span>
+<span class="fc" id="L67">    rowContainer.setContainer(finalList, this.header, List.of(header));</span>
+<span class="fc" id="L68">    this.finalList = finalList;</span>
+<span class="fc" id="L69">    return rowContainer;</span>
+  }
+
+  @NotNull
+  @Override
+  public Iterator&lt;T&gt; iterator() {
+<span class="fc" id="L75">    return this.finalList.iterator();</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
