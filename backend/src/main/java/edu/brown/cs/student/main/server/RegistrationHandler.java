@@ -5,8 +5,6 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class RegistrationHandler implements Route {
 
@@ -16,19 +14,20 @@ public class RegistrationHandler implements Route {
         String password = request.queryParams("password");
         if(email == null){
             return new RegistrationResponse("Failure","none",false,
-                    "Please provide a brown affiliated email.");
+                    "Please provide a brown affiliated email.").serialize();
         }
         if(password == null){
             return new RegistrationResponse("Failure","none",false,
-                    "Please provide a password.");
+                    "Please provide a password.").serialize();
         }
         try {
             RegisterUser registerUser = new RegisterUser();
             boolean result = registerUser.saverUser(email,password);
             return new RegistrationResponse("Success",email,result,
-                    "Registration Complete");
+                    "Registration Complete").serialize();
         } catch (Exception e) {
-            return new RegistrationResponse("Failure",email,false, e.getMessage());
+            return new RegistrationResponse("Failure",email,false,
+                    e.getMessage()).serialize();
         }
     }
 
