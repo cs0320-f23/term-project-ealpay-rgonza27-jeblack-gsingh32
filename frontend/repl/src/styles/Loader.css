@@ -1,0 +1,79 @@
+body.loading {
+  overflow: hidden;
+  height: 100vh;
+}
+
+.loader .loader-inner .image-block {
+  position: absolute;
+  transform-origin: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader .loader-inner .image-block.image-1 {
+  width: 400px;
+  left: 10%;
+  bottom: 10%;
+
+  @media (max-width: 576px) {
+    left: 4%;
+    bottom: 28%;
+  }
+}
+
+.loader .loader-inner .image-block.image-3 {
+  width: 300px;
+  right: 12%;
+  top: 8%;
+
+  @media (max-width: 576px) {
+    top: 16%;
+    right: 4%;
+  }
+}
+
+.loader .loader-inner .image-block.image-4 {
+  max-width: 400px;
+  width: 40%;
+  right: 20%;
+  bottom: 0%;
+
+  @media (max-width: 576px) {
+    right: 6%;
+    bottom: 32%;
+  }
+}
+
+.loader .loader-inner .image-block.image-5 {
+  width: 280px;
+  left: 14%;
+  top: 0%;
+
+  @media (max-width: 576px) {
+    left: 6%;
+    top: 18%;
+  }
+}
+
+.loader .loader-inner .image-block img {
+  width: 100%;
+  object-fit: fill;
+}
+
+.loader .loader-inner .transition-image {
+  position: absolute;
+  left: 10%; /* Adjust the left value to center horizontally */
+  top: 10%;
+  height: 80vh;
+  width: 80vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader .loader-inner .transition-image img {
+  width: 800px;
+  display: flex;
+  z-index: -10;
+}

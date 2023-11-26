@@ -18,7 +18,8 @@
     "isolatedModules": true,
     "noEmit": false,
     "jsx": "react-jsx",
-    "types": ["node"]
+    "types": ["node"],
+    "downlevelIteration": true
   },
   "include": ["src", "components"]
 }

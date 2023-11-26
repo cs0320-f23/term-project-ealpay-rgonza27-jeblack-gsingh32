@@ -1,0 +1,101 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f0eff1; /* Almond as the desired background color */
+}
+.header {
+  font-size: 1.6rem;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  margin-right: 30px;
+  margin-left: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: #24242a;
+}
+
+.header-inner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 3rem;
+}
+
+@media (max-width: 768px) {
+  .logo {
+    font-size: 3.2rem;
+    flex: 4;
+  }
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.nav li {
+  list-style: none;
+  margin: 0 40px;
+}
+
+.nav li a {
+  text-decoration: none;
+  color: #24242a;
+  white-space: nowrap;
+}
+
+.contact {
+  @media (max-width: 768px) {
+    flex: 1;
+  }
+}
+
+.contact a {
+  color: #24242a;
+  text-decoration: none;
+  border-bottom: 2px solid #24242a;
+  padding-bottom: 12px;
+  white-space: nowrap;
+
+  @media (max-width: 480px) {
+    border: none;
+  }
+}
+
+.nav-menu {
+  /* height: 56px; */
+  width: 56px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+  cursor: pointer;
+}
+
+.nav-menu:hover {
+  background: #fff; /* Replace with the desired hover background color */
+}
+
+@media (min-width: 768px) {
+  .nav-menu {
+    display: none;
+  }
+}
+
+.nav-menu span {
+  width: 20px;
+  background: #24242a;
+  display: block;
+}

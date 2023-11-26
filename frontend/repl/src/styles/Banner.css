@@ -1,0 +1,164 @@
+.banner {
+  z-index: 100;
+  position: relative;
+}
+
+.banner-row {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  margin-bottom: -10px;
+  margin-top: -40px; /* Adjusted margin to bring rows closer together */
+}
+
+/* Center-aligned Row */
+.banner-row.center {
+  justify-content: center;
+  text-align: center;
+}
+
+/* Letter and Title Styling */
+.row-title {
+  font-size: 15rem;
+  position: relative;
+  letter-spacing: -0.8rem;
+  display: inline-block;
+  white-space: nowrap;
+  margin-bottom: -10px;
+  margin-top: -10px; /* Adjusted margin to bring rows closer together */
+}
+
+/* Row Columns */
+.row-col {
+  margin: 0%;
+  width: 50%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+/* Message Styling */
+.row-message {
+  font-weight: 500;
+  font-size: 1.2rem;
+  width: 320px;
+}
+
+/* Scroll Styling */
+.scroll {
+  height: 130px;
+  width: 130px;
+  border-radius: 100%;
+  background: #fffbff;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  left: 130px;
+}
+
+.scroll span {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 4px 0;
+}
+
+/* Transition Image Styling */
+.transition-image {
+  height: 80vh;
+  width: 80vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.transition-image img {
+  width: 800px;
+  display: flex;
+  z-index: -100;
+}
+
+.final {
+  display: block;
+  top: -100px;
+  position: relative;
+  width: 90%;
+  margin: 0 auto;
+  z-index: -100;
+}
+
+@media (max-width: 480px) {
+  .final {
+    top: -56px;
+  }
+}
+
+.final img {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* CSS Variables */
+:root {
+  --move-initial: calc(-25%);
+  --move-final: calc(-50%);
+}
+
+/* Marquee Styles */
+.marquee {
+  position: relative;
+  overflow: hidden;
+}
+
+.marquee.animate .marquee__inner {
+  animation-play-state: running;
+}
+
+.marquee__inner {
+  width: fit-content;
+  display: flex;
+  position: relative;
+  transform: translate3d(var(--move-initial), 0, 0);
+  animation: marquee 5s linear infinite;
+  animation-play-state: paused;
+}
+
+@media (min-width: 1920px) {
+  .marquee__inner {
+    transform: translate3d(calc(-25% + 10vw), 0, 0);
+    animation: marquee-lg 5s linear infinite;
+    animation-play-state: paused;
+  }
+}
+
+.row-title {
+  padding: 0 8vw;
+}
+
+@media (min-width: 1920px) {
+  .row-title {
+    padding: 0 10vw;
+  }
+}
+
+/* Keyframe Animations */
+@keyframes marquee {
+  0% {
+    transform: translate3d(var(--move-initial), 0, 0);
+  }
+
+  100% {
+    transform: translate3d(var(--move-final), 0, 0);
+  }
+}
+
+@keyframes marquee-lg {
+  0% {
+    transform: translate3d(calc(-25% + 10vw), 0, 0);
+  }
+
+  100% {
+    transform: translate3d(calc(-50% + 10vw), 0, 0);
+  }
+}
