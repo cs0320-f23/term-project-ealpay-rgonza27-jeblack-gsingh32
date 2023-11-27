@@ -23,7 +23,7 @@ function AnimatedRouts() {
           path="/"
           element={
             <AuthRoute key="home">
-              <HomePage />
+              <HomePage key="home" />
             </AuthRoute>
           }
         />

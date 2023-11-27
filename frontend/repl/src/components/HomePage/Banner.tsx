@@ -15,31 +15,24 @@ const banner: Variants = {
   },
 };
 
-const letterAni: Variants = {
-  initial: { y: 400 },
-  animate: {
-    y: 0,
-    transition: {
-      duration: 1,
-      ease: "easeInOut",
-    },
-  },
-};
-
 const AnimatedLetters: React.FC<AnimatedLettersProps> = ({ title }) => (
-  <motion.span
-    className="row-title"
-    variants={banner}
-    initial="initial"
-    animate="animate"
-    layout
-  >
+  <span className="row-title">
     {[...title].map((letter, index) => (
-      <motion.span key={index} className="row-letter" variants={letterAni}>
+      <motion.span
+        key={index}
+        className="row-letter"
+        style={{ display: "inline-block" }}
+        initial={{ opacity: 0, y: 400 }} // Initial state with opacity and a small negative y translation
+        animate={{
+          opacity: 1,
+          y: 0, // Ending state with opacity 1 and y translation 0
+          transition: { duration: 1, delay: index * 0.1 },
+        }}
+      >
         {letter}
       </motion.span>
     ))}
-  </motion.span>
+  </span>
 );
 
 interface BannerRowTopProps {
@@ -75,10 +68,19 @@ interface BannerRowBottomProps {
 
 const BannerRowBottom: React.FC<BannerRowBottomProps> = ({ title }) => (
   <div className={"banner-row center"}>
-    <div className="scroll">
+    <motion.div
+      className="scroll"
+      initial={{ opacity: 0, y: 80 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        ease: "easeInOut",
+        duration: 1,
+        delay: 0.4,
+      }}
+    >
       <span>scroll</span>
       <span>down!</span>
-    </div>
+    </motion.div>
     <AnimatedLetters title={title} />
   </div>
 );
