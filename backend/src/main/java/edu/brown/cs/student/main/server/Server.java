@@ -3,7 +3,6 @@ package edu.brown.cs.student.main.server;
 import static spark.Spark.after;
 
 import edu.brown.cs.student.main.Authorization.FirebaseInitialize;
-import edu.brown.cs.student.main.csvSearch.Container;
 import java.util.ArrayList;
 import java.util.List;
 import spark.Spark;
@@ -15,7 +14,7 @@ import spark.Spark;
  */
 public class Server {
 
-  private static final Container<List<String>> sharedContainer = new Container<>();
+  //private static final Container<List<String>> sharedContainer = new Container<>();
 
   /**
    * Runs Server.
@@ -25,13 +24,11 @@ public class Server {
   public static void main(String[] args) {
     int port = 3232;
     Spark.port(port);
-    CacheData cacheData = new CacheData(new ApiOutput(), 100, 10);
     after(
         (request, response) -> {
           response.header("Access-Control-Allow-Origin", "*");
           response.header("Access-Control-Allow-Methods", "*");
         });
-    LoadCsvHandler loadCsvHandler = new LoadCsvHandler(sharedContainer);
     Spark.get(
         "/",
         (request, response) -> {
@@ -60,14 +57,9 @@ public class Server {
         (request, response) -> {
           response.type("application/json");
           response.status(200);
-          delete();
+          //delete();
           return "Parsed Data Deleted";
         });
-    Spark.get("broadBand", new BroadBandHandler(cacheData));
-    Spark.get("mock", new MockHandler(""));
-    Spark.get("loadCSV", loadCsvHandler);
-    Spark.get("search", new SearchHandler(sharedContainer));
-    Spark.get("viewCSV", new ViewCsvHandler(sharedContainer));
     try {
         FirebaseInitialize initialize = new FirebaseInitialize();
         FirebaseInitialize.initialize();
@@ -88,9 +80,9 @@ public class Server {
     System.out.println("Server started at http://localhost:" + port);
   }
 
-  public static void delete() {
-    sharedContainer.rows = new ArrayList<>();
-    sharedContainer.hasHeader = false;
-    sharedContainer.header = new ArrayList<>();
-  }
+//  public static void delete() {
+//    sharedContainer.rows = new ArrayList<>();
+//    sharedContainer.hasHeader = false;
+//    sharedContainer.header = new ArrayList<>();
+//  }
 }
