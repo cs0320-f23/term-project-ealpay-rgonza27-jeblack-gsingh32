@@ -3,8 +3,6 @@ package edu.brown.cs.student.main.server;
 import static spark.Spark.after;
 
 import edu.brown.cs.student.main.Authorization.FirebaseInitialize;
-import java.util.ArrayList;
-import java.util.List;
 import spark.Spark;
 
 /**
@@ -14,7 +12,7 @@ import spark.Spark;
  */
 public class Server {
 
-  //private static final Container<List<String>> sharedContainer = new Container<>();
+  // private static final Container<List<String>> sharedContainer = new Container<>();
 
   /**
    * Runs Server.
@@ -57,16 +55,15 @@ public class Server {
         (request, response) -> {
           response.type("application/json");
           response.status(200);
-          //delete();
+          // delete();
           return "Parsed Data Deleted";
         });
     try {
-        FirebaseInitialize initialize = new FirebaseInitialize();
-        FirebaseInitialize.initialize();
+      FirebaseInitialize initialize = new FirebaseInitialize();
+      FirebaseInitialize.initialize();
+    } catch (Exception e) {
+      System.err.println("Could not connect to database: " + e.getMessage());
     }
-    catch(Exception e) {
-        System.err.println( "Could not connect to database: "+ e.getMessage());
-      }
     Spark.get("registerUser", new RegistrationHandler());
     Spark.notFound(
         (request, response) -> {
@@ -80,9 +77,9 @@ public class Server {
     System.out.println("Server started at http://localhost:" + port);
   }
 
-//  public static void delete() {
-//    sharedContainer.rows = new ArrayList<>();
-//    sharedContainer.hasHeader = false;
-//    sharedContainer.header = new ArrayList<>();
-//  }
+  //  public static void delete() {
+  //    sharedContainer.rows = new ArrayList<>();
+  //    sharedContainer.hasHeader = false;
+  //    sharedContainer.header = new ArrayList<>();
+  //  }
 }

@@ -9,17 +9,18 @@ import java.io.IOException;
 public class FirebaseInitialize {
 
   public static void initialize() throws IOException {
-      try{
-        FileInputStream serviceAccount = new FileInputStream("src/main/java/edu/brown/cs/student/main/Authorization/meikdatabase-firebase-adminsdk-5r9bn-600aa7ae4f.json");
-        FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .build();
+    try {
+      FileInputStream serviceAccount =
+          new FileInputStream(
+              "src/main/java/edu/brown/cs/student/main/Authorization/meikdatabase-firebase-adminsdk-5r9bn-600aa7ae4f.json");
+      FirebaseOptions options =
+          new FirebaseOptions.Builder()
+              .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+              .build();
 
-        FirebaseApp.initializeApp(options);
-      }
-      catch (IOException e){
-        e.printStackTrace();
-      }
-
+      FirebaseApp.initializeApp(options);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }
