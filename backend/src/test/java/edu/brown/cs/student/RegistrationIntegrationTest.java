@@ -12,7 +12,6 @@ import spark.Spark;
 import okio.Buffer;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -82,7 +81,6 @@ public class RegistrationIntegrationTest {
         assertEquals("Success", body.result());
         assertEquals("test@brown.edu", body.emailAddress());
         assertEquals("Registration Complete", body.message());
-
 
     }
 }
