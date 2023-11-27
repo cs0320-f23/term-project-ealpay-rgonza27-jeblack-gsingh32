@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FailCreator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">s0</a> &gt; <a href="index.source.html" class="el_package">edu.brown.cs.student.main.csvSearch</a> &gt; <span class="el_source">FailCreator.java</span></div><h1>FailCreator.java</h1><pre class="source lang-java linenums">package edu.brown.cs.student.main.csvSearch;
+
+import java.util.HashMap;
+import java.util.List;
+
+/** Abstract class that implements the CreatorFromRow interface and overrides the create method. */
+<span class="fc" id="L7">public class FailCreator implements CreatorFromRow&lt;HashMap&lt;Integer, String&gt;&gt; {</span>
+
+  /**
+   * Override of create method from CreatorFromRow Interface. In this case it trys to parse all
+   * elements to a hashMap but fails. This class is used to test exceptions
+   *
+   * @param row Is a list of strings given by a row from the CSV file.
+   * @return This method returns a HashMap(Integer,String) with the keys being the column names and
+   *     the values being the corresponding string.
+   * @throws FactoryFailureException when there is a problem creating the rows
+   */
+  @Override
+  public HashMap&lt;Integer, String&gt; create(List&lt;String&gt; row) throws FactoryFailureException {
+<span class="fc" id="L20">    HashMap&lt;Integer, String&gt; finalHashMap = new HashMap&lt;&gt;();</span>
+    try {
+<span class="pc bpc" id="L22" title="1 of 2 branches missed.">      for (int i = -1; i &lt; (row.size()); i++) {</span>
+<span class="nc" id="L23">        finalHashMap.put(i, row.get(i));</span>
+      }
+<span class="fc" id="L25">    } catch (ArrayIndexOutOfBoundsException e) {</span>
+<span class="fc" id="L26">      throw new FactoryFailureException(e.getMessage(), row);</span>
+<span class="nc" id="L27">    }</span>
+<span class="nc" id="L28">    return finalHashMap;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
