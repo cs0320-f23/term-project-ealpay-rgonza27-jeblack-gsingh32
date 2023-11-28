@@ -1,0 +1,62 @@
+.card {
+  width: 350px;
+  height: 350px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  overflow: hidden;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.upper-half {
+  flex: 1;
+  overflow: hidden;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lower-half {
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.text-group {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+}
+
+.scroll-content {
+  display: flex;
+  overflow-x: auto;
+  padding: 10px;
+}
+
+.scroll-content span {
+  padding: 5px;
+  margin-right: 5px;
+  background-color: #4b3f3f;
+  color: #fff;
+  border-radius: 30px;
+  padding: 8px;
+}
+.Name {
+  font-weight: 700;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: larger;
+}
+
+.Concentration,
+.Location,
+.Year,
+.Email {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: small;
+}
