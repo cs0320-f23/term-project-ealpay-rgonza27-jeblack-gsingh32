@@ -2,13 +2,7 @@ package edu.brown.cs.student.main.server;
 
 import static spark.Spark.after;
 
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import edu.brown.cs.student.main.Authorization.FirebaseInitialize;
 import spark.Spark;
 
 /**
@@ -18,17 +12,14 @@ import spark.Spark;
  */
 public class Server {
 
+  // private static final Container<List<String>> sharedContainer = new Container<>();
 
   /**
    * Runs Server.
    *
    * @param args none
    */
-  public static void main(String[] args) throws IOException {
-    FileInputStream serviceAccount =
-        new FileInputStream(
-            "/Users/robertogonzales/Desktop/CS0320/term-project-ealpay-rgonza27-jeblack-gsingh32/backend/src/main/java/edu/brown/cs/student/main/server/private/meikdatabase-firebase-adminsdk-5r9bn-be1c95c791.json");
-
+  public static void main(String[] args) {
     int port = 3232;
     Spark.port(port);
     after(
@@ -36,7 +27,6 @@ public class Server {
           response.header("Access-Control-Allow-Origin", "*");
           response.header("Access-Control-Allow-Methods", "*");
         });
-
     Spark.get(
         "/",
         (request, response) -> {
@@ -60,7 +50,21 @@ public class Server {
               + "\n"
               + "Example -> http://localhost:3232/broadBand?State=California&county=San%20Francisco";
         });
-
+    Spark.get(
+        "DELETE_PARSED_DATA",
+        (request, response) -> {
+          response.type("application/json");
+          response.status(200);
+          // delete();
+          return "Parsed Data Deleted";
+        });
+    try {
+      FirebaseInitialize initialize = new FirebaseInitialize();
+      FirebaseInitialize.initialize();
+    } catch (Exception e) {
+      System.err.println("Could not connect to database: " + e.getMessage());
+    }
+    Spark.get("registerUser", new RegistrationHandler());
     Spark.notFound(
         (request, response) -> {
           response.status(404); // Not Found
@@ -72,4 +76,10 @@ public class Server {
     // Notice this link alone leads to a 404... Why is that?
     System.out.println("Server started at http://localhost:" + port);
   }
+
+  //  public static void delete() {
+  //    sharedContainer.rows = new ArrayList<>();
+  //    sharedContainer.hasHeader = false;
+  //    sharedContainer.header = new ArrayList<>();
+  //  }
 }
