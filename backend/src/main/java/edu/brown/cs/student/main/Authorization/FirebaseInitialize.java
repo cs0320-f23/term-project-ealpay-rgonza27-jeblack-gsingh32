@@ -6,8 +6,14 @@ import com.google.firebase.FirebaseOptions;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+/***
+ * Creates our firebase app.
+ */
 public class FirebaseInitialize {
-
+  /***
+   * This method is used to initialize our firebase app.
+   * @throws IOException If file with service account information is not accessible.
+   */
   public static void initialize() throws IOException {
     try {
       FileInputStream serviceAccount =

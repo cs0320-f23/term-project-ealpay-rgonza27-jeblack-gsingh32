@@ -9,9 +9,17 @@ import java.util.regex.Pattern;
 
 public class RegisterUser {
 
-  public boolean saverUser(String userEmail, String password)
+  /**
+   * This method is used to register users to our app.
+   * @param userEmail The registration would require a brown affliated email.
+   * @param password  The password to associate with the
+   * @return boolean that registration has completed.
+   * @throws FirebaseAuthException Error in registration
+   * @throws IOException Error initializing our Firebase App
+   */
+  public boolean registerUser(String userEmail, String password)
       throws FirebaseAuthException, IOException {
-
+    //Check to see that email is brown affiliated.
     if (!this.getEmailProvider(userEmail).equals("brown.edu")) {
       throw new IllegalArgumentException("Please provide your Brown email");
     }
