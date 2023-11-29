@@ -10,7 +10,7 @@ interface LoaderProps {
 const container: Variants = {
   show: {
     transition: {
-      staggerChildren: 0.3,
+      staggerChildren: 0.2,
     },
   },
 };
@@ -24,13 +24,13 @@ const item: Variants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.55,
+      duration: 0.4,
     },
   },
   exit: {
     opacity: 0,
     y: -200,
-    transition: { ease: "easeInOut", duration: 0.3 },
+    transition: { ease: "easeInOut", duration: 0.2 },
   },
 };
 
@@ -71,7 +71,7 @@ const Loader: React.FC<LoaderProps> = ({ setLoading }) => {
             src={`/images/image-2.jpg`}
             alt="random alt"
             layoutId="main-image-1"
-            transition={{ duration: 1 }}
+            transition={{ duration: 0.5 }}
           />
         </motion.div>
         <ImageBlock id={"image-" + a} variants={item} cssId="image-1" />

@@ -3,6 +3,7 @@ import cardView from "../Search/cardView";
 import Header from "../HomePage/Header";
 import "../../styles/Meiks.css";
 import { motion } from "framer-motion";
+import { VerticalScroll } from "../Helpers/ScrollComponents";
 
 interface IMeikProps {}
 
@@ -42,40 +43,43 @@ const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
   return (
     <div>
       <Header />
-      <motion.div
-        className="MainBody"
-        initial={{ opacity: 0, y: -400 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 400 }}
-        transition={{ duration: 0.3 }}
-      >
-        <span className="Title">Find the perfect Meik for you!</span>
-        <ul className="TagBox">
-          {tags.map((tag) => (
-            <li key={tag}>
-              {tag}
-              <span className="X" onClick={() => removeTag(tag)}>
-                ×
-              </span>
-            </li>
-          ))}
-          <input
-            className="SearchBarInput"
-            type="text"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-          />
-        </ul>
-        <div>
-          {cardView({
-            name: "ExampleName",
-            concentration: "Applied Example",
-            year: "'26",
-            email: "example@brown.edu",
-            location: "example, RI",
-          })}
-        </div>
-      </motion.div>
+      <VerticalScroll>
+        {" "}
+        <motion.div
+          className="MainBody"
+          initial={{ opacity: 0, y: -400 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 400 }}
+          transition={{ duration: 0.2 }}
+        >
+          <span className="Title">Find the perfect Meik for you!</span>
+          <ul className="TagBox">
+            {tags.map((tag) => (
+              <li key={tag}>
+                {tag}
+                <span className="X" onClick={() => removeTag(tag)}>
+                  ×
+                </span>
+              </li>
+            ))}
+            <input
+              className="SearchBarInput"
+              type="text"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+            />
+          </ul>
+          <div>
+            {cardView({
+              name: "ExampleName",
+              concentration: "Applied Example",
+              year: "'26",
+              email: "example@brown.edu",
+              location: "example, RI",
+            })}
+          </div>
+        </motion.div>
+      </VerticalScroll>
     </div>
   );
 };

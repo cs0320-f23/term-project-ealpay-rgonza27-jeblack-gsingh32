@@ -34,7 +34,7 @@ const HomePage: React.FunctionComponent<IHomeProps> = (props) => {
             className="transition-body"
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 400 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.2 }}
           >
             <VerticalScroll>
               <Banner />
@@ -43,7 +43,7 @@ const HomePage: React.FunctionComponent<IHomeProps> = (props) => {
                   <motion.img
                     src={"/images/image-2.jpg"}
                     layoutId="main-image-1"
-                    transition={{ duration: 1 }}
+                    transition={{ duration: 0.5 }}
                   />
                 </motion.div>
               )}
