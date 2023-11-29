@@ -9,7 +9,7 @@ interface AnimatedLettersProps {
 const banner: Variants = {
   animate: {
     transition: {
-      delayChildren: 0.1,
+      delayChildren: 0.08,
       staggerChildren: 0.1,
     },
   },
@@ -26,7 +26,7 @@ const AnimatedLetters: React.FC<AnimatedLettersProps> = ({ title }) => (
         animate={{
           opacity: 1,
           y: 0, // Ending state with opacity 1 and y translation 0
-          transition: { duration: 1, delay: index * 0.1 },
+          transition: { duration: 0.5, delay: index * 0.08 },
         }}
       >
         {letter}
@@ -49,8 +49,8 @@ const BannerRowTop: React.FC<BannerRowTopProps> = ({ title }) => (
       animate={{ opacity: 1, y: 0 }}
       transition={{
         ease: "easeInOut",
-        duration: 1,
-        delay: 0.4,
+        duration: 0.5,
+        delay: 0.2,
       }}
       className="row-col"
     >
@@ -74,7 +74,7 @@ const BannerRowBottom: React.FC<BannerRowBottomProps> = ({ title }) => (
       animate={{ opacity: 1, y: 0 }}
       transition={{
         ease: "easeInOut",
-        duration: 1,
+        duration: 0.5,
         delay: 0.4,
       }}
     >
@@ -109,7 +109,7 @@ const Banner: React.FC = () => {
   useEffect(() => {
     setTimeout(() => {
       setPlayMarquee(true);
-    }, 2000);
+    }, 1000);
   }, []);
   return (
     <motion.div className="banner" variants={banner}>

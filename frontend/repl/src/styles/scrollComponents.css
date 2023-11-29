@@ -10,7 +10,7 @@
 
 .vertical-scroll-container {
   overflow-y: auto;
-  max-height: 100vh; /* Adjust the max height as needed */
+  max-height: 90vh; /* Adjust the max height as needed */
 }
 
 .vertical-scroll-content {

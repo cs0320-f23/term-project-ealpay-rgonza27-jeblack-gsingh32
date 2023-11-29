@@ -4,6 +4,7 @@ import Header from "../HomePage/Header";
 import cardView, { ICardProps } from "../Search/cardView";
 import "../../styles/Profile.css"; // Import your profile-specific styles
 import { concentrations } from "../Helpers/concentrations";
+import { VerticalScroll } from "../Helpers/ScrollComponents";
 
 interface IProfileProps {}
 
@@ -30,8 +31,14 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
           <label htmlFor="Concentration2">Concentration 2:</label>
           <select
             id="Concentration2"
-            value={concentration2}
-            onChange={(e) => setConcentration2(e.target.value)}
+            value={concentration2.replace(" & ", "")}
+            onChange={(e) => {
+              if (e.target.value != "--") {
+                setConcentration2(" & " + e.target.value);
+              } else {
+                setConcentration2("");
+              }
+            }}
           >
             {Object.values(concentrations).map((conc) => (
               <option key={conc} value={conc}>
@@ -48,8 +55,14 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
             <label htmlFor="Concentration2">Concentration 2:</label>
             <select
               id="Concentration2"
-              value={concentration2}
-              onChange={(e) => setConcentration2(e.target.value)}
+              value={concentration2.replace(" & ", "")}
+              onChange={(e) => {
+                if (e.target.value != "--") {
+                  setConcentration2(" & " + e.target.value);
+                } else {
+                  setConcentration2("");
+                }
+              }}
             >
               {Object.values(concentrations).map((conc) => (
                 <option key={conc} value={conc}>
@@ -62,8 +75,14 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
             <label htmlFor="Concentration3">Concentration 3:</label>
             <select
               id="Concentration3"
-              value={concentration3}
-              onChange={(e) => setConcentration3(e.target.value)}
+              value={concentration3.replace(" & ", "")}
+              onChange={(e) => {
+                if (e.target.value != "--") {
+                  setConcentration3(" & " + e.target.value);
+                } else {
+                  setConcentration3("");
+                }
+              }}
             >
               {Object.values(concentrations).map((conc) => (
                 <option key={conc} value={conc}>
@@ -81,68 +100,70 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
   return (
     <div>
       <Header />
-      <motion.div
-        initial={{ opacity: 0, y: -400 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 400 }}
-        transition={{ duration: 0.3 }}
-        className="profile-container"
-      >
-        <div className="profile-content">
-          <span className="Title">Edit Your Profile!</span>
-          <div>{cardView(profileData)}</div>
-          <label htmlFor="username">Name:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <label htmlFor="location">Location:</label>
-          <input
-            type="text"
-            id="location"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          />
-          <label htmlFor="Concentration">Concentration:</label>
-          <select
-            id="Concentration"
-            value={concentration}
-            onChange={(e) => {
-              setConcentration(e.target.value as concentrations);
-            }}
-          >
-            {Object.values(concentrations).map((conc) => (
-              <option key={conc} value={conc}>
-                {conc}
-              </option>
-            ))}
-          </select>
-          {addCon()}
-          <button
-            onClick={() => {
-              if (concentrationNum < 3) {
-                setConNum(concentrationNum + 1);
-              }
-            }}
-          >
-            Add Concentration
-          </button>
-          <label htmlFor="year">Year:</label>
-          <select
-            id="year"
-            value={year}
-            onChange={(e) => setYear(e.target.value)}
-          >
-            <option value="'27">'27</option>
-            <option value="'26">'26</option>
-            <option value="'25">'25</option>
-            <option value="'24">'24</option>
-          </select>
-          <button>Save Changes</button>
-        </div>
-      </motion.div>
+      <VerticalScroll>
+        <motion.div
+          initial={{ opacity: 0, y: -400 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 400 }}
+          transition={{ duration: 0.2 }}
+          className="profile-container"
+        >
+          <div className="profile-content">
+            <span className="Title">Edit Your Profile!</span>
+            <div>{cardView(profileData)}</div>
+            <label htmlFor="username">Name:</label>
+            <input
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <label htmlFor="location">Location:</label>
+            <input
+              type="text"
+              id="location"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+            />
+            <label htmlFor="Concentration">Concentration:</label>
+            <select
+              id="Concentration"
+              value={concentration}
+              onChange={(e) => {
+                setConcentration(e.target.value as concentrations);
+              }}
+            >
+              {Object.values(concentrations).map((conc) => (
+                <option key={conc} value={conc}>
+                  {conc}
+                </option>
+              ))}
+            </select>
+            {addCon()}
+            <button
+              onClick={() => {
+                if (concentrationNum < 3) {
+                  setConNum(concentrationNum + 1);
+                }
+              }}
+            >
+              Add Concentration
+            </button>
+            <label htmlFor="year">Year:</label>
+            <select
+              id="year"
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+            >
+              <option value="'27">'27</option>
+              <option value="'26">'26</option>
+              <option value="'25">'25</option>
+              <option value="'24">'24</option>
+            </select>
+            <button>Save Changes</button>
+          </div>
+        </motion.div>
+      </VerticalScroll>
     </div>
   );
 };
