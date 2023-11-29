@@ -66,7 +66,15 @@ const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
             onChange={(e) => setInputValue(e.target.value)}
           />
         </ul>
-        <div>{cardView()}</div>
+        <div>
+          {cardView({
+            name: "ExampleName",
+            concentration: "Applied Example",
+            year: "'26",
+            email: "example@brown.edu",
+            location: "example, RI",
+          })}
+        </div>
       </motion.div>
     </div>
   );

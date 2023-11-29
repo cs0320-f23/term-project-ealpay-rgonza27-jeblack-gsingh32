@@ -5,7 +5,9 @@ interface HorizontalScrollProps {
   children: React.ReactNode;
 }
 
-const HorizontalScroll: React.FC<HorizontalScrollProps> = ({ children }) => {
+export const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
+  children,
+}) => {
   return (
     <div className="horizontal-scroll-container">
       <div className="horizontal-scroll-content">{children}</div>
@@ -13,4 +15,14 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({ children }) => {
   );
 };
 
-export default HorizontalScroll;
+interface VerticalScrollProps {
+  children: React.ReactNode;
+}
+
+export const VerticalScroll: React.FC<VerticalScrollProps> = ({ children }) => {
+  return (
+    <div className="vertical-scroll-container">
+      <div className="vertical-scroll-content">{children}</div>
+    </div>
+  );
+};
