@@ -1,6 +1,15 @@
-import HorizontalScroll from "../Helpers/ScrollComponents";
+import { HorizontalScroll } from "../Helpers/ScrollComponents";
 import "../../styles/cardView.css";
-function cardView() {
+
+export interface ICardProps {
+  name: String;
+  location: String;
+  year: String;
+  concentration: String;
+  email: String;
+}
+
+function cardView(props: ICardProps) {
   return (
     <div className="card">
       <div className="upper-half">
@@ -8,15 +17,15 @@ function cardView() {
       </div>
       <div className="lower-half">
         <div className="text-group">
-          <span className="Name">Example Name</span>
-          <span className="Location">Example Town, RI</span>
+          <span className="Name">{props.name}</span>
+          <span className="Location">{props.location}</span>
         </div>
         <div className="text-group">
-          <span className="Concentration">Applied Example</span>
-          <span className="Year">'26</span>
+          <span className="Concentration">{props.concentration}</span>
+          <span className="Year">{props.year}</span>
         </div>
         <div className="text-group">
-          <span className="Email">example_example@brown.edu</span>
+          <span className="Email">{props.email}</span>
         </div>
         <HorizontalScroll>
           <div className="scroll-content">

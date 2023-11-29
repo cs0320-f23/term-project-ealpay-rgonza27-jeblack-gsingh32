@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Banner from "./Banner";
 import Loader from "./Loader";
 import Header from "./Header";
+import { VerticalScroll } from "../Helpers/ScrollComponents";
 
 export interface IHomeProps {}
 
@@ -27,7 +28,7 @@ const HomePage: React.FunctionComponent<IHomeProps> = (props) => {
           <Loader setLoading={setLoading} />
         </motion.div>
       ) : (
-        <>
+        <div>
           <Header />
           <motion.div
             className="transition-body"
@@ -35,26 +36,28 @@ const HomePage: React.FunctionComponent<IHomeProps> = (props) => {
             exit={{ opacity: 0, y: 400 }}
             transition={{ duration: 0.3 }}
           >
-            <Banner />
-            {!loading && (
-              <motion.div className="transition-image final">
-                <motion.img
-                  src={"/images/image-2.jpg"}
-                  layoutId="main-image-1"
-                  transition={{ duration: 1 }}
-                />
-              </motion.div>
-            )}
-            <button
-              className="SignOut"
-              onClick={() => {
-                signOut(auth);
-              }}
-            >
-              Sign Out
-            </button>
+            <VerticalScroll>
+              <Banner />
+              {!loading && (
+                <motion.div className="transition-image final">
+                  <motion.img
+                    src={"/images/image-2.jpg"}
+                    layoutId="main-image-1"
+                    transition={{ duration: 1 }}
+                  />
+                </motion.div>
+              )}
+              <button
+                className="SignOut"
+                onClick={() => {
+                  signOut(auth);
+                }}
+              >
+                Sign Out
+              </button>
+            </VerticalScroll>
           </motion.div>
-        </>
+        </div>
       )}
     </>
   );
