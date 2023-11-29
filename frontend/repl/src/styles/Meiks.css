@@ -1,0 +1,39 @@
+.Title {
+  font-weight: 700;
+  font-size: 3rem;
+}
+
+.MainBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.TagBox {
+  display: flex;
+  border: 1px solid;
+  padding: 7px;
+  margin: 12px 0;
+  border-radius: 15px;
+}
+.TagBox li {
+  list-style: none;
+  display: flex;
+  padding: 5px 8px 5px 10px;
+  background: #fff;
+  margin: 4px 3px;
+  border-radius: 5px;
+  border: 1px solid;
+}
+
+.X {
+  margin-left: 5px;
+}
+
+.SearchBarInput {
+  flex: 1;
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
