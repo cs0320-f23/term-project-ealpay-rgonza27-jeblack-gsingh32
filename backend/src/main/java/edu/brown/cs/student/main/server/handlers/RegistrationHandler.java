@@ -1,4 +1,5 @@
-package edu.brown.cs.student.main.server;
+package edu.brown.cs.student.main.server.handlers;
+import edu.brown.cs.student.main.server.responses.RegistrationResponse;
 
 import edu.brown.cs.student.main.Authorization.RegisterUser;
 import spark.Request;
