@@ -3,6 +3,8 @@ package edu.brown.cs.student.main.Authorization;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -16,9 +18,10 @@ public class FirebaseInitialize {
    */
   public static void initialize() throws IOException {
     try {
-      FileInputStream serviceAccount =
-          new FileInputStream(
-              "src/main/java/edu/brown/cs/student/main/Authorization/meikdatabase-firebase-adminsdk-5r9bn-600aa7ae4f.json");
+      // Load the service account JSON file as a FileInputStream
+      File serviceAccountFile = new File(FirebaseInitialize.class.getClassLoader().getResource("meikdatabase-firebase-adminsdk-5r9bn-be1c95c791.json").getFile());
+      FileInputStream serviceAccount = new FileInputStream(serviceAccountFile);
+
       FirebaseOptions options =
           new FirebaseOptions.Builder()
               .setCredentials(GoogleCredentials.fromStream(serviceAccount))
@@ -30,3 +33,4 @@ public class FirebaseInitialize {
     }
   }
 }
+

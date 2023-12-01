@@ -3,6 +3,10 @@ package edu.brown.cs.student.main.server;
 import static spark.Spark.after;
 
 import edu.brown.cs.student.main.Authorization.FirebaseInitialize;
+import edu.brown.cs.student.main.server.handlers.GetAllMeikHandler;
+import edu.brown.cs.student.main.server.handlers.GetMeikHandler;
+import edu.brown.cs.student.main.server.handlers.RegistrationHandler;
+
 import spark.Spark;
 
 /**
@@ -20,6 +24,11 @@ public class Server {
    * @param args none
    */
   public static void main(String[] args) {
+
+    String workingDirectory = System.getProperty("user.dir");
+
+    // Print the working directory
+    System.out.println("Working Directory = " + workingDirectory);
     int port = 3232;
     Spark.port(port);
     after(
@@ -27,44 +36,15 @@ public class Server {
           response.header("Access-Control-Allow-Origin", "*");
           response.header("Access-Control-Allow-Methods", "*");
         });
-    Spark.get(
-        "/",
-        (request, response) -> {
-          response.type("application/json");
-          response.status(200);
 
-          return "Welcome! Here are your options:\n"
-              + "\n"
-              + "- /broadBand: Used to look at Information from the US Census, "
-              + "you must provide a State and County name!\n"
-              + "\n"
-              + "- /loadCSV: Used to load any CSV file you have!\n"
-              + "\n"
-              + "- /search: Used to search on the loaded CSV file!\n"
-              + "\n"
-              + "- /viewCSV: Used to view the CSV file!\n"
-              + "\n"
-              +
-              // Add more options as needed
-              "Choose an option and make a request by typing it in the URL!.\n"
-              + "\n"
-              + "Example -> http://localhost:3232/broadBand?State=California&county=San%20Francisco";
-        });
-    Spark.get(
-        "DELETE_PARSED_DATA",
-        (request, response) -> {
-          response.type("application/json");
-          response.status(200);
-          // delete();
-          return "Parsed Data Deleted";
-        });
     try {
-      FirebaseInitialize initialize = new FirebaseInitialize();
       FirebaseInitialize.initialize();
     } catch (Exception e) {
       System.err.println("Could not connect to database: " + e.getMessage());
     }
     Spark.get("registerUser", new RegistrationHandler());
+    Spark.get("getMeikById", new GetMeikHandler());
+    Spark.get("getAllMeiks", new GetAllMeikHandler());
     Spark.notFound(
         (request, response) -> {
           response.status(404); // Not Found
@@ -77,9 +57,4 @@ public class Server {
     System.out.println("Server started at http://localhost:" + port);
   }
 
-  //  public static void delete() {
-  //    sharedContainer.rows = new ArrayList<>();
-  //    sharedContainer.hasHeader = false;
-  //    sharedContainer.header = new ArrayList<>();
-  //  }
 }
