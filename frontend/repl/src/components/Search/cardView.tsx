@@ -1,15 +1,18 @@
 import { HorizontalScroll } from "../Helpers/ScrollComponents";
 import "../../styles/cardView.css";
 
-export interface ICardProps {
-  name: String;
-  location: String;
-  year: String;
-  concentration: String;
-  email: String;
+interface Meik {
+  concentration: string;
+  email: string;
+  id: string;
+  imageURL: string;
+  location: string;
+  name: string;
+  tags: string[];
+  text: string;
+  year: string;
 }
-
-function cardView(props: ICardProps) {
+function cardView(props: Meik) {
   return (
     <div className="card">
       <div className="upper-half">
@@ -29,12 +32,11 @@ function cardView(props: ICardProps) {
         </div>
         <HorizontalScroll>
           <div className="scroll-content">
-            <span>activity a </span>
-            <span>activity b</span>
-            <span>activity c</span>
-            <span>activity a </span>
-            <span>activity b</span>
-            <span>activity c</span>
+            {Array.isArray(props.tags) ? (
+              props.tags.map((tag, index) => <span key={index}>{tag}</span>)
+            ) : (
+              <span>{props.tags}</span>
+            )}
           </div>
         </HorizontalScroll>
       </div>

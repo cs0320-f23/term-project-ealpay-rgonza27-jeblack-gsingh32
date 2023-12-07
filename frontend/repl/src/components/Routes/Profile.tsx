@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Header from "../HomePage/Header";
-import cardView, { ICardProps } from "../Search/cardView";
 import "../../styles/Profile.css"; // Import your profile-specific styles
 import { concentrations } from "../Helpers/concentrations";
 import { VerticalScroll } from "../Helpers/ScrollComponents";
@@ -16,13 +15,6 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
   const [concentrationNum, setConNum] = useState(1);
   const [location, setLocation] = useState("example,RI");
   const [year, setYear] = useState("'26");
-  const profileData: ICardProps = {
-    name: username,
-    location: location,
-    year: year,
-    concentration: concentration + concentration2 + concentration3,
-    email: "example@example.com",
-  };
 
   function addCon() {
     if (concentrationNum === 2) {
@@ -110,7 +102,7 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
         >
           <div className="profile-content">
             <span className="Title">Edit Your Profile!</span>
-            <div>{cardView(profileData)}</div>
+            {/* <div>{cardView(profileData)}</div> */}
             <label htmlFor="username">Name:</label>
             <input
               type="text"
