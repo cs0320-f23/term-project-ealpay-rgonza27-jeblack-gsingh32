@@ -2,6 +2,7 @@ package edu.brown.cs.student.main.server.handlers;
 
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import edu.brown.cs.student.main.server.responses.MeikDataResponse;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -20,6 +21,12 @@ public class GetMeikHandler implements Route {
     return getUserById(userId);
   }
 
+  /**
+   * This returns meik information from a given uid and serializes it into json format.
+   * @param userId
+   * @return
+   */
+
   private String getUserById(String userId) {
     try {
       Firestore db = FirestoreClient.getFirestore();
@@ -36,32 +43,22 @@ public class GetMeikHandler implements Route {
 
         // Get all contents of the document as a Map
         Map<String, Object> userData = document.getData();
-
-        // Convert the Map to JSON
-        return convertMapToJson(userData);
+        //Create a record of the retrieved data
+        MeikDataResponse response = new MeikDataResponse(userId,userData,"Successfully retrieved data");
+        return response.serialize();
       } else {
         System.err.println("User not found for ID: " + userId);
-        return "{\"error\":\"User not found\"}";
+        //Create record for response where UID is not found.
+        MeikDataResponse response = new MeikDataResponse(userId,null,"User not found for ID");
+        return response.serialize();
       }
 
     } catch (InterruptedException | ExecutionException e) {
       e.printStackTrace();
-      return "{\"error\":\"" + e.getMessage() + "\"}";
+      //Create record for failures in retrieving data.
+      MeikDataResponse response = new MeikDataResponse(userId,null,e.getMessage());
+      return response.serialize();
     }
-  }
-
-  private String convertMapToJson(Map<String, Object> data) {
-    // Convert the Map to JSON (you can use a JSON library for better handling)
-    StringBuilder jsonBuilder = new StringBuilder("{");
-    for (Map.Entry<String, Object> entry : data.entrySet()) {
-      jsonBuilder.append("\"").append(entry.getKey()).append("\":\"").append(entry.getValue()).append("\",");
-    }
-    // Remove the trailing comma and add the closing brace
-    if (jsonBuilder.length() > 1) {
-      jsonBuilder.setLength(jsonBuilder.length() - 1);
-    }
-    jsonBuilder.append("}");
-    return jsonBuilder.toString();
   }
 }
 
