@@ -5,6 +5,7 @@ import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.firebase.cloud.FirestoreClient;
+import edu.brown.cs.student.main.server.responses.AllMeikDataResponse;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -24,8 +25,8 @@ public class GetAllMeikHandler implements Route {
     return getAllUsers();
   }
 
-  private List<String> getAllUsers() {
-    List<String> userListJson = new ArrayList<>();
+  private String getAllUsers() {
+    List<Map<String,Object>> userList = new ArrayList<>();
 
     try {
       Firestore db = FirestoreClient.getFirestore();
@@ -47,7 +48,7 @@ public class GetAllMeikHandler implements Route {
           Map<String, Object> userData = documentSnapshot.getData();
 
           // Convert the Map to JSON and add to the list
-          userListJson.add(convertMapToJson(userData));
+          userList.add(userData);
         } else {
           System.err.println("Document not found for reference: " + documentReference.getPath());
         }
@@ -55,10 +56,12 @@ public class GetAllMeikHandler implements Route {
 
     } catch (InterruptedException | ExecutionException e) {
       e.printStackTrace();
-      userListJson.add("{\"error\":\"" + e.getMessage() + "\"}");
+      AllMeikDataResponse response = new AllMeikDataResponse("Error retrieving data: "+e.getMessage(),
+              null);
+      return response.serialize();
     }
-
-    return userListJson;
+    AllMeikDataResponse response = new AllMeikDataResponse("Successfully retrieved data",userList);
+    return response.serialize();
   }
 
   private String convertMapToJson(Map<String, Object> data) {
