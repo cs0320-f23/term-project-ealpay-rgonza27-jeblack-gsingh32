@@ -21,6 +21,12 @@ public class GetMeikHandler implements Route {
     return getUserById(userId);
   }
 
+  /**
+   * This returns meik information from a given uid and serializes it into json format.
+   * @param userId
+   * @return
+   */
+
   private String getUserById(String userId) {
     try {
       Firestore db = FirestoreClient.getFirestore();
