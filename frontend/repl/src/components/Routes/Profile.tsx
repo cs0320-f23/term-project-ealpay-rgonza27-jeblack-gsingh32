@@ -91,7 +91,11 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
 
   return (
     <div>
-      <Header />
+      <Header
+        onLinkClick={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+      />
       <VerticalScroll>
         <motion.div
           initial={{ opacity: 0, y: -400 }}

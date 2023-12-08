@@ -51,7 +51,11 @@ const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
 
   return (
     <div>
-      <Header />
+      <Header
+        onLinkClick={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+      />
       <VerticalScroll>
         {" "}
         <motion.div
@@ -80,7 +84,13 @@ const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
           </ul>
           <div>
             {meikObjects.map((meikObject, index) => (
-              <div key={index}>{cardView(meikObject)}</div>
+              <div
+                className="Rows"
+                key={index}
+                style={{ display: "inline-block" }}
+              >
+                {cardView(meikObject)}
+              </div>
             ))}
           </div>
         </motion.div>
