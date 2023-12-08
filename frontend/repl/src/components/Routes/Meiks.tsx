@@ -4,11 +4,14 @@ import Header from "../HomePage/Header";
 import "../../styles/Meiks.css";
 import { motion } from "framer-motion";
 import { VerticalScroll } from "../Helpers/ScrollComponents";
+import { AllMeiks } from "./MeikHandler";
+import Meik from "./MeikObject";
 
 interface IMeikProps {}
 
 const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
   const [tags, setTags] = useState<string[]>([]);
+  const [meikObjects, setMeikObjects] = useState<Meik[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
 
   const addTag = (e: KeyboardEvent) => {
@@ -34,7 +37,13 @@ const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
     };
 
     input?.addEventListener("keyup", handleKey);
-
+    AllMeiks().then((data) => {
+      const meikObjects: Meik[] = data.map((item) =>
+        typeof item === "string" ? JSON.parse(item) : item
+      );
+      console.log(data);
+      setMeikObjects(meikObjects);
+    });
     return () => {
       input?.removeEventListener("keyup", handleKey);
     };
@@ -70,13 +79,9 @@ const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
             />
           </ul>
           <div>
-            {cardView({
-              name: "ExampleName",
-              concentration: "Applied Example",
-              year: "'26",
-              email: "example@brown.edu",
-              location: "example, RI",
-            })}
+            {meikObjects.map((meikObject, index) => (
+              <div key={index}>{cardView(meikObject)}</div>
+            ))}
           </div>
         </motion.div>
       </VerticalScroll>
