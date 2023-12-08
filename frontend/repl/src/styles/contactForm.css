@@ -59,8 +59,3 @@ input:focus ~ label,
 textarea:focus ~ label {
   font-size: 20px;
 }
-
-button:hover {
-  font-size: 18px;
-  background: #ddd3c9;
-}

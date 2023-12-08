@@ -11,6 +11,7 @@ interface IMeikProps {}
 
 const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
   const [tags, setTags] = useState<string[]>([]);
+  const [allMeiksData, setAllMeiksData] = useState<Meik[]>([]);
   const [meikObjects, setMeikObjects] = useState<Meik[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
 
@@ -37,13 +38,30 @@ const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
     };
 
     input?.addEventListener("keyup", handleKey);
-    AllMeiks().then((data) => {
-      const meikObjects: Meik[] = data.map((item) =>
-        typeof item === "string" ? JSON.parse(item) : item
+    if (allMeiksData.length === 0) {
+      AllMeiks().then((data) => {
+        const meikObjects: Meik[] = data.map((item) =>
+          typeof item === "string" ? JSON.parse(item) : item
+        );
+        setAllMeiksData(meikObjects);
+        setMeikObjects(meikObjects);
+      });
+    } else {
+      // Filter the meikObjects based on tags
+      const filteredMeikObjects = allMeiksData.filter((meik) =>
+        tags.every(
+          (tag) =>
+            meik.name.includes(tag) ||
+            meik.concentration.includes(tag) ||
+            meik.year.includes(tag) ||
+            meik.location.includes(tag) ||
+            meik.email.includes(tag) ||
+            meik.tags.some((item) => item.includes(tag))
+        )
       );
-      console.log(data);
-      setMeikObjects(meikObjects);
-    });
+      setMeikObjects(filteredMeikObjects);
+    }
+
     return () => {
       input?.removeEventListener("keyup", handleKey);
     };
