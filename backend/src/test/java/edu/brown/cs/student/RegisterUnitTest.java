@@ -31,7 +31,7 @@ public class RegisterUnitTest {
   public void testRegistrationWithoutBrownEmail() {
     RegisterUser registerUser = new RegisterUser();
     try {
-      registerUser.saverUser("gurpartap@gmail.com", "password");
+      registerUser.registerUser("gurpartap@gmail.com", "password");
     } catch (Exception e) {
       assertEquals("Please provide your Brown email", e.getMessage());
     }
@@ -41,7 +41,7 @@ public class RegisterUnitTest {
   public void testRegistrationWithBrownEmail() {
     RegisterUser registerUser = new RegisterUser();
     try {
-      boolean result = registerUser.saverUser("gurpartap@brown.edu", "password");
+      boolean result = registerUser.registerUser("gurpartap@brown.edu", "password");
       assert (result);
     } catch (Exception e) {
       assertEquals(

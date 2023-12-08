@@ -19,8 +19,10 @@ public class FirebaseInitialize {
   public static void initialize() throws IOException {
     try {
       // Load the service account JSON file as a FileInputStream
-      File serviceAccountFile = new File(FirebaseInitialize.class.getClassLoader().getResource("meikdatabase-firebase-adminsdk-5r9bn-be1c95c791.json").getFile());
-      FileInputStream serviceAccount = new FileInputStream(serviceAccountFile);
+      FileInputStream serviceAccount =
+              new FileInputStream(
+                      "src/main/java/edu/brown/cs/student/main/Authorization/meikdatabase-firebase-adminsdk-5r9bn-600aa7ae4f.json");
+
 
       FirebaseOptions options =
           new FirebaseOptions.Builder()
