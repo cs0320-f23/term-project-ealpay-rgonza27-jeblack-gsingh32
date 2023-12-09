@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import com.google.firebase.cloud.FirestoreClient;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
@@ -15,11 +16,13 @@ import edu.brown.cs.student.main.Authorization.FirebaseInitialize;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 public class UserInformation {
-    public void getUser(String userId) throws ExecutionException, InterruptedException, IOException {
+    public User getUser(String userId, String collection) throws ExecutionException, InterruptedException, IOException {
+
+
 
         try {
             FirebaseInitialize initialize = new FirebaseInitialize();
@@ -27,12 +30,14 @@ public class UserInformation {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        User user = null;
 
 
         Firestore db = FirestoreClient.getFirestore();
-        CollectionReference firstYears = db.collection("FirstYears");
-        DocumentReference userDocRef = firstYears.document("z8jCW6mJLxQaQswrOuQs");
+        CollectionReference collectionRef = db.collection(collection);
+        DocumentReference userDocRef = collectionRef.document(userId);
         DocumentSnapshot document = userDocRef.get().get();
+
 
 
         if (document.exists()) {
@@ -41,21 +46,28 @@ public class UserInformation {
             // Get all contents of the document as a Map
             Map<String, Object> userData = document.getData();
            // System.out.println(userData);
-            Moshi moshi = new Moshi.Builder().build();
-            Type mapStringObject = Types.newParameterizedType(Map.class, String.class, Object.class);
-            JsonAdapter<Map<String, Object>> stringObjMapAdapter = moshi.adapter(mapStringObject);
-            JsonAdapter<User> userJsonAdapter = moshi.adapter(User.class);
-            String text = stringObjMapAdapter.toJson(userData);
-            String text2;
-            text2 = new String(text);
-            System.out.println(text2);
+            String email = document.get("email",java.lang.String.class);
+            String name = document.get("name",java.lang.String.class);
+            String location =  document.get("location",java.lang.String.class);
+            String concentration =  document.get("concentration",java.lang.String.class);
+            List<String> tags = (List<String>)document.get("tags");
 
+            if(collection.equals("FirstYears")){
+                //Issue of typecasting
+                Map<String,Integer> search = (Map<String,Integer>) document.get("search");
+                user = new FirstYear(name,concentration,location, tags, email, search);
+            }
 
-            userJsonAdapter.fromJson(text2);
-           // User gurpartap = userJsonAdapter.fromJson(stringObjMapAdapter.toJson(userData).toString());
-
-
+            //GenericTypeIndicator<Map<String, Integer>> genericTypeIndicator = new GenericTypeIndicator<Map<String, Integer>>() {};
+            if(collection.equals("meiks")){
+                String text = document.get("text",java.lang.String.class);
+                String year =  document.get("year",java.lang.String.class);
+                user = new Meik(name,email,location,year,text,tags);
+            }
+            //GenericTypeIndicator<List<String>> tag = new GenericTypeIndicator<List<String>>(){};
         }
+
+        return user;
 
     }
 
