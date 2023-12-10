@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Header from "../HomePage/Header";
-import cardView, { ICardProps } from "../Search/cardView";
 import "../../styles/Profile.css"; // Import your profile-specific styles
 import { concentrations } from "../Helpers/concentrations";
 import { VerticalScroll } from "../Helpers/ScrollComponents";
+import cardView from "../Search/cardView";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { singleMeik } from "./MeikHandler";
 
 interface IProfileProps {}
 
@@ -16,13 +18,29 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
   const [concentrationNum, setConNum] = useState(1);
   const [location, setLocation] = useState("example,RI");
   const [year, setYear] = useState("'26");
-  const profileData: ICardProps = {
-    name: username,
-    location: location,
-    year: year,
-    concentration: concentration + concentration2 + concentration3,
-    email: "example@example.com",
-  };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
+      if (user) {
+        const uid = user.uid;
+        singleMeik(uid).then((data) => {
+          setUsername(data.name);
+          setLocation(data.location);
+          setYear(data.year);
+          const constList = data.concentration.split(" & ");
+          setConcentration(constList[0]);
+          if (constList[1]) {
+            setConcentration2(" & " + constList[1]);
+          }
+          if (constList[2]) {
+            setConcentration3(" & " + constList[2]);
+          }
+        });
+      }
+    });
+
+    return () => unsubscribe(); // Cleanup the subscription when the component unmounts
+  }, []);
 
   function addCon() {
     if (concentrationNum === 2) {
@@ -99,7 +117,11 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
 
   return (
     <div>
-      <Header />
+      <Header
+        onLinkClick={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+      />
       <VerticalScroll>
         <motion.div
           initial={{ opacity: 0, y: -400 }}
@@ -110,22 +132,32 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
         >
           <div className="profile-content">
             <span className="Title">Edit Your Profile!</span>
-            <div>{cardView(profileData)}</div>
-            <label htmlFor="username">Name:</label>
+            <div>
+              {cardView({
+                name: username,
+                concentration: concentration + concentration2 + concentration3,
+                email: "",
+                year: year,
+                location: location,
+                id: "",
+                imageURL: "",
+                tags: [""],
+                text: "",
+              })}
+            </div>
+
             <input
               type="text"
               id="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
-            <label htmlFor="location">Location:</label>
             <input
               type="text"
               id="location"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
             />
-            <label htmlFor="Concentration">Concentration:</label>
             <select
               id="Concentration"
               value={concentration}
@@ -149,7 +181,6 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
             >
               Add Concentration
             </button>
-            <label htmlFor="year">Year:</label>
             <select
               id="year"
               value={year}

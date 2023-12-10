@@ -4,11 +4,15 @@ import Header from "../HomePage/Header";
 import "../../styles/Meiks.css";
 import { motion } from "framer-motion";
 import { VerticalScroll } from "../Helpers/ScrollComponents";
+import { AllMeiks } from "./MeikHandler";
+import Meik from "./MeikObject";
 
 interface IMeikProps {}
 
 const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
   const [tags, setTags] = useState<string[]>([]);
+  const [allMeiksData, setAllMeiksData] = useState<Meik[]>([]);
+  const [meikObjects, setMeikObjects] = useState<Meik[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
 
   const addTag = (e: KeyboardEvent) => {
@@ -34,6 +38,29 @@ const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
     };
 
     input?.addEventListener("keyup", handleKey);
+    if (allMeiksData.length === 0) {
+      AllMeiks().then((data) => {
+        const meikObjects: Meik[] = data.map((item) =>
+          typeof item === "string" ? JSON.parse(item) : item
+        );
+        setAllMeiksData(meikObjects);
+        setMeikObjects(meikObjects);
+      });
+    } else {
+      // Filter the meikObjects based on tags
+      const filteredMeikObjects = allMeiksData.filter((meik) =>
+        tags.every(
+          (tag) =>
+            meik.name.includes(tag) ||
+            meik.concentration.includes(tag) ||
+            meik.year.includes(tag) ||
+            meik.location.includes(tag) ||
+            meik.email.includes(tag) ||
+            meik.tags.some((item) => item.includes(tag))
+        )
+      );
+      setMeikObjects(filteredMeikObjects);
+    }
 
     return () => {
       input?.removeEventListener("keyup", handleKey);
@@ -42,7 +69,11 @@ const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
 
   return (
     <div>
-      <Header />
+      <Header
+        onLinkClick={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+      />
       <VerticalScroll>
         {" "}
         <motion.div
@@ -70,13 +101,15 @@ const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
             />
           </ul>
           <div>
-            {cardView({
-              name: "ExampleName",
-              concentration: "Applied Example",
-              year: "'26",
-              email: "example@brown.edu",
-              location: "example, RI",
-            })}
+            {meikObjects.map((meikObject, index) => (
+              <div
+                className="Rows"
+                key={index}
+                style={{ display: "inline-block" }}
+              >
+                {cardView(meikObject)}
+              </div>
+            ))}
           </div>
         </motion.div>
       </VerticalScroll>

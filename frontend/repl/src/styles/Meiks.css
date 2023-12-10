@@ -37,3 +37,8 @@
   border: none;
   background-color: transparent;
 }
+
+.Rows {
+  width: 400px;
+  padding-left: 130px;
+}
