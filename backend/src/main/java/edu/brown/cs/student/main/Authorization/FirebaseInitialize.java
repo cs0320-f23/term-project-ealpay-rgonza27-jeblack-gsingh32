@@ -21,13 +21,13 @@ public class FirebaseInitialize {
       // Load the service account JSON file as a FileInputStream
       FileInputStream serviceAccount =
               new FileInputStream(
-                      "src/main/java/edu/brown/cs/student/main/Authorization/meikdatabase-firebase-adminsdk-5r9bn-600aa7ae4f.json");
+                      "src/main/resources/meikdatabase-firebase-adminsdk-5r9bn-be1c95c791.json");
 
 
       FirebaseOptions options =
-          new FirebaseOptions.Builder()
-              .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-              .build();
+              new FirebaseOptions.Builder()
+                      .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                      .build();
 
       FirebaseApp.initializeApp(options);
     } catch (IOException e) {
@@ -35,4 +35,3 @@ public class FirebaseInitialize {
     }
   }
 }
-

@@ -24,12 +24,6 @@ public class UserInformation {
 
 
 
-        try {
-            FirebaseInitialize initialize = new FirebaseInitialize();
-            FirebaseInitialize.initialize();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
         User user = null;
 
 
@@ -54,7 +48,7 @@ public class UserInformation {
 
             if(collection.equals("FirstYears")){
                 //Issue of typecasting
-                Map<String,Integer> search = (Map<String,Integer>) document.get("search");
+                Map<String,String> search = (Map<String,String>) document.get("search");
                 user = new FirstYear(name,concentration,location, tags, email, search);
             }
 

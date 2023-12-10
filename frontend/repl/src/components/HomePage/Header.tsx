@@ -1,12 +1,20 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/Header.css";
-const Header = () => {
+import { scrollToSection } from "./Home";
+
+interface HeaderProps {
+  onLinkClick: () => void;
+}
+
+const Header: React.FunctionComponent<HeaderProps> = ({ onLinkClick }) => {
   const navigate = useNavigate();
   return (
     <div className="header">
       <div className="header-inner">
-        <div className="logo">MeetYourMeiks</div>
+        <div className="logo" onClick={() => navigate("/")}>
+          MeetYourMeiks
+        </div>
         <nav className="nav">
           <li onClick={() => navigate("/Meiks")}>
             <a>Meiks!</a>
@@ -21,7 +29,13 @@ const Header = () => {
             <a>Why join us?</a>
           </li>
         </nav>
-        <div className="contact" onClick={() => navigate("/contact")}>
+        <div
+          className="contact"
+          onClick={() => {
+            onLinkClick;
+            console.log("hey");
+          }}
+        >
           <a>Contact us!</a>
         </div>
         <div className="nav-menu">

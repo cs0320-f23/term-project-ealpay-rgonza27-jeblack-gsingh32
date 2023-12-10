@@ -1,0 +1,27 @@
+.AboutPage {
+  text-align: center;
+}
+
+.WhyJoinUsPage {
+  text-align: center;
+}
+
+.ContactUsPage {
+  text-align: center;
+  height: 10%;
+}
+
+.contact-div {
+  height: 600px;
+  background-color: #f5eee7;
+}
+
+.about-div {
+  height: 600px;
+  background-color: #f5eee7;
+}
+
+.join-div {
+  height: 600px;
+  background-color: #f5eee7;
+}
