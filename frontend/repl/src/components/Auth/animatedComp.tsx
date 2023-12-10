@@ -12,6 +12,7 @@ import RegisterPage from "./Register";
 import { AnimatePresence } from "framer-motion";
 import Meiks from "../Routes/Meiks";
 import Profile from "../Routes/Profile";
+import NonMeikRoute from "./NoneMeikRoute";
 
 function AnimatedRouts() {
   const location = useLocation();
@@ -41,7 +42,9 @@ function AnimatedRouts() {
           path="/Profile"
           element={
             <AuthRoute key="profile">
-              <Profile key="profile" />
+              <NonMeikRoute>
+                <Profile key="profile" />
+              </NonMeikRoute>
             </AuthRoute>
           }
         />
