@@ -76,7 +76,7 @@ public class GetAllMeikHandler implements Route {
     }
 
     //Create a success response
-    AllMeikDataResponse response = new AllMeikDataResponse("Successfully retrieved data",null);
+    AllMeikDataResponse response = new AllMeikDataResponse("Successfully retrieved data",userList);
     return response.serialize();
 
   }
