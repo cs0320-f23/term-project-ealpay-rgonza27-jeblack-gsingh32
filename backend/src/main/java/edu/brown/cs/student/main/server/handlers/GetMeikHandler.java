@@ -1,66 +1,81 @@
 package edu.brown.cs.student.main.server.handlers;
 
-import com.google.cloud.firestore.*;
-import com.google.firebase.cloud.FirestoreClient;
 import edu.brown.cs.student.main.User.User;
 import edu.brown.cs.student.main.User.UserInformation;
 import edu.brown.cs.student.main.server.responses.UserDataResponse;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-
+import edu.brown.cs.student.main.server.responses.MeikDataResponse;
+import edu.brown.cs.student.main.utils.FirebaseStorageService;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import spark.Request;
+import spark.Response;
+import spark.Route;
 
 public class GetMeikHandler implements Route {
 
   @Override
   public Object handle(Request request, Response response) throws Exception {
     response.type("application/json");
-    String userId = request.queryParams("id");
+    String meikId = request.queryParams("id");
 
     // Return the user data as JSON
-    return getUserById(userId);
+    return getMeikById(meikId);
   }
 
   /**
-   * This returns meik information from a given uid and serializes it into json format.
-   * @param userId
+   * This returns meik information from a given uid and serializes it into JSON format.
+   * @param meikId
    * @return
    */
+  private String getMeikById(String meikId) {
+    Map<String, Object> meikResponse = new HashMap<>();
 
-  private String getUserById(String userId) {
-    Map<String,Object> userResponse = new HashMap<>();
-    if(userId == null){
-      userResponse.put("err_bad_rqst","Missing ID");
-      UserDataResponse response1 = new UserDataResponse("Null",userResponse);
-      return response1.serialize();
+    if (meikId == null) {
+      meikResponse.put("err_bad_rqst", "Missing ID");
+      MeikDataResponse response = new MeikDataResponse("Null", meikResponse, null, null);
+      return response.serialize();
     }
 
     try {
       UserInformation userInformation = new UserInformation();
-      User user1 = userInformation.getUser(userId,"meiks");
-      userResponse.put("user",user1);
-      userResponse.put("result","success");
+      User meik = userInformation.getUser(meikId, "meiks");
+
+      if (meik == null) {
+        meikResponse.put("result", "failure");
+        meikResponse.put("message", "No user found with id: " + meikId);
+        UserDataResponse response = new UserDataResponse(meikId, meikResponse);
+        return response.serialize();
+      }
+
+      meikResponse.put("user", meik);
+      meikResponse.put("result", "success");
+
+      // Get meik image
+      FirebaseStorageService storageService = new FirebaseStorageService();
+      byte[] image = storageService.getImageBytes("images/" + meikId + ".jpg");
+      String imageData = Base64.getEncoder().encodeToString(image);
+      MeikDataResponse response = new MeikDataResponse(meikId, meikResponse, imageData, null);
+
+      return response.serialize();
 
     } catch (InterruptedException | ExecutionException e) {
       e.printStackTrace();
-      //Create record for failures in retrieving data.
-      userResponse.put("result","Failure");
-      userResponse.put("message",e.getMessage());
+      Map<String, Object> errorResponse = new HashMap<>();
 
-      UserDataResponse response = new UserDataResponse(userId,userResponse);
+      // Create record for failures in retrieving data.
+      errorResponse.put("result", "Failure");
+      errorResponse.put("message", e.getMessage());
+      MeikDataResponse response = new MeikDataResponse(meikId, errorResponse, null, null);
+
       return response.serialize();
 
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
-
-    UserDataResponse response = new UserDataResponse(userId,userResponse);
-    return response.serialize();
-
   }
 }
+
 
