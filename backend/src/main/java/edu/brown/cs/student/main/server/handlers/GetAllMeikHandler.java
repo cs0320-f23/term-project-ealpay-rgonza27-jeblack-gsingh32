@@ -50,16 +50,15 @@ public class GetAllMeikHandler implements Route {
 
         if (documentSnapshot.exists()) {
           //System.out.println("Successfully retrieved user: " + documentSnapshot.getId());
-
           // Get all contents of the document as a Map
           Map<String, Object> userData = documentSnapshot.getData();
-
           // Convert the Map to JSON and add to the list
           userList.add(userData);
         } else {
           System.err.println("Document not found for reference: " + documentReference.getPath());
           //Create a failed response
-          AllMeikDataResponse response = new AllMeikDataResponse("Document not found for reference: " + documentReference.getPath(),
+          AllMeikDataResponse response = new AllMeikDataResponse("Document not found for reference: " +
+                  documentReference.getPath(),
                   null);
           return response.serialize();
 
@@ -75,6 +74,7 @@ public class GetAllMeikHandler implements Route {
       return response.serialize();
 
     }
+
     //Create a success response
     AllMeikDataResponse response = new AllMeikDataResponse("Successfully retrieved data",userList);
     return response.serialize();
@@ -82,6 +82,5 @@ public class GetAllMeikHandler implements Route {
   }
 
 }
-
 
 

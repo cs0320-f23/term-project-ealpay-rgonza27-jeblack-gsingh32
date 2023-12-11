@@ -2,11 +2,15 @@ package edu.brown.cs.student.main.server.handlers;
 
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
-import edu.brown.cs.student.main.server.responses.MeikDataResponse;
+import edu.brown.cs.student.main.User.User;
+import edu.brown.cs.student.main.User.UserInformation;
+import edu.brown.cs.student.main.server.responses.UserDataResponse;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -28,38 +32,35 @@ public class GetMeikHandler implements Route {
    */
 
   private String getUserById(String userId) {
+    Map<String,Object> userResponse = new HashMap<>();
+    if(userId == null){
+      userResponse.put("err_bad_rqst","Missing ID");
+      UserDataResponse response1 = new UserDataResponse("Null",userResponse);
+      return response1.serialize();
+    }
+
     try {
-      Firestore db = FirestoreClient.getFirestore();
-
-      // Specify the collection to query
-      CollectionReference meiksCollection = db.collection("meiks");
-
-      // Example query: Get the document with the specified userId
-      DocumentReference userDocRef = meiksCollection.document(userId);
-      DocumentSnapshot document = userDocRef.get().get();
-
-      if (document.exists()) {
-        System.out.println("Successfully retrieved user: " + document.getId());
-
-        // Get all contents of the document as a Map
-        Map<String, Object> userData = document.getData();
-        //Create a record of the retrieved data
-        MeikDataResponse response = new MeikDataResponse(userId,userData,"Successfully retrieved data");
-        return response.serialize();
-      } else {
-        System.err.println("User not found for ID: " + userId);
-        //Create record for response where UID is not found.
-        MeikDataResponse response = new MeikDataResponse(userId,null,"User not found for ID");
-        return response.serialize();
-      }
+      UserInformation userInformation = new UserInformation();
+      User user1 = userInformation.getUser(userId,"meiks");
+      userResponse.put("user",user1);
+      userResponse.put("result","success");
 
     } catch (InterruptedException | ExecutionException e) {
       e.printStackTrace();
       //Create record for failures in retrieving data.
-      MeikDataResponse response = new MeikDataResponse(userId,null,e.getMessage());
+      userResponse.put("result","Failure");
+      userResponse.put("message",e.getMessage());
+
+      UserDataResponse response = new UserDataResponse(userId,userResponse);
       return response.serialize();
+
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     }
+
+    UserDataResponse response = new UserDataResponse(userId,userResponse);
+    return response.serialize();
+
   }
 }
-
 
