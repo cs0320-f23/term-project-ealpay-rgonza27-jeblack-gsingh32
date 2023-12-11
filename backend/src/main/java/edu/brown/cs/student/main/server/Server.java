@@ -3,10 +3,7 @@ package edu.brown.cs.student.main.server;
 import static spark.Spark.after;
 
 import edu.brown.cs.student.main.Authorization.FirebaseInitialize;
-import edu.brown.cs.student.main.server.handlers.GetAllMeikHandler;
-import edu.brown.cs.student.main.server.handlers.GetMeikHandler;
-import edu.brown.cs.student.main.server.handlers.GetUserHandler;
-import edu.brown.cs.student.main.server.handlers.RegistrationHandler;
+import edu.brown.cs.student.main.server.handlers.*;
 
 import spark.Spark;
 
@@ -47,7 +44,9 @@ public class Server {
     Spark.get("getMeikById", new GetMeikHandler());
     Spark.get("getAllMeiks", new GetAllMeikHandler());
     Spark.get("getUserById", new GetUserHandler());
-    Spark.notFound(
+    Spark.get("updateMeik", new UpdateMeikHandler());
+
+      Spark.notFound(
         (request, response) -> {
           response.status(404); // Not Found
           return "404 Not Found - The requested endpoint does not exist.";
