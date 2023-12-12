@@ -8,15 +8,21 @@ import Header from "./Header";
 import { VerticalScroll } from "../Helpers/ScrollComponents";
 import "../../styles/AddedPages.css";
 import Form from "./contactForm";
+import AboutUsPage from "./AboutUs";
+import JoinUsPage from "./JoinUs";
 
 export interface IHomeProps {}
 export const scrollToSection = (
-  elementRef: React.RefObject<HTMLDivElement>
+  elementRef: React.RefObject<HTMLDivElement>,
+  containerRef: React.RefObject<HTMLDivElement>
 ) => {
-  window.scrollTo({
-    top: elementRef.current?.offsetTop || 0,
-    behavior: "smooth",
-  });
+  if (elementRef.current && containerRef.current) {
+    console.log("Scrolling to:", containerRef.current);
+    containerRef.current.scrollTo({
+      top: elementRef.current.offsetTop - 125,
+      behavior: "smooth",
+    });
+  }
 };
 
 interface FormData {
@@ -35,9 +41,18 @@ const HomePage: React.FunctionComponent<IHomeProps> = (props) => {
   const about = useRef<HTMLDivElement>(null);
   const join = useRef<HTMLDivElement>(null);
   const contact = useRef<HTMLDivElement>(null);
-  const handleLinkClick = () => {
+  const scrollAAARef = useRef<HTMLDivElement>(null);
+  const handleLinkClickContacts = () => {
     console.log("scrolling to contact");
-    scrollToSection(contact);
+    scrollToSection(contact, scrollAAARef);
+  };
+  const handleLinkClickAbout = () => {
+    console.log("scrolling to contact");
+    scrollToSection(about, scrollAAARef);
+  };
+  const handleLinkClickJoin = () => {
+    console.log("scrolling to contact");
+    scrollToSection(join, scrollAAARef);
   };
 
   useEffect(() => {
@@ -57,7 +72,11 @@ const HomePage: React.FunctionComponent<IHomeProps> = (props) => {
         </motion.div>
       ) : (
         <div>
-          <Header onLinkClick={handleLinkClick} />
+          <Header
+            onLinkClickContact={handleLinkClickContacts}
+            onLinkClickAbout={handleLinkClickAbout}
+            onLinkClickJoin={handleLinkClickJoin}
+          />
           <motion.div
             className="transition-body"
             animate={{ opacity: 1, y: 0 }}
@@ -65,36 +84,37 @@ const HomePage: React.FunctionComponent<IHomeProps> = (props) => {
             transition={{ duration: 0.2 }}
           >
             <VerticalScroll>
-              <Banner />
-              {!loading && (
-                <motion.div className="transition-image final">
-                  <motion.img
-                    src={"/images/image-2.jpg"}
-                    layoutId="main-image-1"
-                    transition={{ duration: 0.5 }}
-                  />
-                </motion.div>
-              )}
-              <div className="about-div">
-                <h3 className="AboutPage">About</h3>
-                <li onClick={() => scrollToSection(contact)}>gotoContact</li>
-              </div>
-              <div className="join-div">
-                <h3 className="WhyJoinUsPage">Why join us?</h3>
-              </div>
-              <div ref={contact} className="contact-div">
-                <h3 className="ContactUsPage">Contact us!</h3>
-                <Form onSubmit={handleSubmit} />
-              </div>
+              <div className="scrollAAA" ref={scrollAAARef}>
+                <Banner />
+                {!loading && (
+                  <motion.div className="transition-image final">
+                    <motion.img
+                      src={"/images/image-2.jpg"}
+                      layoutId="main-image-1"
+                      transition={{ duration: 0.5 }}
+                    />
+                  </motion.div>
+                )}
+                <div ref={about} className="about-div">
+                  <AboutUsPage />
+                </div>
+                <div ref={join} className="join-div">
+                  <JoinUsPage />
+                </div>
+                <div ref={contact} className="contact-div">
+                  <h3 className="ContactUsPage">Contact us!</h3>
+                  <Form onSubmit={handleSubmit} />
+                </div>
 
-              <button
-                className="SignOut"
-                onClick={() => {
-                  signOut(auth);
-                }}
-              >
-                Sign Out
-              </button>
+                <button
+                  className="SignOut"
+                  onClick={() => {
+                    signOut(auth);
+                  }}
+                >
+                  Sign Out
+                </button>
+              </div>
             </VerticalScroll>
           </motion.div>
         </div>

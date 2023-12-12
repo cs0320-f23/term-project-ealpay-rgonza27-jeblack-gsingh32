@@ -1,0 +1,81 @@
+.join-us-main-div {
+  width: 100%;
+}
+
+.container {
+  display: flex;
+}
+
+.section-name {
+  height: 500px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.team-item {
+  width: 30%;
+  margin: 10px;
+  background-color: #b3a38e;
+  text-align: center;
+  padding: 20px;
+  border-radius: 8px;
+  transition: background-color 0.25s ease-in-out;
+  transition: transform 0.5s ease-in-out;
+  color: black;
+}
+
+.team-item:hover {
+  background-color: #958875;
+  transform: scale(1.05);
+}
+
+.team-info {
+  text-align: center;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.team-item-h3 {
+  margin: 20px 0 1px 0 !important;
+  color: black;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: color 0.25s ease-in-out;
+}
+
+.join-header-div {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  margin: 20px auto;
+}
+
+.join-header-div-h1 {
+  font-size: 50px;
+  color: #000;
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.join-header-div-h1::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  display: block;
+  height: 4px;
+  margin: 0 auto;
+  background-color: #b3a38e;
+}

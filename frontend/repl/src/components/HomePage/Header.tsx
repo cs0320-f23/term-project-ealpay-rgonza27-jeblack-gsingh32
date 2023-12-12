@@ -4,10 +4,16 @@ import "../../styles/Header.css";
 import { scrollToSection } from "./Home";
 
 interface HeaderProps {
-  onLinkClick: () => void;
+  onLinkClickContact: () => void;
+  onLinkClickAbout: () => void;
+  onLinkClickJoin: () => void;
 }
 
-const Header: React.FunctionComponent<HeaderProps> = ({ onLinkClick }) => {
+const Header: React.FunctionComponent<HeaderProps> = ({
+  onLinkClickContact,
+  onLinkClickAbout,
+  onLinkClickJoin,
+}) => {
   const navigate = useNavigate();
   return (
     <div className="header">
@@ -22,17 +28,25 @@ const Header: React.FunctionComponent<HeaderProps> = ({ onLinkClick }) => {
           <li onClick={() => navigate("/Profile")}>
             <a>Profile</a>
           </li>
-          <li onClick={() => navigate("/")}>
+          <li
+            onClick={() => {
+              onLinkClickAbout();
+            }}
+          >
             <a>About</a>
           </li>
-          <li onClick={() => navigate("/why")}>
+          <li
+            onClick={() => {
+              onLinkClickJoin();
+            }}
+          >
             <a>Why join us?</a>
           </li>
         </nav>
         <div
           className="contact"
           onClick={() => {
-            onLinkClick;
+            onLinkClickContact();
             console.log("hey");
           }}
         >
