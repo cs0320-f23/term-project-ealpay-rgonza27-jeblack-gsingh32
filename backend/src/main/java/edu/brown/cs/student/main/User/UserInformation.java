@@ -56,7 +56,7 @@ public class UserInformation {
             if(collection.equals("meiks")){
                 String text = document.get("text",java.lang.String.class);
                 String year =  document.get("year",java.lang.String.class);
-                user = new Meik(name,email,location,year,text,tags,userId);
+                user = new Meik(name,email,location,year,text,tags,userId,concentration);
             }
             //GenericTypeIndicator<List<String>> tag = new GenericTypeIndicator<List<String>>(){};
         }

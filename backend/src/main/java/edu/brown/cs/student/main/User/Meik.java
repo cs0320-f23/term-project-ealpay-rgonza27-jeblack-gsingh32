@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public record Meik(String name, String email, String location, String year, String text,
-                   List<String> tags, String uid) implements User{
+                   List<String> tags, String uid, String concentration) implements User{
 
 
 
