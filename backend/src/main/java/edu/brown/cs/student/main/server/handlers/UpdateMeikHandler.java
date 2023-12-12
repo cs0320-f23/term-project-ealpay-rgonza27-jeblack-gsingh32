@@ -46,7 +46,7 @@ public class UpdateMeikHandler implements Route {
         try {
             UserInformation userInformation = new UserInformation();
             user = userInformation.getUser(userId, "meiks");
-            user.isMeik();
+
             if (!(location == null)) {
                 user.updateUserLocation(location);
                 results.put("location_status","Success");
