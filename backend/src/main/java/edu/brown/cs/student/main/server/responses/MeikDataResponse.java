@@ -4,7 +4,7 @@ import com.squareup.moshi.Moshi;
 
 import java.util.Map;
 
-public record MeikDataResponse(String meikID, Map<String,Object> data,
+public record MeikDataResponse(String meikID, Map<String,Object> data,String image,
                                String message) {
 
 
