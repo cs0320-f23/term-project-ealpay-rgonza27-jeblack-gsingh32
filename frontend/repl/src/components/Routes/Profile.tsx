@@ -7,17 +7,20 @@ import { VerticalScroll } from "../Helpers/ScrollComponents";
 import cardView from "../Search/cardView";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { singleMeik } from "./MeikHandler";
+import { tags } from "../Helpers/tags";
 
 interface IProfileProps {}
 
 const Profile: React.FunctionComponent<IProfileProps> = (props) => {
   const [username, setUsername] = useState("Name");
+  const [email, setEmail] = useState("email");
   const [concentration, setConcentration] = useState("Visual Arts");
   const [concentration2, setConcentration2] = useState("");
   const [concentration3, setConcentration3] = useState("");
   const [concentrationNum, setConNum] = useState(1);
   const [location, setLocation] = useState("example,RI");
   const [year, setYear] = useState("'26");
+  const [tags, setTags] = useState([""]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
@@ -27,6 +30,8 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
           setUsername(data.name);
           setLocation(data.location);
           setYear(data.year);
+          setTags(data.tags);
+          setEmail(data.email);
           const constList = data.concentration.split(" & ");
           setConcentration(constList[0]);
           if (constList[1]) {
@@ -136,12 +141,12 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
               {cardView({
                 name: username,
                 concentration: concentration + concentration2 + concentration3,
-                email: "",
+                email: email,
                 year: year,
                 location: location,
                 id: "",
                 imageURL: "",
-                tags: [""],
+                tags: tags,
                 text: "",
               })}
             </div>
@@ -181,6 +186,19 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
             >
               Add Concentration
             </button>
+            <select
+              id="Tags"
+              value={concentration}
+              onChange={(e) => {
+                // setConcentration(e.target.value as tags);
+              }}
+            >
+              {Object.values(tags).map((conc) => (
+                <option key={conc} value={conc}>
+                  {conc}
+                </option>
+              ))}
+            </select>
             <select
               id="year"
               value={year}

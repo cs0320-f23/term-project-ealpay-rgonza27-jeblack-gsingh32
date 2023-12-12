@@ -15,7 +15,8 @@ export function singleMeik(meikId: String): Promise<Meik> {
   return fetch("http://localhost:3232/getMeikById?id=" + meikId)
     .then((response) => response.json())
     .then((data) => {
-      return data["data"];
+      console.log(data);
+      return data["data"]["user"];
     })
     .then((data) => {
       const a = typeof data === "string" ? JSON.parse(data) : data;
