@@ -70,7 +70,13 @@ const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
   return (
     <div>
       <Header
-        onLinkClick={function (): void {
+        onLinkClickContact={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+        onLinkClickAbout={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+        onLinkClickJoin={function (): void {
           throw new Error("Function not implemented.");
         }}
       />
