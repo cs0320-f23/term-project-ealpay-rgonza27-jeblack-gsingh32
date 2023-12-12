@@ -107,7 +107,7 @@ const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
                 key={index}
                 style={{ display: "inline-block" }}
               >
-                {cardView(meikObject)}
+                {cardView(meikObject, null)}
               </div>
             ))}
           </div>

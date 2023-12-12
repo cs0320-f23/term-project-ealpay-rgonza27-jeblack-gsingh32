@@ -8,6 +8,7 @@ import cardView from "../Search/cardView";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { changeInfo, singleMeik } from "./MeikHandler";
 import { interests } from "../Helpers/tags";
+import { stringToImage } from "../Helpers/ImageConvertor";
 
 interface IProfileProps {}
 
@@ -22,26 +23,38 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
   const [year, setYear] = useState("'26");
   const [tags, setTags] = useState([""]);
   const [uid, setUid] = useState("");
+  const [image, setImage] = useState<HTMLImageElement | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
       if (user) {
         setUid(user.uid);
-        singleMeik(user.uid).then((data) => {
-          setUsername(data.name);
-          setLocation(data.location);
-          setYear(data.year);
-          setTags(data.tags);
-          setEmail(data.email);
-          const constList = data.concentration.split(" & ");
-          setConcentration(constList[0]);
-          if (constList[1]) {
-            setConcentration2(" & " + constList[1]);
-          }
-          if (constList[2]) {
-            setConcentration3(" & " + constList[2]);
-          }
-        });
+        singleMeik(user.uid)
+          .then((data) => {
+            console.log(data);
+            setImage(stringToImage(String(data["image"])));
+            return data["data"]["user"];
+          })
+          .then((data) => {
+            const a = typeof data === "string" ? JSON.parse(data) : data;
+
+            return a;
+          })
+          .then((data) => {
+            setUsername(data.name);
+            setLocation(data.location);
+            setYear(data.year);
+            setTags(data.tags);
+            setEmail(data.email);
+            const constList = data.concentration.split(" & ");
+            setConcentration(constList[0]);
+            if (constList[1]) {
+              setConcentration2(" & " + constList[1]);
+            }
+            if (constList[2]) {
+              setConcentration3(" & " + constList[2]);
+            }
+          });
       }
     });
 
@@ -139,17 +152,21 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
           <div className="profile-content">
             <span className="Title">Edit Your Profile!</span>
             <div>
-              {cardView({
-                name: username,
-                concentration: concentration + concentration2 + concentration3,
-                email: email,
-                year: year,
-                location: location,
-                id: "",
-                imageURL: "",
-                tags: tags,
-                text: "",
-              })}
+              {cardView(
+                {
+                  name: username,
+                  concentration:
+                    concentration + concentration2 + concentration3,
+                  email: email,
+                  year: year,
+                  location: location,
+                  id: "",
+                  imageURL: "",
+                  tags: tags,
+                  text: "",
+                },
+                image
+              )}
             </div>
 
             <input

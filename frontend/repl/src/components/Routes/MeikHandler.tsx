@@ -11,18 +11,9 @@ export function AllMeiks(): Promise<string[]> {
     });
 }
 
-export function singleMeik(meikId: String): Promise<Meik> {
+export function singleMeik(meikId: String) {
   return fetch("http://localhost:3232/getMeikById?id=" + meikId)
     .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      return data["data"]["user"];
-    })
-    .then((data) => {
-      const a = typeof data === "string" ? JSON.parse(data) : data;
-
-      return a;
-    })
     .catch((e) => {
       return "ERROR: " + e;
     });

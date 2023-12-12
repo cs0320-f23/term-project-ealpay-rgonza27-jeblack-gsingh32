@@ -12,12 +12,14 @@ interface Meik {
   text: string;
   year: string;
 }
-function cardView(props: Meik) {
+function cardView(props: Meik, image: HTMLImageElement | null) {
+  const imageHtml = image ? image.outerHTML : "";
   return (
     <div className="card">
-      <div className="upper-half">
-        <img src="" alt="User" />
-      </div>
+      <div
+        className="upper-half"
+        dangerouslySetInnerHTML={{ __html: imageHtml }}
+      />
       <div className="lower-half">
         <div className="text-group">
           <span className="Name">{props.name}</span>
