@@ -5,6 +5,7 @@ import edu.brown.cs.student.main.User.User;
 import edu.brown.cs.student.main.User.UserInformation;
 import edu.brown.cs.student.main.server.responses.UserDataResponse;
 import edu.brown.cs.student.main.server.responses.UserUpdateResponse;
+import java.util.List;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -35,12 +36,12 @@ public class UpdateMeikHandler implements Route {
         }
 
         String location = request.queryParams("location");
-        String email = request.queryParams("email");
-        String text = request.queryParams("text");
-        //String year = request.queryParams("year");
+        String concentration = request.queryParams("concentration");
+//        String text = request.queryParams("text");
+        String year = request.queryParams("year");
         String name = request.queryParams("name");
         String tag = request.queryParams("tag");
-        String tagAction = request.queryParams("action");
+//        String tagAction = request.queryParams("action");
         User user = null;
 
         try {
@@ -51,34 +52,44 @@ public class UpdateMeikHandler implements Route {
                 user.updateUserLocation(location);
                 results.put("location_status","Success");
             }
-            if (!(email == null)) {
-                user.updateUserEmail(email);
-                results.put("email_status","Success");
+            if (!(tag == null)) {
+                user.updateUserTags(List.of(tag.split(",")));
+                results.put("tags_status","Success");
             }
-            if (!(text == null)) {
-                user.updateUserText(text);
-                results.put("text_status","Success");
-
-            }
+//            if (!(text == null)) {
+//                user.updateUserText(text);
+//                results.put("text_status","Success");
+//
+//            }
             if (!(name == null)) {
                 user.updateUserName(name);
                 results.put("name_status","Success");
 
             }
-            if (!(tag == null)) {
-                if (!(tagAction == null)) {
-                    if (tagAction.equals("add")) {
-                        user.addUserTags(tag);
-                        results.put("tag_add","Success");
+            if (!(concentration == null)) {
+                user.updateUserConcentration(concentration);
+                results.put("concentration_status","Success");
 
-                    }
-                    if (tagAction.equals("remove")) {
-                        user.removeUserTags(tag);
-                        results.put("tag_remove","Success");
-
-                    }
-                }
             }
+            if (!(year == null)) {
+                user.updateUserYear(year);
+                results.put("concentration_status","Success");
+
+            }
+//            if (!(tag == null)) {
+//                if (!(tagAction == null)) {
+//                    if (tagAction.equals("add")) {
+//                        user.addUserTags(tag);
+//                        results.put("tag_add","Success");
+//
+//                    }
+//                    if (tagAction.equals("remove")) {
+//                        user.removeUserTags(tag);
+//                        results.put("tag_remove","Success");
+//
+//                    }
+//                }
+//            }
         }
         catch (Exception e){
             results.put("error",e.getMessage());

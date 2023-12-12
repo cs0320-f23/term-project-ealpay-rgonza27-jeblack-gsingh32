@@ -54,3 +54,31 @@
   background-position: right 8px center;
   padding-right: 25px;
 }
+
+#Tags {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Style the options */
+#Tags option {
+  padding: 10px;
+}
+
+/* Style the selected options */
+#Tags option:checked {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Style the container when focused */
+#Tags:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}

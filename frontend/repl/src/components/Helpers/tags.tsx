@@ -1,7 +1,18 @@
-export enum tags {
-  Default = "",
+export enum interests {
   Music = "Music",
   Sports = "Sports",
   International = "International",
   OnCampusJoc = "On Campus Job",
+  Research = "Research",
+  UTA = "Teaching Assistant (UTA)",
+  UFLI = "UFLI",
+  PreMed = "Pre-Med",
+  PreLaw = "Pre-Law",
+  LGBTIQ = "LGBTIQA2S+",
+  MeikLeader = "Meik Leader",
+  Dance = "Dance",
+  Arts = "Arts",
+  UTRA = "Sprint/Utra",
+  Languages = "Languages",
+  Default = "",
 }

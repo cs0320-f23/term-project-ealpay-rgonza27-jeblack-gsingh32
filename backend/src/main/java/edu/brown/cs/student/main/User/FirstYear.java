@@ -51,4 +51,14 @@ public record FirstYear(String name, String concentrations, String location,
     public void updateUserEmail(String email) throws ExecutionException, InterruptedException {
 
     }
+
+    @Override
+    public void updateUserYear(String year) throws ExecutionException, InterruptedException {
+
+    }
+
+    @Override
+    public void updateUserTags(List<String> tags) throws ExecutionException, InterruptedException {
+
+    }
 }

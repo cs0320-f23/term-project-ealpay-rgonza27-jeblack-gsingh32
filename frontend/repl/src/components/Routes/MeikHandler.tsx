@@ -27,3 +27,31 @@ export function singleMeik(meikId: String): Promise<Meik> {
       return "ERROR: " + e;
     });
 }
+
+export function changeInfo(
+  meikId: String,
+  name: String,
+  location: String,
+  year: String,
+  tag: String,
+  concentration: String
+): Promise<string[]> {
+  return fetch(
+    "http://localhost:3232/updateMeik?id=" +
+      meikId +
+      "&name=" +
+      name +
+      "&location=" +
+      location +
+      "&year=" +
+      year +
+      "&tag=" +
+      tag +
+      "&concentration=" +
+      concentration
+  )
+    .then((response) => response.json())
+    .catch((e) => {
+      return "ERROR: " + e;
+    });
+}

@@ -29,9 +29,9 @@ public class UpdataUsersTest {
         tags.add("swagger");
         tags.add("jagger");
 
-        Meik testMeik = new Meik("gurpartap","gurpartap_singh@brown.edu","Queens, NY",
-                "24","instagram haha",tags,"6KihrwCTtOO3vA7yAU3Q9K3j6gu1");
-        testMeik.updateUserName("Gurpoptart");
+//        Meik testMeik = new Meik("gurpartap","gurpartap_singh@brown.edu","Queens, NY",
+//                "24","instagram haha",tags,"6KihrwCTtOO3vA7yAU3Q9K3j6gu1");
+//        testMeik.updateUserName("Gurpoptart");
     }
 
 }

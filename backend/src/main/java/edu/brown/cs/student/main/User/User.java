@@ -13,6 +13,8 @@ public interface User {
     void updateUserConcentration(String concentration) throws ExecutionException, InterruptedException;
     void updateUserName(String name) throws ExecutionException, InterruptedException;
     void updateUserEmail(String email) throws ExecutionException, InterruptedException;
+    void updateUserYear(String year) throws ExecutionException, InterruptedException;
+    void updateUserTags(List<String> tags) throws ExecutionException, InterruptedException;
 
 
 

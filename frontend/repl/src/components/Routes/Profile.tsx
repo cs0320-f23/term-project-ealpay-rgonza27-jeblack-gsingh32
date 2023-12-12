@@ -6,8 +6,8 @@ import { concentrations } from "../Helpers/concentrations";
 import { VerticalScroll } from "../Helpers/ScrollComponents";
 import cardView from "../Search/cardView";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { singleMeik } from "./MeikHandler";
-import { tags } from "../Helpers/tags";
+import { changeInfo, singleMeik } from "./MeikHandler";
+import { interests } from "../Helpers/tags";
 
 interface IProfileProps {}
 
@@ -21,12 +21,13 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
   const [location, setLocation] = useState("example,RI");
   const [year, setYear] = useState("'26");
   const [tags, setTags] = useState([""]);
+  const [uid, setUid] = useState("");
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
       if (user) {
-        const uid = user.uid;
-        singleMeik(uid).then((data) => {
+        setUid(user.uid);
+        singleMeik(user.uid).then((data) => {
           setUsername(data.name);
           setLocation(data.location);
           setYear(data.year);
@@ -87,9 +88,9 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
                 }
               }}
             >
-              {Object.values(concentrations).map((conc) => (
-                <option key={conc} value={conc}>
-                  {conc}
+              {Object.values(interests).map((int) => (
+                <option key={int} value={int}>
+                  {int}
                 </option>
               ))}
             </select>
@@ -188,12 +189,20 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
             </button>
             <select
               id="Tags"
-              value={concentration}
+              value={tags}
               onChange={(e) => {
-                // setConcentration(e.target.value as tags);
+                const value = e.target.value;
+                if (tags.includes(value)) {
+                  const updatedTags = tags.filter((tag) => tag !== value);
+                  console.log(updatedTags);
+                  setTags(updatedTags);
+                } else {
+                  setTags([...tags, e.target.value]);
+                }
               }}
+              multiple
             >
-              {Object.values(tags).map((conc) => (
+              {Object.values(interests).map((conc) => (
                 <option key={conc} value={conc}>
                   {conc}
                 </option>
@@ -209,7 +218,20 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
               <option value="'25">'25</option>
               <option value="'24">'24</option>
             </select>
-            <button>Save Changes</button>
+            <button
+              onClick={() => {
+                changeInfo(
+                  uid,
+                  username,
+                  location,
+                  year,
+                  String(tags),
+                  concentration + concentration2 + concentration3
+                );
+              }}
+            >
+              Save Changes
+            </button>
           </div>
         </motion.div>
       </VerticalScroll>

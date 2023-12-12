@@ -35,6 +35,23 @@ public record Meik(String name, String email, String location, String year, Stri
         System.out.println(userDocRef.update("concentration",concentration).get());
 
     }
+    public void updateUserTags(List<String> tags) throws ExecutionException, InterruptedException {
+
+        Firestore db = FirestoreClient.getFirestore();
+        CollectionReference collectionRef = db.collection("meiks");
+        DocumentReference userDocRef = collectionRef.document(uid);
+        System.out.println(userDocRef.update("tags",tags).get());
+
+    }
+
+    public void updateUserYear(String year) throws ExecutionException, InterruptedException {
+
+        Firestore db = FirestoreClient.getFirestore();
+        CollectionReference collectionRef = db.collection("meiks");
+        DocumentReference userDocRef = collectionRef.document(uid);
+        System.out.println(userDocRef.update("year",year).get());
+
+    }
 
     public void updateUserLocation(String location) throws ExecutionException, InterruptedException {
 
