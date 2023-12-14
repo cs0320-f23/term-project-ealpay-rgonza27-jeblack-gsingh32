@@ -77,7 +77,9 @@ function Form({ onSubmit }: FormProps) {
           </label>
         </div>
         <br />
-        <button type="submit">Submit</button>
+        <button className="submit-button" type="submit">
+          Submit
+        </button>
       </form>
     </div>
   );
