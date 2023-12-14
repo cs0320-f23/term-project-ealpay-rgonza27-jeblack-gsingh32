@@ -43,22 +43,28 @@ public class UserInformation {
             String email = document.get("email",java.lang.String.class);
             String name = document.get("name",java.lang.String.class);
             String location =  document.get("location",java.lang.String.class);
-            String concentration =  document.get("concentration",java.lang.String.class);
+
+
+
             List<String> tags = (List<String>)document.get("tags");
 
             if(collection.equals("FirstYears")){
+                GenericTypeIndicator<Map<String, Integer>> genericTypeIndicator = new GenericTypeIndicator<Map<String, Integer>>() {};
+
                 //Issue of typecasting
                 Map<String,String> search = (Map<String,String>) document.get("search");
+                List<String> concentration = (List<String>) document.get("concentration");
+
                 user = new FirstYear(name,concentration,location, tags, email, search);
             }
 
-            //GenericTypeIndicator<Map<String, Integer>> genericTypeIndicator = new GenericTypeIndicator<Map<String, Integer>>() {};
             if(collection.equals("meiks")){
                 String text = document.get("text",java.lang.String.class);
                 String year =  document.get("year",java.lang.String.class);
-                user = new Meik(name,email,location,year,text,tags,userId,concentration);
+                String concentration =  document.get("concentration",java.lang.String.class);
+                user = new Meik(name,email,location,year,text,tags,concentration);
             }
-            //GenericTypeIndicator<List<String>> tag = new GenericTypeIndicator<List<String>>(){};
+            GenericTypeIndicator<List<String>> tag = new GenericTypeIndicator<List<String>>(){};
         }
 
         return user;
