@@ -1,12 +1,14 @@
 package edu.brown.cs.student.main.User;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-public record FirstYear(String name, String concentrations, String location,
-                        List<String> tags, String email, Map<String,String> search)
+public record FirstYear(String name, List<String> concentrations, String location,
+                        List<String> tags, String email, Map<String,Double> search)
         implements User {
 
 
@@ -61,4 +63,66 @@ public record FirstYear(String name, String concentrations, String location,
     public void updateUserTags(List<String> tags) throws ExecutionException, InterruptedException {
 
     }
+
+    @Override
+    public void initializeTagsBuckets() throws Exception {
+        Map<String,Double> tagRating = new HashMap<>();
+        for (String tag: this.tags){
+            if(!tagRating.containsKey(tag)){
+                tagRating.put(tag,5.0);
+            }
+        }
+    }
+
+    @Override
+    public void initializeConcentrationBuckets() throws Exception {
+        Map<String,Double> concentrationRating = new HashMap<>();
+        for (String tag: this.concentrations){
+            if(!concentrationRating.containsKey(tag)){
+                concentrationRating.put(tag,5.0);
+            }
+        }
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public Map<String,Double> getTagRankings() {
+        Map<String,Double> ratings = new HashMap<>();
+
+        List<String> officialTags = new ArrayList<>();
+        officialTags.add("Music");
+        officialTags.add("Sports");
+        officialTags.add("International");
+        officialTags.add("On Campus Job");
+        officialTags.add("UFLI");
+        officialTags.add("Pre-Med");
+        officialTags.add("Pre-Law");
+        officialTags.add("LGBTIQA2S+");
+        officialTags.add("Dance");
+        officialTags.add("Arts");
+        officialTags.add("Sprint/Utra");
+        officialTags.add("Languages");
+
+        for(String tag: this.tags){
+            if(!ratings.containsKey(tag)){
+                ratings.put(tag,5.0);
+            }
+        }
+
+        for (String search : this.search.keySet() ){
+            if (officialTags.contains(search)){
+                if(!ratings.containsKey(search)){
+                    double val = this.search.get(search);
+                    ratings.put(search,val);
+                }
+            }
+        }
+
+        return ratings;
+    }
+
 }

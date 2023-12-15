@@ -44,6 +44,17 @@ public record Meik(String name, String email, String location, String year, Stri
 
     }
 
+    @Override
+    public void initializeTagsBuckets() throws Exception {
+        throw new Exception("This method is meant for First Years");
+    }
+
+    @Override
+    public void initializeConcentrationBuckets() throws Exception {
+        throw new Exception("This method is meant for First Years");
+
+    }
+
     public void updateUserYear(String year) throws ExecutionException, InterruptedException {
 
         Firestore db = FirestoreClient.getFirestore();

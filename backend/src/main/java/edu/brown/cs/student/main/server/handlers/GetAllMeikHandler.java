@@ -39,8 +39,6 @@ public class GetAllMeikHandler implements Route {
 
       // Specify the collection to query
       CollectionReference meiksCollection = db.collection("meiks");
-      System.out.println(meiksCollection);
-      System.out.println("Check 1");
       // Get all references to documents in the collection
       Iterable<DocumentReference> documentReferences = meiksCollection.listDocuments();
 

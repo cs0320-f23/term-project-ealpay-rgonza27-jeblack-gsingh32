@@ -20,43 +20,57 @@ import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 public class UserInformation {
-    public User getUser(String userId, String collection) throws ExecutionException, InterruptedException, IOException {
-
-
+    public User getUserFromId(String userId, String collection) throws ExecutionException, InterruptedException, IOException {
 
         User user = null;
-
 
         Firestore db = FirestoreClient.getFirestore();
         CollectionReference collectionRef = db.collection(collection);
         DocumentReference userDocRef = collectionRef.document(userId);
         DocumentSnapshot document = userDocRef.get().get();
 
+        user = this.getUserFromDocRef(document,collection);
 
 
-        if (document.exists()) {
-            System.out.println("Successfully retrieved user: " + document.getId());
+        return user;
+
+    }
+
+    public User getUserFromDocRef(DocumentSnapshot doc,String collection) throws ExecutionException, InterruptedException, IOException {
+
+        User user = null;
+
+
+
+
+        if (doc.exists()) {
+            System.out.println("Successfully retrieved user: " + doc.getId());
 
             // Get all contents of the document as a Map
-            Map<String, Object> userData = document.getData();
-           // System.out.println(userData);
-            String email = document.get("email",java.lang.String.class);
-            String name = document.get("name",java.lang.String.class);
-            String location =  document.get("location",java.lang.String.class);
-            String concentration =  document.get("concentration",java.lang.String.class);
-            List<String> tags = (List<String>)document.get("tags");
+            Map<String, Object> userData = doc.getData();
+            // System.out.println(userData);
+            String email = doc.get("email",java.lang.String.class);
+            String name = doc.get("name",java.lang.String.class);
+            String location =  doc.get("location",java.lang.String.class);
+=            List<String> tags = (List<String>)doc.get("tags");
 
             if(collection.equals("FirstYears")){
+                List<String> concentration = (List<String>) doc.get("concentration");
+
                 //Issue of typecasting
-                Map<String,String> search = (Map<String,String>) document.get("search");
+                Map<String,Double> search = (Map<String,Double>) doc.get("search");
                 user = new FirstYear(name,concentration,location, tags, email, search);
+
             }
 
             //GenericTypeIndicator<Map<String, Integer>> genericTypeIndicator = new GenericTypeIndicator<Map<String, Integer>>() {};
             if(collection.equals("meiks")){
-                String text = document.get("text",java.lang.String.class);
-                String year =  document.get("year",java.lang.String.class);
-                user = new Meik(name,email,location,year,text,tags,userId,concentration);
+
+                String concentration = doc.get("concentration",java.lang.String.class);
+                String text = doc.get("text",java.lang.String.class);
+                String year =  doc.get("year",java.lang.String.class);
+                user = new Meik(name,email,location,year,text,tags, doc.getId(),concentration);
+
             }
             //GenericTypeIndicator<List<String>> tag = new GenericTypeIndicator<List<String>>(){};
         }
