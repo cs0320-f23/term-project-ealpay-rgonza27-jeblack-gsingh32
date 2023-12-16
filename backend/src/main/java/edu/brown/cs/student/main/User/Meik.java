@@ -50,9 +50,24 @@ public record Meik(String name, String email, String location, String year, Stri
     }
 
     @Override
+    public void updateTagBucket() {
+
+    }
+
+    @Override
     public void initializeConcentrationBuckets() throws Exception {
         throw new Exception("This method is meant for First Years");
 
+    }
+
+    @Override
+    public String getName() {
+        return null;
+    }
+
+    @Override
+    public Map<String, Double> getTagRankings() {
+        return null;
     }
 
     public void updateUserYear(String year) throws ExecutionException, InterruptedException {
@@ -118,9 +133,6 @@ public record Meik(String name, String email, String location, String year, Stri
     }
 
 
-    @Override
-    public boolean isMeik() {
-        return true;
-    }
+
 }
 

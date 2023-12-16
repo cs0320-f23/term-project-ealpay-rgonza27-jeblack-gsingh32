@@ -35,13 +35,13 @@ public class GetRecommendation {
                 userList.add(user);
                 user.initializeTagsBuckets();
                 ratings.put(user.getName(),user.getTagRankings());
+
             }
 
         }catch (Exception e){
             e.printStackTrace();
         }
-
-
+        return ratings;
     }
 
 }

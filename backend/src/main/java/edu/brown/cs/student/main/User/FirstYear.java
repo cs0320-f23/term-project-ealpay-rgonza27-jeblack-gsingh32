@@ -13,10 +13,7 @@ public record FirstYear(String name, List<String> concentrations, String locatio
 
 
 
-    @Override
-    public boolean isMeik() {
-        return false;
-    }
+
 
     @Override
     public void addUserTags(String tag) throws ExecutionException, InterruptedException {
@@ -75,6 +72,12 @@ public record FirstYear(String name, List<String> concentrations, String locatio
     }
 
     @Override
+    public void updateTagBucket() {
+
+    }
+
+
+    @Override
     public void initializeConcentrationBuckets() throws Exception {
         Map<String,Double> concentrationRating = new HashMap<>();
         for (String tag: this.concentrations){
@@ -83,7 +86,7 @@ public record FirstYear(String name, List<String> concentrations, String locatio
             }
         }
     }
-
+w
     @Override
     public String getName() {
         return name;
@@ -115,14 +118,13 @@ public record FirstYear(String name, List<String> concentrations, String locatio
 
         for (String search : this.search.keySet() ){
             if (officialTags.contains(search)){
-                if(!ratings.containsKey(search)){
-                    double val = this.search.get(search);
+                    double val = this.search.get(search)*0.75;
                     ratings.put(search,val);
-                }
             }
         }
 
         return ratings;
+
     }
 
 }

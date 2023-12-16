@@ -7,7 +7,6 @@ import java.util.concurrent.ExecutionException;
 
 public interface User {
 
-    boolean isMeik();
     void addUserTags(String tag) throws ExecutionException, InterruptedException;
     void removeUserTags(String tag) throws ExecutionException, InterruptedException;
     void updateUserText(String text) throws ExecutionException, InterruptedException;
@@ -18,6 +17,7 @@ public interface User {
     void updateUserYear(String year) throws ExecutionException, InterruptedException;
     void updateUserTags(List<String> tags) throws ExecutionException, InterruptedException;
     void initializeTagsBuckets() throws Exception;
+    void updateTagBucket();
     void initializeConcentrationBuckets() throws Exception;
     String getName();
     Map<String, Double> getTagRankings();

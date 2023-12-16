@@ -47,12 +47,10 @@ public class UserInformation {
             System.out.println("Successfully retrieved user: " + doc.getId());
 
             // Get all contents of the document as a Map
-            Map<String, Object> userData = doc.getData();
-            // System.out.println(userData);
             String email = doc.get("email",java.lang.String.class);
             String name = doc.get("name",java.lang.String.class);
             String location =  doc.get("location",java.lang.String.class);
-=            List<String> tags = (List<String>)doc.get("tags");
+            List<String> tags = (List<String>)doc.get("tags");
 
             if(collection.equals("FirstYears")){
                 List<String> concentration = (List<String>) doc.get("concentration");
