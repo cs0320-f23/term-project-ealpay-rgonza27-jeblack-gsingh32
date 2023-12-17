@@ -1,0 +1,89 @@
+.contact-form {
+  margin-top: 50px;
+  width: 100%;
+  max-width: 1500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-group {
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.input-bar-message {
+  width: 500px;
+  padding: 10px;
+  outline: 0;
+  border: 1px solid #040404;
+  color: #030303;
+  background: transparent;
+  font-size: 15px;
+}
+
+.input-bar-email {
+  width: 500px;
+  padding: 10px;
+  outline: 0;
+  border: 1px solid #040404;
+  color: #030303;
+  background: transparent;
+  font-size: 15px;
+}
+
+.input-bar-name {
+  width: 500px;
+  padding: 10px;
+  outline: 0;
+  border: 1px solid #040404;
+  color: #030303;
+  background: transparent;
+  font-size: 15px;
+}
+
+.label-name,
+.label-email,
+.label-message {
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 5px;
+  color: #030303;
+  cursor: text;
+  transition: 0.2s;
+}
+
+.submit-button {
+  padding: 10px;
+  padding-left: 100px;
+  padding-right: 100px;
+  color: #030303;
+  outline: none;
+  background: transparent;
+  border: 1px solid #030303;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.input-bar-message {
+  height: 100px;
+}
+
+.input-bar-name:valid ~ label,
+.input-bar-email:valid ~ label,
+.input-bar-message:valid ~ label {
+  top: -30px;
+}
+
+.input-bar-name:focus ~ label,
+.input-bar-email:focus ~ label,
+.input-bar-message:focus ~ label {
+  font-size: 18px;
+}
+
+.submit-button:hover {
+  font-size: 17px;
+  background: #ddd3c9;
+}

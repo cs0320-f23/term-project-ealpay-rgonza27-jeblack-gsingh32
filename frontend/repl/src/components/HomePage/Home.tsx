@@ -10,6 +10,7 @@ import "../../styles/AddedPages.css";
 import Form from "./contactForm";
 import AboutUsPage from "./AboutUs";
 import JoinUsPage from "./JoinUs";
+import ScrollToTop from "./scrollToTop";
 
 export interface IHomeProps {}
 export const scrollToSection = (
@@ -42,6 +43,7 @@ const HomePage: React.FunctionComponent<IHomeProps> = (props) => {
   const join = useRef<HTMLDivElement>(null);
   const contact = useRef<HTMLDivElement>(null);
   const scrollAAARef = useRef<HTMLDivElement>(null);
+
   const handleLinkClickContacts = () => {
     console.log("scrolling to contact");
     scrollToSection(contact, scrollAAARef);
@@ -86,6 +88,7 @@ const HomePage: React.FunctionComponent<IHomeProps> = (props) => {
             <VerticalScroll>
               <div className="scrollAAA" ref={scrollAAARef}>
                 <Banner />
+                <ScrollToTop elementRef={scrollAAARef} />
                 {!loading && (
                   <motion.div className="transition-image final">
                     <motion.img
