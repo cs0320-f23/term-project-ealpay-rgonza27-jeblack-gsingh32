@@ -5,6 +5,7 @@ import static spark.Spark.after;
 import edu.brown.cs.student.main.Authorization.FirebaseInitialize;
 import edu.brown.cs.student.main.server.handlers.*;
 
+import org.checkerframework.checker.units.qual.C;
 import spark.Spark;
 
 /**
@@ -44,7 +45,8 @@ public class Server {
     Spark.get("getMeikById", new GetMeikHandler());
     Spark.get("getAllMeiks", new GetAllMeikHandler());
     Spark.get("getUserById", new GetUserHandler());
-    Spark.get("updateMeik", new UpdateMeikHandler());
+    Spark.get("updateMeik", new UpdateUserHandler());
+    Spark.get("newFirstYear", new CreateFirstYearHandler());
 
       Spark.notFound(
         (request, response) -> {
