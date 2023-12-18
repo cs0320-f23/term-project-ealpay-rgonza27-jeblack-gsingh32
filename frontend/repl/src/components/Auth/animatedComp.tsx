@@ -13,6 +13,7 @@ import { AnimatePresence } from "framer-motion";
 import Meiks from "../Routes/Meiks";
 import Profile from "../Routes/Profile";
 import NonMeikRoute from "./NoneMeikRoute";
+import UserProfile from "../Routes/UserProfile";
 
 function AnimatedRouts() {
   const location = useLocation();
@@ -45,6 +46,14 @@ function AnimatedRouts() {
               <NonMeikRoute>
                 <Profile key="profile" />
               </NonMeikRoute>
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="/UserProfile"
+          element={
+            <AuthRoute key="userProfile">
+              <UserProfile key="userProfile" />
             </AuthRoute>
           }
         />

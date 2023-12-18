@@ -11,7 +11,7 @@ const NonMeikRoute: React.FunctionComponent<IAuthRouteProps> = (props) => {
 
   useEffect(() => {
     const AuthCheck = onAuthStateChanged(auth, (user) => {
-      if (user?.email == "ADD THE WHOLE MEIK LIST HERE") {
+      if (user?.email == "efe_alpay@brown.edu") {
         navigate("/UserProfile");
       }
     });
