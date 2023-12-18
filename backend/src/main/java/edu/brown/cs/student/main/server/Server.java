@@ -5,6 +5,7 @@ import static spark.Spark.after;
 import edu.brown.cs.student.main.Authorization.FirebaseInitialize;
 import edu.brown.cs.student.main.server.handlers.*;
 
+import edu.brown.cs.student.main.utils.ImageCacheService;
 import spark.Spark;
 
 /**
@@ -24,6 +25,7 @@ public class Server {
   public static void main(String[] args) {
 
     String workingDirectory = System.getProperty("user.dir");
+    ImageCacheService imageCacheService = new ImageCacheService();
 
     // Print the working directory
     System.out.println("Working Directory = " + workingDirectory);
@@ -41,8 +43,8 @@ public class Server {
       System.err.println("Could not connect to database: " + e.getMessage());
     }
     Spark.get("registerUser", new RegistrationHandler());
-    Spark.get("getMeikById", new GetMeikHandler());
-    Spark.get("getAllMeiks", new GetAllMeikHandler());
+    Spark.get("getMeikById", new GetMeikHandler(imageCacheService));
+    Spark.get("getAllMeiks", new GetAllMeikHandler(imageCacheService));
     Spark.get("getUserById", new GetUserHandler());
     Spark.get("updateMeik", new UpdateMeikHandler());
 

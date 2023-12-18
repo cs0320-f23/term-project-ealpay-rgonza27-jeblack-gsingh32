@@ -29,15 +29,14 @@ public class FirebaseStorageService {
 
   public byte[] getImageBytes( String imagePath) {
     try{
-      System.out.println("imagePath: " + imagePath);
       BlobId blobId = BlobId.of(this.bucketName, imagePath);
-      System.out.println("blobId: " + blobId);
       Blob blob = storage.get(blobId);
       // Check if the blob exists
       if (blob != null) {
         return blob.getContent();
       } else {
-        throw new Exception("Blob does not exist");
+        System.out.println("No image exists for id: " + imagePath);
+        return null;
       }
 
     }catch (Exception e) {
