@@ -4,8 +4,8 @@ import static spark.Spark.after;
 
 import edu.brown.cs.student.main.Authorization.FirebaseInitialize;
 import edu.brown.cs.student.main.server.handlers.*;
-
 import edu.brown.cs.student.main.utils.ImageCacheService;
+import org.checkerframework.checker.units.qual.C;
 import spark.Spark;
 
 /**
@@ -46,7 +46,8 @@ public class Server {
     Spark.get("getMeikById", new GetMeikHandler(imageCacheService));
     Spark.get("getAllMeiks", new GetAllMeikHandler(imageCacheService));
     Spark.get("getUserById", new GetUserHandler());
-    Spark.get("updateMeik", new UpdateMeikHandler());
+    Spark.get("updateMeik", new UpdateUserHandler());
+    Spark.get("newFirstYear", new CreateFirstYearHandler());
 
       Spark.notFound(
         (request, response) -> {

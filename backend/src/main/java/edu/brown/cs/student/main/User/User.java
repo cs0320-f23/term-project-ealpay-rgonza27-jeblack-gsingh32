@@ -1,20 +1,21 @@
 package edu.brown.cs.student.main.User;
 
+import com.google.cloud.firestore.DocumentReference;
+
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public interface User {
 
-    boolean isMeik();
-    void addUserTags(String tag) throws ExecutionException, InterruptedException;
-    void removeUserTags(String tag) throws ExecutionException, InterruptedException;
-    void updateUserText(String text) throws ExecutionException, InterruptedException;
-    void updateUserLocation(String location) throws ExecutionException, InterruptedException;
-    void updateUserConcentration(String concentration) throws ExecutionException, InterruptedException;
-    void updateUserName(String name) throws ExecutionException, InterruptedException;
-    void updateUserEmail(String email) throws ExecutionException, InterruptedException;
-    void updateUserYear(String year) throws ExecutionException, InterruptedException;
-    void updateUserTags(List<String> tags) throws ExecutionException, InterruptedException;
+
+    void updateUserText(String text,String uid,String collection) throws ExecutionException, InterruptedException;
+    void updateUserLocation(String location,String uid,String collection) throws ExecutionException, InterruptedException;
+    void updateUserConcentration(String concentration,String uid,String collection) throws ExecutionException, InterruptedException;
+    void updateUserName(String name,String uid,String collection) throws ExecutionException, InterruptedException;
+    void updateUserEmail(String email,String uid,String collection) throws ExecutionException, InterruptedException;
+    void updateUserYear(String year,String uid,String collection) throws ExecutionException, InterruptedException;
+    void updateUserTags(List<String> tags,String uid,String collection) throws ExecutionException, InterruptedException;
+    public DocumentReference doc(String uid,String collection);
 
 
 

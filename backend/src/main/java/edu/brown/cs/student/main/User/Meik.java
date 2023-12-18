@@ -14,102 +14,63 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public record Meik(String name, String email, String location, String year, String text,
-                   List<String> tags, String uid, String concentration) implements User{
+                   List<String> tags, String concentration) implements User{
 
 
 
-    public void updateUserName(String name) throws ExecutionException, InterruptedException {
-        Firestore db = FirestoreClient.getFirestore();
-        CollectionReference collectionRef = db.collection("meiks");
-        DocumentReference userDocRef = collectionRef.document(uid);
-
+    public void updateUserName(String name,String uid,String collection) throws ExecutionException, InterruptedException {
+        DocumentReference userDocRef = this.doc(uid,collection);
         System.out.println(userDocRef.update("name",name).get());
 
     }
 
-    public void updateUserConcentration(String concentration) throws ExecutionException, InterruptedException {
+    public void updateUserConcentration(String concentration,String uid,String collection) throws ExecutionException, InterruptedException {
 
-        Firestore db = FirestoreClient.getFirestore();
-        CollectionReference collectionRef = db.collection("meiks");
-        DocumentReference userDocRef = collectionRef.document(uid);
+        DocumentReference userDocRef = this.doc(uid,collection);
         System.out.println(userDocRef.update("concentration",concentration).get());
 
     }
-    public void updateUserTags(List<String> tags) throws ExecutionException, InterruptedException {
+    public void updateUserTags(List<String> tags,String uid,String collection) throws ExecutionException, InterruptedException {
 
-        Firestore db = FirestoreClient.getFirestore();
-        CollectionReference collectionRef = db.collection("meiks");
-        DocumentReference userDocRef = collectionRef.document(uid);
+        DocumentReference userDocRef = this.doc(uid,collection);
         System.out.println(userDocRef.update("tags",tags).get());
 
     }
 
-    public void updateUserYear(String year) throws ExecutionException, InterruptedException {
+    public void updateUserYear(String year,String uid,String collection) throws ExecutionException, InterruptedException {
 
-        Firestore db = FirestoreClient.getFirestore();
-        CollectionReference collectionRef = db.collection("meiks");
-        DocumentReference userDocRef = collectionRef.document(uid);
+        DocumentReference userDocRef = this.doc(uid,collection);
         System.out.println(userDocRef.update("year",year).get());
 
     }
 
-    public void updateUserLocation(String location) throws ExecutionException, InterruptedException {
+    public void updateUserLocation(String location,String uid,String collection) throws ExecutionException, InterruptedException {
 
-        Firestore db = FirestoreClient.getFirestore();
-        CollectionReference collectionRef = db.collection("meiks");
-        DocumentReference userDocRef = collectionRef.document(uid);
+        DocumentReference userDocRef = this.doc(uid,collection);
         System.out.println(userDocRef.update("location",location).get());
 
     }
 
-    public void updateUserText(String text) throws ExecutionException, InterruptedException {
+    public void updateUserText(String text,String uid,String collection) throws ExecutionException, InterruptedException {
 
-        Firestore db = FirestoreClient.getFirestore();
-        CollectionReference collectionRef = db.collection("meiks");
-        DocumentReference userDocRef = collectionRef.document(uid);
+        DocumentReference userDocRef = this.doc(uid,collection);
         System.out.println(userDocRef.update("text",text).get());
 
     }
 
-    public void updateUserEmail(String email) throws ExecutionException, InterruptedException {
+    public void updateUserEmail(String email,String uid,String collection) throws ExecutionException, InterruptedException {
 
-        Firestore db = FirestoreClient.getFirestore();
-        CollectionReference collectionRef = db.collection("meiks");
-        DocumentReference userDocRef = collectionRef.document(uid);
+        DocumentReference userDocRef = this.doc(uid,collection);
         System.out.println(userDocRef.update("email",email).get());
 
     }
 
-    public void addUserTags(String tag) throws ExecutionException, InterruptedException {
 
+    public DocumentReference doc(String uid,String collection){
         Firestore db = FirestoreClient.getFirestore();
-        CollectionReference collectionRef = db.collection("meiks");
-        DocumentReference userDocRef = collectionRef.document(uid);
-        if(!this.tags.contains(tag)) {
-            this.tags.add(tag);
-        }
+        CollectionReference collectionRef = db.collection(collection);
+        return collectionRef.document(uid);
 
-        System.out.println(userDocRef.update("tag",this.tags).get());
-
-    }
-
-    public void removeUserTags(String tag) throws ExecutionException, InterruptedException {
-
-        Firestore db = FirestoreClient.getFirestore();
-        CollectionReference collectionRef = db.collection("meiks");
-        DocumentReference userDocRef = collectionRef.document(uid);
-        if(this.tags.contains(tag)) {
-            this.tags.remove(tag);
-        }
-
-        System.out.println(userDocRef.update("tag",this.tags).get());
-
-    }
-
-
-    @Override
-    public boolean isMeik() {
-        return true;
     }
 }
 
