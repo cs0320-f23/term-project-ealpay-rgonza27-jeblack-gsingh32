@@ -25,6 +25,8 @@ public interface User {
     public DocumentReference doc(String uid,String collection);
     List<String> getConcentration();
     List<String> getTags();
+    Map<String,String> getSearch(String uid) throws Exception;
+
 
 
 
