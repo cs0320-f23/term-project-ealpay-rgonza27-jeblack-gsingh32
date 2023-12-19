@@ -55,6 +55,7 @@ public class UpdateSearchHandler implements Route {
 
             result.put("no_error","true");
             result.put("result","success");
+            result.put("new_search",searches);
         }
         catch (Exception e){
             result.put("error",e.getMessage());
