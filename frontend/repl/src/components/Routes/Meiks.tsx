@@ -65,12 +65,14 @@ const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
       const filteredMeikObjects = allMeiksData.filter((meik, index) => {
         const isFiltered = tags.every(
           (tag) =>
-            meik.name.includes(tag) ||
-            meik.concentration.includes(tag) ||
-            meik.year.includes(tag) ||
-            meik.location.includes(tag) ||
-            meik.email.includes(tag) ||
-            meik.tags.some((item) => item.includes(tag))
+            meik.name.toLowerCase().includes(tag.toLowerCase()) ||
+            meik.concentration.toLowerCase().includes(tag.toLowerCase()) ||
+            meik.year.toLowerCase().includes(tag.toLowerCase()) ||
+            meik.location.includes(tag.toLowerCase()) ||
+            meik.email.toLowerCase().includes(tag.toLowerCase()) ||
+            meik.tags.some((item) =>
+              item.toLowerCase().includes(tag.toLowerCase())
+            )
         );
 
         if (!isFiltered) {
@@ -136,7 +138,7 @@ const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
               onChange={(e) => setInputValue(e.target.value)}
             />
           </ul>
-          <div>
+          <div className="MeikBody">
             {meikObjects.map((meikObject, index) => (
               <div
                 className="Rows"

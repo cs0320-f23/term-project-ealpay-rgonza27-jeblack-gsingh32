@@ -10,19 +10,21 @@ function JoinUsPage() {
       <div className="container">
         <div className="row">
           <div className="team-item">
-            <img src="../../images/image-1.jpg" className="image"></img>
+            <img src="../../images/join3.jpg" className="image"></img>
             <h3 className="team-item-h3">Personalized Academic Guidance</h3>
             <div className="team-info">
               <p>
                 The Meiklejohn Program provides personalized academic guidance
                 through peer advising. Each Meiklejohn Peer Advisor is paired
                 with a faculty advising partner and works closely with a small
-                group of first-year students throughout the academic year.{" "}
+                group of first-year students throughout the academic year. The
+                idea is for first year to receive guidance both in and out of
+                the classroom.{" "}
               </p>
             </div>
           </div>
           <div className="team-item">
-            <img src="../../images/image-1.jpg" className="image"></img>
+            <img src="../../images/join2.jpg" className="image"></img>
             <h3 className="team-item-h3">
               Comprehensive Support Beyond Academics
             </h3>
@@ -39,7 +41,7 @@ function JoinUsPage() {
             </div>
           </div>
           <div className="team-item">
-            <img src="../../images/image-1.jpg" className="image"></img>
+            <img src="../../images/join1.jpg" className="image"></img>
             <h3 className="team-item-h3">
               Building a Strong Community and Network
             </h3>

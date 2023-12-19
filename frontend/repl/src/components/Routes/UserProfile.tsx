@@ -6,7 +6,7 @@ import { concentrations } from "../Helpers/concentrations";
 import { VerticalScroll } from "../Helpers/ScrollComponents";
 import cardView from "../Search/cardView";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { changeInfo, singleMeik } from "./MeikHandler";
+import { algoMeiks, changeInfo, singleMeik } from "./MeikHandler";
 import { interests } from "../Helpers/tags";
 import { stringToImage } from "../Helpers/ImageConvertor";
 import cardViewFirstYear from "../Search/cardViewFirstYear";
@@ -131,18 +131,6 @@ const UserProfile: React.FunctionComponent<IUserProfileProps> = (props) => {
         >
           <div className="profile-content">
             <span className="Title">Edit Your Profile!</span>
-            <div>
-              {cardViewFirstYear({
-                name: username,
-                concentration: concentration + concentration2 + concentration3,
-                email: email,
-                year: year,
-                location: location,
-                id: "",
-                tags: tags,
-                text: "",
-              })}
-            </div>
 
             <input
               type="text"
@@ -223,6 +211,15 @@ const UserProfile: React.FunctionComponent<IUserProfileProps> = (props) => {
               }}
             >
               Save Changes
+            </button>
+          </div>
+          <div>
+            <button
+              onClick={() => {
+                algoMeiks();
+              }}
+            >
+              Try me!
             </button>
           </div>
         </motion.div>
