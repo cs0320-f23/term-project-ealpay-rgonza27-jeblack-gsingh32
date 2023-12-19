@@ -8,6 +8,8 @@ import java.util.Map;
 public class UserBasedCollaborativeFiltering {
         private Map<String, Map<String, Double>> userItemRatings;
 
+
+
         public UserBasedCollaborativeFiltering() {
             userItemRatings = new HashMap<>();
         }
@@ -42,24 +44,28 @@ public class UserBasedCollaborativeFiltering {
         }
 
         // Get recommendations for a user
-        public Map<String, Double> getRecommendations(String targetUser) {
+        public Map<String, Double> getRecommendations(String targetUser,Map<String,Map<String,Double>> allRatings) {
             Map<String, Double> recommendations = new HashMap<>();
+            System.out.println("ratings"+allRatings);
+            System.out.println("target user "+targetUser);
+
 
             // Iterate over all users
-            for (String user : userItemRatings.keySet()) {
+            for (String user : allRatings.keySet()) {
                 if (!user.equals(targetUser)) {
-                    double similarity = cosineSimilarity(userItemRatings.get(targetUser), userItemRatings.get(user));
+                    double similarity = cosineSimilarity(allRatings.get(targetUser), allRatings.get(user));
 
                     // Only consider items not rated by the target user
-                    for (String item : userItemRatings.get(user).keySet()) {
-                        if (!userItemRatings.get(targetUser).containsKey(item)) {
+                    for (String item : allRatings.get(user).keySet()) {
+                        if (!allRatings.get(targetUser).containsKey(item)) {
                             // Weighted sum of ratings
-                            recommendations.merge(item, userItemRatings.get(user).get(item) * similarity, Double::sum);
+                            recommendations.merge(item, allRatings.get(user).get(item) * similarity, Double::sum);
                         }
                     }
                 }
             }
 
             return recommendations;
+
         }
 }

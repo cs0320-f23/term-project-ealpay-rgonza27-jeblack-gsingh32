@@ -27,9 +27,9 @@ public class GetUserInfoTests {
     @Test
     public void testUserClass() throws ExecutionException, InterruptedException, IOException {
         UserInformation user = new UserInformation();
-        User user1= user.getUser("BDKRZm8WKJP98ocTbh8MtwRhnQZ2","meiks");
+        User user1= user.getUserFromId("BDKRZm8WKJP98ocTbh8MtwRhnQZ2","meiks");
         System.out.println(user);
-        User user2 = user.getUser("z8jCW6mJLxQaQswrOuQs","FirstYears");
+        User user2 = user.getUserFromId("z8jCW6mJLxQaQswrOuQs","FirstYears");
 
     }
 }

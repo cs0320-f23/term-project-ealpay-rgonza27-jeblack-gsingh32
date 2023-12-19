@@ -41,36 +41,36 @@ public class UserInformation {
         User user = null;
 
 
-
-
         if (doc.exists()) {
             System.out.println("Successfully retrieved user: " + doc.getId());
 
             // Get all contents of the document as a Map
+
             String email = doc.get("email",java.lang.String.class);
             String name = doc.get("name",java.lang.String.class);
             String location =  doc.get("location",java.lang.String.class);
             List<String> tags = (List<String>)doc.get("tags");
 
             if(collection.equals("FirstYears")){
-                List<String> concentration = (List<String>) doc.get("concentration");
+                //List<String> concentration = (List<String>) doc.get("concentration");
+                List<String> concentration = new ArrayList<>();
 
                 //Issue of typecasting
-                Map<String,Double> search = (Map<String,Double>) doc.get("search");
+                Map<String,Integer> search = (Map<String,Integer>) doc.get("search");
                 user = new FirstYear(name,concentration,location, tags, email, search);
 
             }
 
-            //GenericTypeIndicator<Map<String, Integer>> genericTypeIndicator = new GenericTypeIndicator<Map<String, Integer>>() {};
             if(collection.equals("meiks")){
 
                 String concentration = doc.get("concentration",java.lang.String.class);
                 String text = doc.get("text",java.lang.String.class);
                 String year =  doc.get("year",java.lang.String.class);
-                user = new Meik(name,email,location,year,text,tags, doc.getId(),concentration);
+                user = new Meik(name,email,location,year,text,tags,concentration);
+
 
             }
-            //GenericTypeIndicator<List<String>> tag = new GenericTypeIndicator<List<String>>(){};
+            GenericTypeIndicator<List<String>> tag = new GenericTypeIndicator<List<String>>(){};
         }
 
         return user;
