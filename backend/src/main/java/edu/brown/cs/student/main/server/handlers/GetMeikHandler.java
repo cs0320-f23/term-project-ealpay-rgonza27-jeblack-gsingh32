@@ -4,9 +4,8 @@ import edu.brown.cs.student.main.User.User;
 import edu.brown.cs.student.main.User.UserInformation;
 import edu.brown.cs.student.main.server.responses.UserDataResponse;
 import edu.brown.cs.student.main.server.responses.MeikDataResponse;
-import edu.brown.cs.student.main.utils.FirebaseStorageService;
+import edu.brown.cs.student.main.utils.ImageCacheService;
 import java.io.IOException;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -15,6 +14,12 @@ import spark.Response;
 import spark.Route;
 
 public class GetMeikHandler implements Route {
+
+  private ImageCacheService imageCacheService;
+
+  public GetMeikHandler(ImageCacheService imageCacheService) {
+    this.imageCacheService = imageCacheService;
+  }
 
   @Override
   public Object handle(Request request, Response response) throws Exception {
@@ -34,7 +39,7 @@ public class GetMeikHandler implements Route {
     Map<String, Object> meikResponse = new HashMap<>();
 
     if (meikId == null) {
-      meikResponse.put("err_bad_rqst", "Missing ID");
+      meikResponse.put("err_bad_request", "Missing ID");
       MeikDataResponse response = new MeikDataResponse("Null", meikResponse, null, null);
       return response.serialize();
     }
@@ -53,11 +58,8 @@ public class GetMeikHandler implements Route {
       meikResponse.put("user", meik);
       meikResponse.put("result", "success");
 
-      // Get meik image
-      FirebaseStorageService storageService = new FirebaseStorageService();
-      byte[] image = storageService.getImageBytes("images/" + meikId + ".jpg");
-      String imageData = Base64.getEncoder().encodeToString(image);
-      MeikDataResponse response = new MeikDataResponse(meikId, meikResponse, imageData, null);
+     String image = imageCacheService.getImage(meikId);
+      MeikDataResponse response = new MeikDataResponse(meikId, meikResponse, image, null);
 
       return response.serialize();
 

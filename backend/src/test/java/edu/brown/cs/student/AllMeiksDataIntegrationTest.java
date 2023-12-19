@@ -8,6 +8,7 @@ import edu.brown.cs.student.main.server.handlers.GetAllMeikHandler;
 import edu.brown.cs.student.main.server.handlers.RegistrationHandler;
 import edu.brown.cs.student.main.server.responses.AllMeikDataResponse;
 import edu.brown.cs.student.main.server.responses.RegistrationResponse;
+import edu.brown.cs.student.main.utils.ImageCacheService;
 import okio.Buffer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,7 +46,7 @@ public class AllMeiksDataIntegrationTest {
         } catch (Exception e) {
             System.err.println("Could not connect to database: " + e.getMessage());
         }
-        Spark.get("getAllMeiks", new GetAllMeikHandler());
+        Spark.get("getAllMeiks", new GetAllMeikHandler(new ImageCacheService()));
         Spark.init();
         Spark.awaitInitialization(); // don't continue until the server is listening
         Logger.getLogger("").setLevel(Level.WARNING);
