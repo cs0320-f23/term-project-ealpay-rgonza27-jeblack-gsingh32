@@ -16,7 +16,7 @@ export function algoMeiks(): Promise<string[]> {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      return data["meiksData"];
+      return data["results"]["meiks"];
     })
     .catch((e) => {
       return "ERROR: " + e;

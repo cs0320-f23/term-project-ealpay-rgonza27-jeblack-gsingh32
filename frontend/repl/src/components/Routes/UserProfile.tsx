@@ -10,6 +10,7 @@ import { algoMeiks, changeInfo, singleMeik } from "./MeikHandler";
 import { interests } from "../Helpers/tags";
 import { stringToImage } from "../Helpers/ImageConvertor";
 import cardViewFirstYear from "../Search/cardViewFirstYear";
+import Meik from "./MeikObject";
 
 interface IUserProfileProps {}
 
@@ -24,6 +25,8 @@ const UserProfile: React.FunctionComponent<IUserProfileProps> = (props) => {
   const [year, setYear] = useState("'28");
   const [tags, setTags] = useState([""]);
   const [uid, setUid] = useState("");
+  const [allMeiksData, setAllMeiksData] = useState<Meik[]>([]);
+  const [images, setImages] = useState<HTMLImageElement[]>([]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
@@ -216,11 +219,37 @@ const UserProfile: React.FunctionComponent<IUserProfileProps> = (props) => {
           <div>
             <button
               onClick={() => {
-                algoMeiks();
+                algoMeiks().then((data) => {
+                  console.log(data);
+                  // const imageElements: HTMLImageElement[] = data.map((item) =>
+                  //   stringToImage(
+                  //     typeof item === "string"
+                  //       ? JSON.parse(item)["image"]
+                  //       : item["image"]
+                  //   )
+                  // );
+
+                  // setImages(imageElements);
+                  const meikObjects: Meik[] = data.map((item) =>
+                    typeof item === "string" ? JSON.parse(item) : item
+                  );
+                  setAllMeiksData(meikObjects);
+                });
               }}
             >
               Try me!
             </button>
+            <div className="MeikBody">
+              {allMeiksData.map((meikObject, index) => (
+                <div
+                  className="Rows"
+                  key={index}
+                  style={{ display: "inline-block" }}
+                >
+                  {cardView(meikObject, null)}
+                </div>
+              ))}
+            </div>
           </div>
         </motion.div>
       </VerticalScroll>
