@@ -1,0 +1,86 @@
+/* styles/Profile.css */
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  margin: 20px auto;
+}
+
+.profile-content {
+  max-width: 400px;
+  width: 100%;
+  margin: 20px auto;
+}
+
+.profile-content label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold; /* Make labels bold for better visibility */
+}
+
+.profile-content input,
+.profile-content select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc; /* Add a border for input/select */
+  border-radius: 5px; /* Add border-radius for a rounded look */
+}
+
+.profile-content button {
+  background-color: #b3a38e;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px; /* Add border-radius for a rounded look */
+}
+
+.profile-content button:hover {
+  background-color: #958875;
+  transform: scale(1.05);
+}
+
+.Title {
+  font-weight: 700;
+  font-size: 3rem;
+}
+
+/* Style select dropdown arrow */
+.profile-content select {
+  appearance: none;
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 25px;
+}
+
+#Tags {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Style the options */
+#Tags option {
+  padding: 10px;
+}
+
+/* Style the selected options */
+#Tags option:checked {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Style the container when focused */
+#Tags:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}

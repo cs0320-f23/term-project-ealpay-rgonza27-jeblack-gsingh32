@@ -1,0 +1,28 @@
+.top-button {
+  font-style: bold;
+  font-size: large;
+  font-family: comic;
+  position: fixed;
+  bottom: 15px;
+  right: 20px;
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+  border: 5px;
+  border-color: black;
+  background-color: #b3a38e;
+  color: black;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.top-button:hover {
+  transform: scale(1.1);
+  color: #b3a38e;
+  background-color: black;
+}
+
+.top-button.show {
+  display: block;
+  transition-duration: 0.5s;
+}
