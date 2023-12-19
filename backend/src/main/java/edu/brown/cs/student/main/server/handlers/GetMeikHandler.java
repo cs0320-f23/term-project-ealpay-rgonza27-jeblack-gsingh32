@@ -46,7 +46,7 @@ public class GetMeikHandler implements Route {
 
     try {
       UserInformation userInformation = new UserInformation();
-      User meik = userInformation.getUser(meikId, "meiks");
+      User meik = userInformation.getUserFromId(meikId, "meiks");
 
       if (meik == null) {
         meikResponse.put("result", "failure");

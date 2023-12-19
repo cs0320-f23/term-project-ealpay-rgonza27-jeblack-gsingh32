@@ -3,7 +3,6 @@ package edu.brown.cs.student.main.User;
 import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.Firestore;
 import com.google.firebase.cloud.FirestoreClient;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -22,8 +21,10 @@ public class UserCreator {
         data.put("tags",firstYear.tags());
         data.put("email",firstYear.email());
         data.put("location",firstYear.location());
+        data.put("rankings",firstYear.setTagRankings());
         System.out.println("hi");
-        collectionRef.add(data).get().get().toString();
+        collectionRef.add(data).get().get();
+        collectionRef.getId();
 
     }
 

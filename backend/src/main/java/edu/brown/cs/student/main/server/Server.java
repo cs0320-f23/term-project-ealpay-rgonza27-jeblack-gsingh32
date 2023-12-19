@@ -48,6 +48,7 @@ public class Server {
     Spark.get("getUserById", new GetUserHandler());
     Spark.get("updateMeik", new UpdateUserHandler());
     Spark.get("newFirstYear", new CreateFirstYearHandler());
+    Spark.get("getRecMeiks",new GetReccsFromTagsHandler());
 
       Spark.notFound(
         (request, response) -> {

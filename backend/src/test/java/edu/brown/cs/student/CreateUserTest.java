@@ -36,7 +36,7 @@ public class CreateUserTest {
         concentration.add("APMA");
         concentration.add("English");
         FirstYear firstYear = new FirstYear("Tarp2",concentration,"Mars",tags,"" +
-                "crazyTown@mail.org",new HashMap<String,String>());
+                "crazyTown@mail.org",new HashMap<String,Integer>());
         UserCreator uc = new UserCreator();
         uc.createFirstYear(firstYear);
     }
