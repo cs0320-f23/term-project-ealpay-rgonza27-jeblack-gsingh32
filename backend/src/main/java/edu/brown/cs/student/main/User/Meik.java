@@ -119,6 +119,10 @@ public record Meik(String name, String email, String location, String year, Stri
         return this.tags;
     }
 
+    @Override
+    public Map<String, String> getSearch(String uid) throws Exception {
+        throw new Exception("Meant for first Years");
+    }
 
 
 }

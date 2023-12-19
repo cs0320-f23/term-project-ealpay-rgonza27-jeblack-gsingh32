@@ -80,6 +80,16 @@ public record FirstYear(String name, List<String> concentrations, String locatio
     }
 
     @Override
+    public Map<String, String> getSearch(String uid) throws Exception {
+
+        DocumentReference reference= this.doc(uid,"FirstYears");
+        DocumentSnapshot snapshot = reference.get().get();
+        Map<String,String> searched = (Map<String, String>) snapshot.get("search");
+        return searched;
+
+    }
+
+    @Override
     public void initializeTagsBuckets() throws Exception {
         Map<String,Double> tagRating = new HashMap<>();
         for (String tag: this.tags){
@@ -150,6 +160,7 @@ public record FirstYear(String name, List<String> concentrations, String locatio
     public Map<String, Double> getTagRankings(String uid) throws ExecutionException, InterruptedException {
 
         List<String> officialTags = new ArrayList<>();
+
         officialTags.add("Music");
         officialTags.add("Sports");
         officialTags.add("International");
@@ -170,7 +181,9 @@ public record FirstYear(String name, List<String> concentrations, String locatio
         if(rankings == null){
             rankings = new HashMap<>();
         }
+
         Map<String,String> searched = (Map<String, String>) snapshot.get("search");
+
         if(!(searched == null) ) {
             for (String search : searched.keySet()) {
                 if (officialTags.contains(search)) {
@@ -188,8 +201,6 @@ public record FirstYear(String name, List<String> concentrations, String locatio
         return rankings;
 
     }
-
-
 
 
 }
