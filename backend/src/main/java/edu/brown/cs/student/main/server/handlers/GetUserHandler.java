@@ -32,7 +32,7 @@ public class GetUserHandler implements Route {
 
             try {
                 UserInformation user = new UserInformation();
-                User firstYear = user.getUser(userId, "FirstYears");
+                User firstYear = user.getUserFromId(userId, "FirstYears");
                 userResponse.put("user", firstYear);
                 System.out.println(firstYear);
                 userResponse.put("result", "success");

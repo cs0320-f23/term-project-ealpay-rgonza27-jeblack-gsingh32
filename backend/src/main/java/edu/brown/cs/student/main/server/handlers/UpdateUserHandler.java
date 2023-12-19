@@ -50,7 +50,7 @@ public class UpdateUserHandler implements Route {
 
         try {
             UserInformation userInformation = new UserInformation();
-            user = userInformation.getUser(userId, collection);
+            user = userInformation.getUserFromId(userId, collection);
 
             if (!(location == null)) {
                 user.updateUserLocation(location,userId,collection);
