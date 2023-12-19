@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { VerticalScroll } from "../Helpers/ScrollComponents";
 import { AllMeiks } from "./MeikHandler";
 import Meik from "./MeikObject";
+import { stringToImage } from "../Helpers/ImageConvertor";
 
 interface IMeikProps {}
 
@@ -14,6 +15,8 @@ const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
   const [allMeiksData, setAllMeiksData] = useState<Meik[]>([]);
   const [meikObjects, setMeikObjects] = useState<Meik[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
+  const [images, setImages] = useState<HTMLImageElement[]>([]);
+  const [imagesBack, setImagesBack] = useState<HTMLImageElement[]>([]);
 
   const addTag = (e: KeyboardEvent) => {
     if (e.key === "Enter" && inputValue.trim() !== "") {
@@ -40,6 +43,15 @@ const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
     input?.addEventListener("keyup", handleKey);
     if (allMeiksData.length === 0) {
       AllMeiks().then((data) => {
+        console.log(data);
+        const imageElements: HTMLImageElement[] = data.map((item) =>
+          stringToImage(
+            typeof item === "string" ? JSON.parse(item)["image"] : item["image"]
+          )
+        );
+
+        setImages(imageElements);
+        setImagesBack(imageElements);
         const meikObjects: Meik[] = data.map((item) =>
           typeof item === "string" ? JSON.parse(item) : item
         );
@@ -47,9 +59,11 @@ const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
         setMeikObjects(meikObjects);
       });
     } else {
+      setImagesBack(images);
+      const filteredIndices: number[] = [];
       // Filter the meikObjects based on tags
-      const filteredMeikObjects = allMeiksData.filter((meik) =>
-        tags.every(
+      const filteredMeikObjects = allMeiksData.filter((meik, index) => {
+        const isFiltered = tags.every(
           (tag) =>
             meik.name.includes(tag) ||
             meik.concentration.includes(tag) ||
@@ -57,9 +71,25 @@ const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
             meik.location.includes(tag) ||
             meik.email.includes(tag) ||
             meik.tags.some((item) => item.includes(tag))
-        )
+        );
+
+        if (!isFiltered) {
+          filteredIndices.push(index);
+        }
+
+        return isFiltered;
+      });
+
+      // Remove items from imagesBack based on filteredIndices
+      const updatedImagesBack = imagesBack.filter(
+        (_, index) => !filteredIndices.includes(index)
       );
+      setImagesBack(updatedImagesBack);
+      if (tags.length == 0) {
+        setImagesBack(images);
+      }
       setMeikObjects(filteredMeikObjects);
+      console.log(imagesBack.length);
     }
 
     return () => {
@@ -113,7 +143,7 @@ const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
                 key={index}
                 style={{ display: "inline-block" }}
               >
-                {cardView(meikObject, null)}
+                {cardView(meikObject, imagesBack[index])}
               </div>
             ))}
           </div>

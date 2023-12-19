@@ -90,12 +90,13 @@ interface ImageBlockProps {
 }
 
 function addNumbers(): number[] {
-  const numb = [1, 3, 4, 5];
+  const numb = [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
   const finalList = [];
   for (let i: number = 0; i < 4; i++) {
-    const a = numb.splice(Math.floor(Math.random() * (4 - i)), 1).pop();
+    const a = numb.splice(Math.floor(Math.random() * (13 - i)), 1).pop();
     if (a) {
       finalList.push(a);
+      console.log(finalList);
     }
   }
   return finalList;

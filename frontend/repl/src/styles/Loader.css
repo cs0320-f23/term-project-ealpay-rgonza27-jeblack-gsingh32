@@ -77,3 +77,38 @@ body.loading {
   display: flex;
   z-index: -10;
 }
+
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff; /* Set your desired background color */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  max-width: 800px; /* Set your desired maximum width */
+}
+
+.transition-image img {
+  width: 100%; /* Make sure the image takes up the full width of its container */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.image-block {
+  width: 200px; /* Set your desired width for each image block */
+  height: 400px; /* Set your desired height for each image block */
+  overflow: hidden; /* Ensure that the image is clipped if it exceeds the defined dimensions */
+  margin: 10px; /* Adjust margin as needed */
+  position: relative;
+}
+
+/* Add additional styling as needed for your specific design */
