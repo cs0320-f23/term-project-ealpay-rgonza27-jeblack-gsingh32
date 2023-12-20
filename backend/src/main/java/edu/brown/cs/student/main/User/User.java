@@ -27,6 +27,7 @@ public interface User {
     List<String> getTags();
     Map<String,String> getSearch(String uid) throws Exception;
 
+    String getID() throws Exception;
 
 
 

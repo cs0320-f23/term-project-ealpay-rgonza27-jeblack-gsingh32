@@ -7,6 +7,7 @@ import com.google.firebase.cloud.FirestoreClient;
 import edu.brown.cs.student.main.User.User;
 import edu.brown.cs.student.main.User.UserInformation;
 import edu.brown.cs.student.main.server.responses.UserUpdateResponse;
+import edu.brown.cs.student.main.utils.ImageCacheService;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -24,6 +25,8 @@ public class UpdateSearchHandler implements Route {
      * @return The content to be set in the response
      * @throws Exception implementation can choose to throw exception
      */
+
+
     @Override
     public Object handle(Request request, Response response) throws Exception {
         Map<String,Object> result = new HashMap<>();

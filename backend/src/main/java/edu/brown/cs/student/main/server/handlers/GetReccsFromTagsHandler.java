@@ -4,6 +4,7 @@ import edu.brown.cs.student.main.Matching.Matching;
 import edu.brown.cs.student.main.Matching.Ranking;
 import edu.brown.cs.student.main.User.User;
 import edu.brown.cs.student.main.server.responses.RecommendedMeiksResponse;
+import edu.brown.cs.student.main.utils.ImageCacheService;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -13,6 +14,11 @@ import java.util.List;
 import java.util.Map;
 
 public class GetReccsFromTagsHandler implements Route {
+    private ImageCacheService imageCacheService;
+
+    public GetReccsFromTagsHandler(ImageCacheService imageCacheService){
+        this.imageCacheService = imageCacheService;
+    }
 
 
     /**
@@ -28,6 +34,7 @@ public class GetReccsFromTagsHandler implements Route {
 
 
         Map<String ,Object> result = new HashMap<>();
+        Map<String ,String> images = new HashMap<>();
         String uid = request.queryParams("uid");
         if(uid == null){
             result.put("bad_rqst","uid was not provided");
@@ -35,14 +42,21 @@ public class GetReccsFromTagsHandler implements Route {
         try {
             Matching matching = new Matching();
             List<User> meiks = matching.getMatchingMeiksByTag(uid);
+            for(User user: meiks){
+                String id = user.getID();
+                String image = this.imageCacheService.getImage(id);
+                images.put(id,image);
+
+            }
             result.put("result","success");
             result.put("meiks",meiks);
+
         }
         catch (Exception e){
             result.put("error",e.getMessage());
         }
-        RecommendedMeiksResponse response1 = new RecommendedMeiksResponse(uid,result);
-
+        RecommendedMeiksResponse response1 = new RecommendedMeiksResponse(uid,result,images);
         return response1.serialize();
+
     }
 }

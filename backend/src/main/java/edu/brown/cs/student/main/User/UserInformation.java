@@ -66,7 +66,8 @@ public class UserInformation {
                 String concentration = doc.get("concentration",java.lang.String.class);
                 String text = doc.get("text",java.lang.String.class);
                 String year =  doc.get("year",java.lang.String.class);
-                user = new Meik(name,email,location,year,text,tags,concentration);
+                String uid =  doc.get("id",java.lang.String.class);
+                user = new Meik(name,email,location,year,text,tags,concentration,uid);
 
 
             }
