@@ -5,7 +5,7 @@ import "../../styles/userProfile.css"; // Import your profile-specific styles
 import { concentrations } from "../Helpers/concentrations";
 import { VerticalScroll } from "../Helpers/ScrollComponents";
 import cardView from "../Search/cardView";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { algoMeiks, changeInfo, singleMeik } from "./MeikHandler";
 import { interests } from "../Helpers/tags";
 import Meik from "./MeikObject";
