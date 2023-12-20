@@ -15,7 +15,7 @@ function AboutUsPage() {
           </div>
           <div className="about-content">
             <h2 className="about-content-h2">The Meik Program:</h2>
-            <p className="about-content-p">
+            <p data-testid="about-us-test" className="about-content-p">
               With over 350 peer advisors serving first-year students annually,
               the Meiklejohn Peer Advising Program is Brown's largest student
               organization. Meiklejohn Peer Advisors are paired with a faculty

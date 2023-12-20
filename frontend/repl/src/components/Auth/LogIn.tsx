@@ -65,6 +65,7 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
           <div className="input-field-wrapper">
             <label htmlFor="email">Email</label>
             <input
+              data-testid="login-email-input"
               className="input-field"
               placeholder="Email"
               value={email}
@@ -76,6 +77,7 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
           <div className="input-field-wrapper">
             <label htmlFor="password">Password</label>
             <input
+              data-testid="login-password-input"
               className="input-field"
               placeholder="Password"
               type="password"
@@ -87,6 +89,7 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
           </div>
         </form>
         <button
+          data-testid="login-button"
           className="login-button"
           onClick={() => logIn()}
           disabled={authing}
@@ -94,6 +97,7 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
           Log In
         </button>
         <button
+          data-testid="login-button-google"
           className="google-login-button"
           onClick={() => signInWithGoogle()}
           disabled={authing}

@@ -22,13 +22,17 @@ const Header: React.FunctionComponent<HeaderProps> = ({
           MeetYourMeiks
         </div>
         <nav className="nav">
-          <li onClick={() => navigate("/Meiks")}>
+          <li data-testid="meiks-link-test" onClick={() => navigate("/Meiks")}>
             <a>Meiks!</a>
           </li>
-          <li onClick={() => navigate("/Profile")}>
+          <li
+            data-testid="profile-link-test"
+            onClick={() => navigate("/Profile")}
+          >
             <a>Profile</a>
           </li>
           <li
+            data-testid="about-link"
             onClick={() => {
               onLinkClickAbout();
             }}
@@ -36,6 +40,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
             <a>About</a>
           </li>
           <li
+            data-testid="join-link"
             onClick={() => {
               onLinkClickJoin();
             }}
@@ -44,6 +49,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
           </li>
         </nav>
         <div
+          data-testid="contact-link"
           className="contact"
           onClick={() => {
             onLinkClickContact();

@@ -12,7 +12,7 @@ function JoinUsPage() {
           <div className="team-item">
             <img src="../../images/join3.jpg" className="image"></img>
             <h3 className="team-item-h3">Personalized Academic Guidance</h3>
-            <div className="team-info">
+            <div data-testid="join-test" className="team-info">
               <p>
                 The Meiklejohn Program provides personalized academic guidance
                 through peer advising. Each Meiklejohn Peer Advisor is paired
