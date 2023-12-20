@@ -90,6 +90,11 @@ public record FirstYear(String name, List<String> concentrations, String locatio
     }
 
     @Override
+    public String getID() throws Exception {
+        throw new Exception("For meiks");
+    }
+
+    @Override
     public void initializeTagsBuckets() throws Exception {
         Map<String,Double> tagRating = new HashMap<>();
         for (String tag: this.tags){

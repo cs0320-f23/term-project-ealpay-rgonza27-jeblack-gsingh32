@@ -4,7 +4,7 @@ import com.squareup.moshi.Moshi;
 
 import java.util.Map;
 
-public record RecommendedMeiksResponse(String uid, Map<String,Object> results) {
+public record RecommendedMeiksResponse(String uid, Map<String,Object> results,Map<String,String> images) {
 
 
     public String serialize() {

@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public record Meik(String name, String email, String location, String year, String text,
-                   List<String> tags, String concentration) implements User {
+                   List<String> tags, String concentration,String uid) implements User {
 
 
     @Override
@@ -122,6 +122,11 @@ public record Meik(String name, String email, String location, String year, Stri
     @Override
     public Map<String, String> getSearch(String uid) throws Exception {
         throw new Exception("Meant for first Years");
+    }
+
+    @Override
+    public String getID() {
+        return this.uid;
     }
 
 
