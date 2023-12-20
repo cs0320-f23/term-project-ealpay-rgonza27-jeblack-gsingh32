@@ -84,3 +84,28 @@
   border-color: #007bff;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
+
+.encapsuler {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+}
+
+.profile-content {
+  flex: 1; /* Take remaining space */
+}
+
+.algoDiv {
+  margin-left: 20px; /* Adjust margin as needed */
+  display: flex; /* Ensure children are displayed as flex items */
+  flex-direction: column; /* Display children in a column */
+}
+
+.MeikDiv {
+  margin-top: 20px; /* Add margin between MeikBody and button */
+  width: 800px;
+}
+.tryButton {
+  width: 500px;
+  margin-left: 300px;
+}

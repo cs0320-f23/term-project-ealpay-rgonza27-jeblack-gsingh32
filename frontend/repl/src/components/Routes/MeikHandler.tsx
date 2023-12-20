@@ -11,7 +11,18 @@ export function AllMeiks(): Promise<string[]> {
     });
 }
 
-export function algoMeiks(): Promise<string[]> {
+export function updateSearch(): Promise<string[]> {
+  return fetch("http://localhost:3232/getAllMeiks")
+    .then((response) => response.json())
+    .then((data) => {
+      return data["meiksData"];
+    })
+    .catch((e) => {
+      return "ERROR: " + e;
+    });
+}
+
+export function algoMeiks(uid: String): Promise<string[]> {
   return fetch("http://localhost:3232/getRecMeiks?uid=H6Tkobj4jLpoU6IE1E6S")
     .then((response) => response.json())
     .then((data) => {
