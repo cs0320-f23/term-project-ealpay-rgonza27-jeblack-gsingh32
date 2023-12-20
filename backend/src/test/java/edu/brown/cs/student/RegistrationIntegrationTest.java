@@ -83,4 +83,22 @@ public class RegistrationIntegrationTest {
         assertEquals("Registration Complete", body.message());
 
     }
+
+    @Test
+    public void testBadRequestRegistration() throws Exception {
+
+        Moshi moshi = new Moshi.Builder().build();
+        JsonAdapter<RegistrationResponse> adapter = moshi.adapter(RegistrationResponse.class);
+
+        /////////// LOAD DATASOURCE ///////////
+        // Set up the request, make the request
+        HttpURLConnection loadConnection = tryRequest("registerUser?" + "ema=test@brown.edu"+"&"+"password=12345passwordcheck");
+        // Get an OK response (the *connection* worked, the *API* provides an error response)
+        assertEquals(200, loadConnection.getResponseCode());
+        //Get the expected response: a success
+        RegistrationResponse body = adapter.fromJson(new Buffer().readFrom(loadConnection.getInputStream()));
+        assertEquals("Failure", body.result());
+        assertEquals("Please provide a brown affiliated email.", body.message());
+
+    }
 }

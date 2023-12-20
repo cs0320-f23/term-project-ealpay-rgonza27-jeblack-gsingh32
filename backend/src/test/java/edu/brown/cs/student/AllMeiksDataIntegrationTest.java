@@ -74,7 +74,7 @@ public class AllMeiksDataIntegrationTest {
     }
 
     @Test
-    public void testRegistration() throws Exception {
+    public void testGetAllMeiks() throws Exception {
 
         Moshi moshi = new Moshi.Builder().build();
         JsonAdapter<AllMeikDataResponse> adapter = moshi.adapter(AllMeikDataResponse.class);
@@ -91,6 +91,21 @@ public class AllMeiksDataIntegrationTest {
         assertEquals(16, body.meiksData().size());
         System.out.println(body.meiksData().get(2).get("name"));
         assertEquals("Aliza Kopans", body.meiksData().get(2).get("name"));
+
+    }
+
+    @Test
+    public void testBadRequestGetAllMeiks() throws Exception {
+
+        Moshi moshi = new Moshi.Builder().build();
+        JsonAdapter<AllMeikDataResponse> adapter = moshi.adapter(AllMeikDataResponse.class);
+
+        /////////// LOAD DATASOURCE ///////////
+        // Set up the request, make the request
+        HttpURLConnection loadConnection = tryRequest("getAllMei");
+        // Get an OK response (the *connection* worked, the *API* provides an error response)
+        assertEquals(404, loadConnection.getResponseCode());
+
 
     }
 
