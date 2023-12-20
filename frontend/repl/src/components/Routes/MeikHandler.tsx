@@ -11,8 +11,10 @@ export function AllMeiks(): Promise<string[]> {
     });
 }
 
-export function updateSearch(): Promise<string[]> {
-  return fetch("http://localhost:3232/getAllMeiks")
+export function updateSearch(uid: String, search: String): Promise<string[]> {
+  return fetch(
+    "http://localhost:3232/updateSearch?uid=" + uid + "&searched=" + search
+  )
     .then((response) => response.json())
     .then((data) => {
       return data["meiksData"];

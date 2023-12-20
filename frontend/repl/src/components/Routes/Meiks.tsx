@@ -4,9 +4,10 @@ import Header from "../HomePage/Header";
 import "../../styles/Meiks.css";
 import { motion } from "framer-motion";
 import { VerticalScroll } from "../Helpers/ScrollComponents";
-import { AllMeiks } from "./MeikHandler";
+import { AllMeiks, updateSearch } from "./MeikHandler";
 import Meik from "./MeikObject";
 import { stringToImage } from "../Helpers/ImageConvertor";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 interface IMeikProps {}
 
@@ -17,7 +18,17 @@ const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
   const [inputValue, setInputValue] = useState<string>("");
   const [images, setImages] = useState<HTMLImageElement[]>([]);
   const [imagesBack, setImagesBack] = useState<HTMLImageElement[]>([]);
+  const [uid, setUid] = useState("");
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
+      if (user) {
+        setUid(user.uid);
+      }
+    });
+
+    return () => unsubscribe();
+  });
   const addTag = (e: KeyboardEvent) => {
     if (e.key === "Enter" && inputValue.trim() !== "") {
       const tag = inputValue.trim();
@@ -91,11 +102,10 @@ const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
         setImagesBack(images);
       } else {
         if (inputValue.length == 0) {
-          console.log("AAAAAA");
+          updateSearch(uid, String(tags));
         }
       }
       setMeikObjects(filteredMeikObjects);
-      console.log(imagesBack.length);
     }
 
     return () => {
