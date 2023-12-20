@@ -5,7 +5,7 @@ import "../../styles/Profile.css"; // Import your profile-specific styles
 import { concentrations } from "../Helpers/concentrations";
 import { VerticalScroll } from "../Helpers/ScrollComponents";
 import cardView from "../Search/cardView";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { changeInfo, singleMeik } from "./MeikHandler";
 import { interests } from "../Helpers/tags";
 import { stringToImage } from "../Helpers/ImageConvertor";
@@ -24,6 +24,7 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
   const [tags, setTags] = useState([""]);
   const [uid, setUid] = useState("");
   const [image, setImage] = useState<HTMLImageElement | null>(null);
+  const auth = getAuth();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
@@ -254,6 +255,14 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
               }}
             >
               Save Changes
+            </button>
+            <button
+              className="SignOut"
+              onClick={() => {
+                signOut(auth);
+              }}
+            >
+              Sign Out
             </button>
           </div>
         </motion.div>

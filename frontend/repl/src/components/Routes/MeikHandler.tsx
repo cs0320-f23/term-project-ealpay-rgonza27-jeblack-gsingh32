@@ -24,13 +24,9 @@ export function updateSearch(uid: String, search: String): Promise<string[]> {
     });
 }
 
-export function algoMeiks(uid: String): Promise<string[]> {
-  return fetch("http://localhost:3232/getRecMeiks?uid=H6Tkobj4jLpoU6IE1E6S")
+export function algoMeiks(uid: String): Promise<AlgoMeiksResponse> {
+  return fetch("http://localhost:3232/getRecMeiks?uid=" + uid)
     .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      return data["results"]["meiks"];
-    })
     .catch((e) => {
       return "ERROR: " + e;
     });
@@ -42,6 +38,14 @@ export function singleMeik(meikId: String) {
     .catch((e) => {
       return "ERROR: " + e;
     });
+}
+interface AlgoMeiksResponse {
+  uid: string;
+  results: {
+    meiks: Meik[];
+    // Other properties in the results object
+  };
+  images: Record<string, string>;
 }
 
 export function changeInfo(

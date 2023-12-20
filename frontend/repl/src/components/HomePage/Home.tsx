@@ -38,7 +38,6 @@ function handleSubmit(data: FormData): void {
 
 const HomePage: React.FunctionComponent<IHomeProps> = (props) => {
   const [loading, setLoading] = useState(true);
-  const auth = getAuth();
   const about = useRef<HTMLDivElement>(null);
   const join = useRef<HTMLDivElement>(null);
   const contact = useRef<HTMLDivElement>(null);
@@ -108,15 +107,6 @@ const HomePage: React.FunctionComponent<IHomeProps> = (props) => {
                   <h3 className="ContactUsPage">Contact us!</h3>
                   <Form onSubmit={handleSubmit} />
                 </div>
-
-                <button
-                  className="SignOut"
-                  onClick={() => {
-                    signOut(auth);
-                  }}
-                >
-                  Sign Out
-                </button>
               </div>
             </VerticalScroll>
           </motion.div>

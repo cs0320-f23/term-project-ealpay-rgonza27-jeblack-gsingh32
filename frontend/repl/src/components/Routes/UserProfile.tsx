@@ -9,6 +9,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { algoMeiks, changeInfo, singleMeik } from "./MeikHandler";
 import { interests } from "../Helpers/tags";
 import Meik from "./MeikObject";
+import { stringToImage } from "../Helpers/ImageConvertor";
 
 interface IUserProfileProps {}
 
@@ -25,6 +26,7 @@ const UserProfile: React.FunctionComponent<IUserProfileProps> = (props) => {
   const [uid, setUid] = useState("");
   const [allMeiksData, setAllMeiksData] = useState<Meik[]>([]);
   const [images, setImages] = useState<HTMLImageElement[]>([]);
+  const auth = getAuth();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
@@ -218,22 +220,25 @@ const UserProfile: React.FunctionComponent<IUserProfileProps> = (props) => {
               <button
                 className="tryButton"
                 onClick={() => {
-                  algoMeiks(uid).then((data) => {
-                    console.log(data);
-                    // const imageElements: HTMLImageElement[] = data.map((item) =>
-                    //   stringToImage(
-                    //     typeof item === "string"
-                    //       ? JSON.parse(item)["image"]
-                    //       : item["image"]
-                    //   )
-                    // );
+                  algoMeiks(uid)
+                    .then((data) => {
+                      console.log(data);
+                      const images = Object.values(data["images"]);
+                      console.log(images);
+                      const imageElements: HTMLImageElement[] = images.map(
+                        (item) => stringToImage(item)
+                      );
 
-                    // setImages(imageElements);
-                    const meikObjects: Meik[] = data.map((item) =>
-                      typeof item === "string" ? JSON.parse(item) : item
-                    );
-                    setAllMeiksData(meikObjects);
-                  });
+                      setImages(imageElements);
+                      return data["results"]["meiks"];
+                    })
+                    .then((data) => {
+                      console.log(data);
+                      const meikObjects: Meik[] = data.map((item) =>
+                        typeof item === "string" ? JSON.parse(item) : item
+                      );
+                      setAllMeiksData(meikObjects);
+                    });
                 }}
               >
                 Try me!
@@ -245,12 +250,20 @@ const UserProfile: React.FunctionComponent<IUserProfileProps> = (props) => {
                     key={index}
                     style={{ display: "inline-block" }}
                   >
-                    {cardView(meikObject, null)}
+                    {cardView(meikObject, images[index])}
                   </div>
                 ))}
               </div>
             </div>
           </div>
+          <button
+            className="SignOut"
+            onClick={() => {
+              signOut(auth);
+            }}
+          >
+            Sign Out
+          </button>
         </motion.div>
       </VerticalScroll>
     </div>

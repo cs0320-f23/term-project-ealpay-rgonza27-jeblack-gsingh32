@@ -70,7 +70,7 @@ const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
         setMeikObjects(meikObjects);
       });
     } else {
-      setImagesBack(images);
+      // setImagesBack(images);
       const filteredIndices: number[] = [];
       // Filter the meikObjects based on tags
       const filteredMeikObjects = allMeiksData.filter((meik, index) => {
@@ -94,7 +94,7 @@ const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
       });
 
       // Remove items from imagesBack based on filteredIndices
-      const updatedImagesBack = imagesBack.filter(
+      const updatedImagesBack = images.filter(
         (_, index) => !filteredIndices.includes(index)
       );
       setImagesBack(updatedImagesBack);
