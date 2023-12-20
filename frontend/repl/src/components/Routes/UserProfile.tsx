@@ -8,8 +8,6 @@ import cardView from "../Search/cardView";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { algoMeiks, changeInfo, singleMeik } from "./MeikHandler";
 import { interests } from "../Helpers/tags";
-import { stringToImage } from "../Helpers/ImageConvertor";
-import cardViewFirstYear from "../Search/cardViewFirstYear";
 import Meik from "./MeikObject";
 
 interface IUserProfileProps {}
@@ -132,123 +130,125 @@ const UserProfile: React.FunctionComponent<IUserProfileProps> = (props) => {
           transition={{ duration: 0.2 }}
           className="profile-container"
         >
-          <div className="profile-content">
-            <span className="Title">Edit Your Profile!</span>
-
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <input
-              type="text"
-              id="location"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-            />
-            <select
-              id="Concentration"
-              value={concentration}
-              onChange={(e) => {
-                setConcentration(e.target.value as concentrations);
-              }}
-            >
-              {Object.values(concentrations).map((conc) => (
-                <option key={conc} value={conc}>
-                  {conc}
-                </option>
-              ))}
-            </select>
-            {addCon()}
-            <button
-              onClick={() => {
-                if (concentrationNum < 3) {
-                  setConNum(concentrationNum + 1);
-                }
-              }}
-            >
-              Add Concentration
-            </button>
-            <select
-              id="Tags"
-              value={tags}
-              onChange={(e) => {
-                const value = e.target.value;
-                if (tags.includes(value)) {
-                  const updatedTags = tags.filter((tag) => tag !== value);
-                  console.log(updatedTags);
-                  setTags(updatedTags);
-                } else {
-                  setTags([...tags, e.target.value]);
-                }
-              }}
-              multiple
-            >
-              {Object.values(interests).map((conc) => (
-                <option key={conc} value={conc}>
-                  {conc}
-                </option>
-              ))}
-            </select>
-            <select
-              id="year"
-              value={year}
-              onChange={(e) => setYear(e.target.value)}
-            >
-              <option value="'27">'27</option>
-              <option value="'26">'26</option>
-              <option value="'25">'25</option>
-              <option value="'24">'24</option>
-            </select>
-            <button
-              onClick={() => {
-                changeInfo(
-                  uid,
-                  username,
-                  location,
-                  year,
-                  String(tags),
-                  concentration + concentration2 + concentration3
-                );
-              }}
-            >
-              Save Changes
-            </button>
-          </div>
-          <div>
-            <button
-              onClick={() => {
-                algoMeiks().then((data) => {
-                  console.log(data);
-                  // const imageElements: HTMLImageElement[] = data.map((item) =>
-                  //   stringToImage(
-                  //     typeof item === "string"
-                  //       ? JSON.parse(item)["image"]
-                  //       : item["image"]
-                  //   )
-                  // );
-
-                  // setImages(imageElements);
-                  const meikObjects: Meik[] = data.map((item) =>
-                    typeof item === "string" ? JSON.parse(item) : item
+          <span className="Title">Edit Your Profile!</span>
+          <div className="encapsuler">
+            <div className="profile-content">
+              <input
+                type="text"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+              <input
+                type="text"
+                id="location"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+              />
+              <select
+                id="Concentration"
+                value={concentration}
+                onChange={(e) => {
+                  setConcentration(e.target.value as concentrations);
+                }}
+              >
+                {Object.values(concentrations).map((conc) => (
+                  <option key={conc} value={conc}>
+                    {conc}
+                  </option>
+                ))}
+              </select>
+              {addCon()}
+              <button
+                onClick={() => {
+                  if (concentrationNum < 3) {
+                    setConNum(concentrationNum + 1);
+                  }
+                }}
+              >
+                Add Concentration
+              </button>
+              <select
+                id="Tags"
+                value={tags}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (tags.includes(value)) {
+                    const updatedTags = tags.filter((tag) => tag !== value);
+                    console.log(updatedTags);
+                    setTags(updatedTags);
+                  } else {
+                    setTags([...tags, e.target.value]);
+                  }
+                }}
+                multiple
+              >
+                {Object.values(interests).map((conc) => (
+                  <option key={conc} value={conc}>
+                    {conc}
+                  </option>
+                ))}
+              </select>
+              <select
+                id="year"
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
+              >
+                <option value="'27">'27</option>
+                <option value="'26">'26</option>
+                <option value="'25">'25</option>
+                <option value="'24">'24</option>
+              </select>
+              <button
+                onClick={() => {
+                  changeInfo(
+                    uid,
+                    username,
+                    location,
+                    year,
+                    String(tags),
+                    concentration + concentration2 + concentration3
                   );
-                  setAllMeiksData(meikObjects);
-                });
-              }}
-            >
-              Try me!
-            </button>
-            <div className="MeikBody">
-              {allMeiksData.map((meikObject, index) => (
-                <div
-                  className="Rows"
-                  key={index}
-                  style={{ display: "inline-block" }}
-                >
-                  {cardView(meikObject, null)}
-                </div>
-              ))}
+                }}
+              >
+                Save Changes
+              </button>
+            </div>
+            <div className="algoDiv">
+              <button
+                className="tryButton"
+                onClick={() => {
+                  algoMeiks(uid).then((data) => {
+                    console.log(data);
+                    // const imageElements: HTMLImageElement[] = data.map((item) =>
+                    //   stringToImage(
+                    //     typeof item === "string"
+                    //       ? JSON.parse(item)["image"]
+                    //       : item["image"]
+                    //   )
+                    // );
+
+                    // setImages(imageElements);
+                    const meikObjects: Meik[] = data.map((item) =>
+                      typeof item === "string" ? JSON.parse(item) : item
+                    );
+                    setAllMeiksData(meikObjects);
+                  });
+                }}
+              >
+                Try me!
+              </button>
+              <div className="MeikDiv">
+                {allMeiksData.map((meikObject, index) => (
+                  <div
+                    className="Rows"
+                    key={index}
+                    style={{ display: "inline-block" }}
+                  >
+                    {cardView(meikObject, null)}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </motion.div>

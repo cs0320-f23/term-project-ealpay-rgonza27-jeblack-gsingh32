@@ -24,15 +24,23 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
   const signInWithGoogle = async () => {
     setAuthing(true);
 
-    signInWithPopup(auth, new GoogleAuthProvider())
-      .then((response) => {
+    try {
+      const response = await signInWithPopup(auth, new GoogleAuthProvider());
+      const userEmail = response.user.email || "";
+
+      // Check if the email ends with the allowed domain
+      if (userEmail.endsWith("@brown.edu")) {
         console.log(response.user.uid);
         navigate("/");
-      })
-      .catch((error) => {
-        console.log(error);
-        setAuthing(false);
-      });
+      } else {
+        // User is not allowed, sign them out and show a message
+        await auth.signOut();
+        console.log("User not allowed. Signed out.");
+      }
+    } catch (error) {
+      console.log(error);
+      setAuthing(false);
+    }
   };
 
   const logIn = async () => {

@@ -89,6 +89,10 @@ const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
       setImagesBack(updatedImagesBack);
       if (tags.length == 0) {
         setImagesBack(images);
+      } else {
+        if (inputValue.length == 0) {
+          console.log("AAAAAA");
+        }
       }
       setMeikObjects(filteredMeikObjects);
       console.log(imagesBack.length);

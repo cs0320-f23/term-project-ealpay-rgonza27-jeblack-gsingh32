@@ -34,7 +34,7 @@ function Form({ onSubmit }: FormProps) {
   }
 
   return (
-    <div className="main-div">
+    <div className="main-div-form">
       <form className="contact-form" onSubmit={handleSubmit}>
         <div className="input-group">
           <input
