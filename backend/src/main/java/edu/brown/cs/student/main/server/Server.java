@@ -43,9 +43,9 @@ public class Server {
       System.err.println("Could not connect to database: " + e.getMessage());
     }
     Spark.get("registerUser", new RegistrationHandler());
+    Spark.get("getUserById", new GetUserHandler());
     Spark.get("getMeikById", new GetMeikHandler(imageCacheService));
     Spark.get("getAllMeiks", new GetAllMeikHandler(imageCacheService));
-    Spark.get("getUserById", new GetUserHandler());
     Spark.get("updateMeik", new UpdateUserHandler());
     Spark.get("newFirstYear", new CreateFirstYearHandler());
     Spark.get("getRecMeiks",new GetReccsFromTagsHandler(imageCacheService));
