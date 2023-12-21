@@ -183,6 +183,7 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
               onChange={(e) => setUsername(e.target.value)}
             />
             <input
+              data-testid="profile-location-input"
               type="text"
               id="location"
               value={location}

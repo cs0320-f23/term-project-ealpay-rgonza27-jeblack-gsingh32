@@ -38,6 +38,7 @@ function Form({ onSubmit }: FormProps) {
       <form className="contact-form" onSubmit={handleSubmit}>
         <div className="input-group">
           <input
+            data-testid="name-label"
             className="input-bar-name"
             type="text"
             id="name"

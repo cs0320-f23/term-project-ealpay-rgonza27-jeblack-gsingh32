@@ -146,6 +146,7 @@ const Meiks: React.FunctionComponent<IMeikProps> = (props) => {
               </li>
             ))}
             <input
+              data-testid="search-bar-test"
               className="SearchBarInput"
               type="text"
               value={inputValue}
