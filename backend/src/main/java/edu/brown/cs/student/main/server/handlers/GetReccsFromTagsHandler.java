@@ -22,29 +22,31 @@ public class GetReccsFromTagsHandler implements Route {
 
 
     /**
-     * Invoked when a request is made on this route's corresponding path e.g. '/hello'
+     * Returns the recommended meiks that are calculated using our matching algorithms.
      *
      * @param request  The request object providing information about the HTTP request
      * @param response The response object providing functionality for modifying the response
      * @return The content to be set in the response
      * @throws Exception implementation can choose to throw exception
      */
+
     @Override
     public Object handle(Request request, Response response) throws Exception {
 
 
         Map<String ,Object> result = new HashMap<>();
         Map<String ,String> images = new HashMap<>();
+        //get uid
         String uid = request.queryParams("uid");
         if(uid == null){
             result.put("bad_rqst","uid was not provided");
         }
         try {
             Matching matching = new Matching();
-            List<User> meiks = matching.getMatchingMeiksByTag(uid);
+            List<User> meiks = matching.getMatchingMeiksByTag(uid);//Get matching meiks.
             for(User user: meiks){
                 String id = user.getID();
-                String image = this.imageCacheService.getImage(id);
+                String image = this.imageCacheService.getImage(id);//add images for meiks.
                 images.put(id,image);
 
             }

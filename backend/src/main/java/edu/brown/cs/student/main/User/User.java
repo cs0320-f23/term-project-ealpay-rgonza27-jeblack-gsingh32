@@ -5,13 +5,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * This interface represents both of our users.
+ */
 public interface User {
 
 
     void initializeTagsBuckets() throws Exception;
-    void updateTagBucket();
     void initializeConcentrationBuckets() throws Exception;
-    String getName();
     Map<String, Double> setTagRankings() throws Exception;
     Map<String, Double> getTagRankings(String uid) throws ExecutionException, InterruptedException;
 

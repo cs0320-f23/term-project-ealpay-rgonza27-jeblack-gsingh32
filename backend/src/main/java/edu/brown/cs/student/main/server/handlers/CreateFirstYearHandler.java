@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class CreateFirstYearHandler implements Route {
     /**
-     * Invoked when a request is made on this route's corresponding path e.g. '/hello'
+     *  This handler creates a first year and adds them to our firestore database.
      * @param request  The request object providing information about the HTTP request
      * @param response The response object providing functionality for modifying the response
      * @return The content to be set in the response
@@ -29,7 +29,7 @@ public class CreateFirstYearHandler implements Route {
         Moshi moshi = new Moshi.Builder().build();
         Type mapStringObject = Types.newParameterizedType(Map.class, String.class, Object.class);
         JsonAdapter<Map<String, Object>> adapter = moshi.adapter(mapStringObject);
-
+        //Get information
         Map<String,Object> results = new HashMap<>();
         String name = request.queryParams("name"); ;
         String concentration = request.queryParams("concentration");
@@ -43,6 +43,7 @@ public class CreateFirstYearHandler implements Route {
             List<String> tags = List.of(tag.split(","));
             FirstYear newFirstYear = new FirstYear(name, concentrations, location, tags, email, search);
             UserCreator userCreator = new UserCreator();
+            //Create First Year
             userCreator.createFirstYear(newFirstYear);
             results.put("result","no_error");
 

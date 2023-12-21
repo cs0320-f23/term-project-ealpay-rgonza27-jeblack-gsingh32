@@ -3,7 +3,9 @@ package edu.brown.cs.student.main.Matching;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/***
+ * This class represents our collaborating filtering.
+ */
 
 public class UserBasedCollaborativeFiltering {
         private Map<String, Map<String, Double>> userItemRatings;
@@ -15,11 +17,14 @@ public class UserBasedCollaborativeFiltering {
         }
 
         // Add user-item ratings
-        public void addUserRating(String user, String item, double rating) {
-            userItemRatings.computeIfAbsent(user, k -> new HashMap<>()).put(item, rating);
-        }
 
-        // Calculate cosine similarity between two users
+
+    /**
+     * Calculates cosine similarity between the users.
+     * @param user1 Target user
+     * @param user2 Every other user
+     * @return
+     */
         private double cosineSimilarity(Map<String, Double> user1, Map<String, Double> user2) {
             double dotProduct = 0.0;
             double norm1 = 0.0;
@@ -43,11 +48,15 @@ public class UserBasedCollaborativeFiltering {
             return dotProduct / (Math.sqrt(norm1) * Math.sqrt(norm2));
         }
 
-        // Get recommendations for a user
+    /**
+     * This gives ranking to the missing items for the target user.
+     * @param targetUser The target user
+     * @param allRatings Ratings of all of the users.
+     * @return Calculated ratings of missing items for the target user.
+     */
         public Map<String, Double> getRecommendations(String targetUser,Map<String,Map<String,Double>> allRatings) {
             Map<String, Double> recommendations = new HashMap<>();
-            System.out.println("ratings"+allRatings);
-            System.out.println("target user "+targetUser);
+
 
 
             // Iterate over all users

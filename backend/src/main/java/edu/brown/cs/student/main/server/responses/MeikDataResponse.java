@@ -9,6 +9,10 @@ public record MeikDataResponse(String meikID, Map<String,Object> data,String ima
 
 
 
+    /***
+     * Serialize into json format.
+     * @return
+     */
     public String serialize() {
         Moshi moshi = new Moshi.Builder().build();
         return moshi.adapter(MeikDataResponse.class).toJson(this);

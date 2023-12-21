@@ -10,8 +10,8 @@ import spark.Spark;
 
 /**
  * Top Level class for our project, utilizes spark to create and maintain our server. We setup all
- * the endpoint handler in the main method for this class. We have four total endpoints: loadCSV,
- * searchCSV, viewCSV, broadBand (and mock but that is not necessary for actual functionality).
+ * the endpoint handler in the main method for this class. We have eight total endpoints: registerUser,
+ * getMeikById, getAllMeiks, getUserById,updateMeik, newFirstYear,getRecsMeik, and update search.
  */
 public class Server {
 

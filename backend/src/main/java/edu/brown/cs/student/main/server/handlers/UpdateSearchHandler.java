@@ -32,6 +32,17 @@ public class UpdateSearchHandler implements Route {
         Map<String,Object> result = new HashMap<>();
         String searched = request.queryParams("searched");
         String uid = request.queryParams("uid");
+        //error checking
+        if(searched == null){
+            result.put("bad_rqst","searched values are null");
+            UserUpdateResponse response_error = new UserUpdateResponse(uid,result,"failure");
+
+        }
+        if(uid == null){
+            result.put("bad_rqst","uid is null");
+            UserUpdateResponse response_error = new UserUpdateResponse(null,result,"failure");
+        }
+        //Add the searched values to the existing hashmap
         try {
             List<String> searchedStrings = List.of(searched.split(","));
             UserInformation userInformation = new UserInformation();
@@ -49,7 +60,6 @@ public class UpdateSearchHandler implements Route {
                     searches.put(search,"1");
                 }
             }
-            System.out.println(searches);
 
             Firestore db = FirestoreClient.getFirestore();
             CollectionReference collectionRef = db.collection("FirstYears");

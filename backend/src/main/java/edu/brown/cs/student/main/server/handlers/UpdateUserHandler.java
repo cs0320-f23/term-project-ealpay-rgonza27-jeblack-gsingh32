@@ -14,7 +14,7 @@ import java.util.Map;
 public class UpdateUserHandler implements Route {
 
     /**
-     * Invoked when a request is made on this route's corresponding path e.g. '/hello'
+     * This updates our users information from our backend.
      *
      * @param request  The request object providing information about the HTTP request
      * @param response The response object providing functionality for modifying the response

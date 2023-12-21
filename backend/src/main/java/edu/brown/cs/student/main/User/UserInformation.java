@@ -4,22 +4,26 @@ import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.UserRecord;
 import com.google.firebase.cloud.FirestoreClient;
 import com.google.firebase.database.GenericTypeIndicator;
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.Moshi;
-import com.squareup.moshi.Types;
-import edu.brown.cs.student.main.Authorization.FirebaseInitialize;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * This class represent the user information we can get from the database.
+ */
 public class UserInformation {
+    /**
+     *Gets the user from the database from a string id.
+     * @param userId UID related to the user we are trying to receive
+     * @param collection Collection we want to receive data from.
+     * @return The user we receive
+     * @throws ExecutionException Firestore exception
+     * @throws InterruptedException Firestore exception
+     * @throws IOException Exception reading firestore credentials
+     */
     public User getUserFromId(String userId, String collection) throws ExecutionException, InterruptedException, IOException {
 
         User user = null;
@@ -35,6 +39,15 @@ public class UserInformation {
         return user;
 
     }
+    /**
+     *Gets the user from the database from a string Documentsnapshot.
+     * @param doc Get information from given Documentsnapshot.
+     * @param collection Collection we want to receive data from.
+     * @return The user we receive
+     * @throws ExecutionException Firestore exception
+     * @throws InterruptedException Firestore exception
+     * @throws IOException Exception reading firestore credentials
+     */
 
     public User getUserFromDocRef(DocumentSnapshot doc,String collection) throws ExecutionException, InterruptedException, IOException {
 
