@@ -14,3 +14,7 @@ Github repository: https://github.com/cs0320-f23/term-project-ealpay-rgonza27-je
 Backend [docs](./docs/backend.md)
 
 Frontend [docs](./docs/frontend.md)
+
+## Project Goal:
+
+To provide the Meik leadership program a website that has all the meiks as users that the first years can look through. This aims to help Meiks to convey their interests more clearly to first years so that more meaningful relationships can be formed. Our website also provides a recommendation button for first years to be connected with Meiks.
