@@ -167,7 +167,7 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
                   email: email,
                   year: year,
                   location: location,
-                  id: "",
+                  uid: "",
                   imageURL: "",
                   tags: tags,
                   text: "",
@@ -251,7 +251,8 @@ const Profile: React.FunctionComponent<IProfileProps> = (props) => {
                   location,
                   year,
                   String(tags),
-                  concentration + concentration2 + concentration3
+                  concentration + concentration2 + concentration3,
+                  "meiks"
                 );
               }}
             >

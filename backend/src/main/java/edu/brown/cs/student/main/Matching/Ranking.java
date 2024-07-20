@@ -50,7 +50,7 @@ public class Ranking {
                 DocumentSnapshot documentSnapshot = documentReference.get().get();
                 User user;
                 if (documentSnapshot.exists()) {
-                   user = userInformation.getUserFromDocRef(documentSnapshot,"FirstYears");
+                   user = userInformation.getUserFromDocRef(documentReference,"FirstYears");
                    userRatings.put(documentSnapshot.getId(), user.getTagRankings(documentSnapshot.getId()));
                 }
             }

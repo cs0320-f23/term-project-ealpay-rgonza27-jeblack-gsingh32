@@ -48,24 +48,23 @@ public class UpdateSearchHandler implements Route {
             UserInformation userInformation = new UserInformation();
             User fy = userInformation.getUserFromId(uid, "FirstYears");
             Map<String,String> searches =  fy.getSearch(uid);
-            System.out.println(searches);
+            System.out.println("Searches:"+searches);
+
             for(String search: searchedStrings){
                 if(searches.containsKey(search)){
-                    String val = searches.get(search);
-                    Integer value = Integer.parseInt(val);
-                    value =value +1;
-                    String put = Integer.toString(value);
-                    searches.put(search,put);
+                    Integer val = Integer.parseInt(searches.get(search));
+                    val =val +1;
+                    Integer put = val;
+                    searches.put(search,put.toString());
                 }else{
                     searches.put(search,"1");
                 }
             }
-
+            System.out.println("SearchesB:"+searches);
             Firestore db = FirestoreClient.getFirestore();
             CollectionReference collectionRef = db.collection("FirstYears");
             DocumentReference ref =  collectionRef.document(uid);
             ref.update("search",searches).get();
-
             result.put("no_error","true");
             result.put("result","success");
             result.put("new_search",searches);

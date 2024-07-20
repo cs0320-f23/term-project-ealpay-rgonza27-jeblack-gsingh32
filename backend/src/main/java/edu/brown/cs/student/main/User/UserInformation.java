@@ -33,7 +33,7 @@ public class UserInformation {
         DocumentReference userDocRef = collectionRef.document(userId);
         DocumentSnapshot document = userDocRef.get().get();
 
-        user = this.getUserFromDocRef(document,collection);
+        user = this.getUserFromDocRef(userDocRef,collection);
 
 
         return user;
@@ -41,7 +41,7 @@ public class UserInformation {
     }
     /**
      *Gets the user from the database from a string Documentsnapshot.
-     * @param doc Get information from given Documentsnapshot.
+     * @param docRef Get information from given Documentsnapshot.
      * @param collection Collection we want to receive data from.
      * @return The user we receive
      * @throws ExecutionException Firestore exception
@@ -49,10 +49,10 @@ public class UserInformation {
      * @throws IOException Exception reading firestore credentials
      */
 
-    public User getUserFromDocRef(DocumentSnapshot doc,String collection) throws ExecutionException, InterruptedException, IOException {
+    public User getUserFromDocRef(DocumentReference docRef,String collection) throws ExecutionException, InterruptedException, IOException {
 
         User user = null;
-
+        DocumentSnapshot doc = docRef.get().get();
 
         if (doc.exists()) {
             System.out.println("Successfully retrieved user: " + doc.getId());
@@ -69,7 +69,17 @@ public class UserInformation {
                 List<String> concentration = new ArrayList<>();
 
                 //Issue of typecasting
-                Map<String,Integer> search = (Map<String,Integer>) doc.get("search");
+                Map<String,String> search = (Map<String,String>) doc.get("search");
+                if (search==null){
+                    System.out.println("Search null if statement");
+                    Map<String,String> searchNew= new HashMap<>();
+                    for (String tag: tags){
+                        if (!tag.isEmpty()){
+                        searchNew.put(tag,"0");}
+                    }
+                    System.out.println(searchNew);
+                    search=searchNew;
+                }
                 user = new FirstYear(name,concentration,location, tags, email, search);
 
             }
@@ -89,6 +99,18 @@ public class UserInformation {
 
         return user;
 
+    }
+
+    public void createUser(String userId, String collection){
+        Firestore db = FirestoreClient.getFirestore();
+        CollectionReference collectionRef = db.collection(collection);
+        DocumentReference userDocRef = collectionRef.document(userId);
+
+        // Create a Map representing the data you want to set in the document
+        Map<String, Object> userData = new HashMap<>();
+
+        // Use set method to create or update the document with the specified data
+        userDocRef.set(userData);
     }
 
 }

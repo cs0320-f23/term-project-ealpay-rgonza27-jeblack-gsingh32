@@ -1,7 +1,7 @@
 interface Meik {
   concentration: string;
   email: string;
-  id: string;
+  uid: string;
   imageURL: string;
   location: string;
   name: string;

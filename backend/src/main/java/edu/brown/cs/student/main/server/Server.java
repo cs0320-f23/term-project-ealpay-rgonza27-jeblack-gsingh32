@@ -1,6 +1,7 @@
 package edu.brown.cs.student.main.server;
 
 import static spark.Spark.after;
+import static spark.Spark.options;
 
 import edu.brown.cs.student.main.Authorization.FirebaseInitialize;
 import edu.brown.cs.student.main.server.handlers.*;
@@ -31,11 +32,13 @@ public class Server {
     System.out.println("Working Directory = " + workingDirectory);
     int port = 3232;
     Spark.port(port);
-    after(
-        (request, response) -> {
-          response.header("Access-Control-Allow-Origin", "*");
-          response.header("Access-Control-Allow-Methods", "*");
-        });
+    after((request, response) -> {
+      response.header("Access-Control-Allow-Origin", "*");
+      response.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+      response.header("Access-Control-Allow-Headers", "Content-Type, Authorization, Accept");
+      response.header("Access-Control-Allow-Credentials", "true");
+    });
+
 
     try {
       FirebaseInitialize.initialize();
@@ -50,6 +53,7 @@ public class Server {
     Spark.get("newFirstYear", new CreateFirstYearHandler());
     Spark.get("getRecMeiks",new GetReccsFromTagsHandler(imageCacheService));
     Spark.get("updateSearch", new UpdateSearchHandler());
+
 
       Spark.notFound(
         (request, response) -> {

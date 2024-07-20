@@ -25,7 +25,8 @@ const UserProfile: React.FunctionComponent<IUserProfileProps> = (props) => {
   const [tags, setTags] = useState([""]);
   const [uid, setUid] = useState("");
   const [allMeiksData, setAllMeiksData] = useState<Meik[]>([]);
-  const [images, setImages] = useState<HTMLImageElement[]>([]);
+  const [images, setImages] = useState<{ [key: string]: HTMLImageElement }>({});
+
   const auth = getAuth();
 
   useEffect(() => {
@@ -210,7 +211,8 @@ const UserProfile: React.FunctionComponent<IUserProfileProps> = (props) => {
                     location,
                     year,
                     String(tags),
-                    concentration + concentration2 + concentration3
+                    concentration + concentration2 + concentration3,
+                    "FirstYears"
                   );
                 }}
               >
@@ -223,13 +225,17 @@ const UserProfile: React.FunctionComponent<IUserProfileProps> = (props) => {
                 onClick={() => {
                   algoMeiks(uid)
                     .then((data) => {
-                      console.log(data);
-                      const images = Object.values(data["images"]);
-                      console.log(images);
-                      const imageElements: HTMLImageElement[] = images.map(
-                        (item) => stringToImage(item)
-                      );
+                      const imagesObject = data["images"]; // Get the images object
 
+                      // Convert each URL string to an image element using stringToImage function
+                      const imageElements: { [key: string]: HTMLImageElement } =
+                        {};
+                      Object.entries(imagesObject).forEach(([key, url]) => {
+                        const img = stringToImage(url);
+                        img.setAttribute("key", key); // Set a key attribute for identifying images
+                        imageElements[key] = img;
+                      });
+                      console.log(imageElements);
                       setImages(imageElements);
                       return data["results"]["meiks"];
                     })
@@ -251,7 +257,7 @@ const UserProfile: React.FunctionComponent<IUserProfileProps> = (props) => {
                     key={index}
                     style={{ display: "inline-block" }}
                   >
-                    {cardView(meikObject, images[index])}
+                    {cardView(meikObject, images[meikObject.uid])}
                   </div>
                 ))}
               </div>

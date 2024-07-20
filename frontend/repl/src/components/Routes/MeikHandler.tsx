@@ -54,10 +54,13 @@ export function changeInfo(
   location: String,
   year: String,
   tag: String,
-  concentration: String
+  concentration: String,
+  collection: String
 ): Promise<string[]> {
   return fetch(
-    "http://localhost:3232/updateMeik?id=" +
+    "http://localhost:3232/updateMeik?collection=" +
+      collection +
+      "&id=" +
       meikId +
       "&name=" +
       name +

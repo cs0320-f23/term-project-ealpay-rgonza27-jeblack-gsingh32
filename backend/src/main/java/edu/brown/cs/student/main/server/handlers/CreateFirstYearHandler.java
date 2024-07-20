@@ -36,7 +36,7 @@ public class CreateFirstYearHandler implements Route {
         String location = request.queryParams("location");
         String tag = request.queryParams("tags");
         String email = request.queryParams("email");
-        Map<String,Integer> search = new HashMap<>();
+        Map<String,String> search = new HashMap<>();
 
         try {
             List<String> concentrations = List.of(concentration.split(","));

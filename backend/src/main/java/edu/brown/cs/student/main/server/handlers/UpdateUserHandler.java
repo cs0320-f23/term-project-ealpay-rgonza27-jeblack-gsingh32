@@ -46,11 +46,17 @@ public class UpdateUserHandler implements Route {
         String name = request.queryParams("name");
         String tag = request.queryParams("tag");
         String text = request.queryParams("text");
+        System.out.println(tag);
         User user = null;
 
         try {
             UserInformation userInformation = new UserInformation();
             user = userInformation.getUserFromId(userId, collection);
+
+            if (user==null){
+                userInformation.createUser(userId, collection);
+                user = userInformation.getUserFromId(userId, collection);
+            }
 
             if (!(location == null)) {
                 user.updateUserLocation(location,userId,collection);

@@ -10,7 +10,7 @@ interface LoaderProps {
 const container: Variants = {
   show: {
     transition: {
-      staggerChildren: 0.2,
+      staggerChildren: 0.3,
     },
   },
 };

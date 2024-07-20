@@ -25,7 +25,7 @@ import java.util.concurrent.ExecutionException;
  * @param search First Year's searches
  */
 public record FirstYear(String name, List<String> concentrations, String location,
-                        List<String> tags, String email, Map<String,Integer> search)
+                        List<String> tags, String email, Map<String,String> search)
         implements User {
 
 
@@ -153,10 +153,7 @@ public record FirstYear(String name, List<String> concentrations, String locatio
     @Override
     public Map<String, String> getSearch(String uid) throws Exception {
 
-        DocumentReference reference= this.doc(uid,"FirstYears");
-        DocumentSnapshot snapshot = reference.get().get();
-        Map<String,String> searched = (Map<String, String>) snapshot.get("search");
-        return searched;
+return this.search;
 
     }
 

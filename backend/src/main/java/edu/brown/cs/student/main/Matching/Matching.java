@@ -49,7 +49,7 @@ public class Matching {
 
             if (documentSnapshot.exists()) {
                 //add meik to list
-                User meik = userInformation.getUserFromDocRef(documentSnapshot, "meiks");
+                User meik = userInformation.getUserFromDocRef(documentReference, "meiks");
                 meiks.add(meik);
             }
         }
